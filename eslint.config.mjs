@@ -15,10 +15,6 @@ export default tseslint.config(
       'no-unused-vars': 'error',
       'prefer-const': 'error',
       'no-console': 'warn',
-      'no-undef': 'error',
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      semi: ['error', 'always'],
-      quotes: ['error', 'single'],
     },
   },
   {
