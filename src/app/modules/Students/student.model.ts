@@ -3,12 +3,14 @@ import {
   Gaurdian,
   LocalGaurdian,
   Student,
+  studentMethod,
+  studentModel,
   UserName,
 } from './student.interface';
 
 const userNameSchema = new Schema<UserName>({
   firstName: { type: String, required: true },
-  secoundName: { type: String },
+  secoundName: { type: String, required: false }, // Made explicitly not required
   lastName: { type: String, required: true },
 });
 
@@ -28,9 +30,12 @@ const GaurdianSchema = new Schema<Gaurdian>({
   motherContactNumber: { type: String, required: true },
 });
 
-const studentSchema = new Schema<Student>({
-  id: { type: String, required: true },
-  name: userNameSchema,
+const studentSchema = new Schema<Student , studentModel , studentMethod>({
+  id: { type: String, required: true , unique : true },
+  name: {
+    type: userNameSchema,
+    required: true,
+  },
   gender: { type: String, enum: ['male', 'female'], required: true },
   contact: { type: Number, required: true },
   emergencyContact: { type: Number, required: true },

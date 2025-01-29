@@ -1,6 +1,9 @@
 // import { Schema, model, connect } from 'mongoose';
+
+import { Model } from "mongoose";
+
 // 1. Create an interface representing a document in MongoDB.
-export type Gaurdian = {
+export type TGaurdian = {
   fatherName: string;
   fatherOccupation: string;
   fatherContactNumber: string;
@@ -9,22 +12,22 @@ export type Gaurdian = {
   motherContactNumber: string;
 };
 
-export type UserName = {
+export type TUserName = {
   firstName: string;
-  secoundName: string;
+  secoundName?: string; // Made optional with ?
   lastName: string;
 };
 
-export type LocalGaurdian = {
+export type TLocalGaurdian = {
   name: string;
   occupation: string;
   contactNo: number;
   address: string;
 };
 
-export type Student = {
+export type TStudent = {
   id: string;
-  name: UserName;
+  name: TUserName;
   gender: 'male' | 'female';
   contact: number;
   emergencyContact: number;
@@ -33,8 +36,16 @@ export type Student = {
   bloodGroup?: 'a+' | 'ab+' | 'a-' | 'b+';
   presentAddress: string;
   parmanentAddress: string;
-  gaurdian: Gaurdian;
-  localGaurdian: LocalGaurdian;
+  gaurdian: TGaurdian;
+  localGaurdian: TLocalGaurdian;
   profileImage?: string;
   isActive: 'active' | 'inactive';
 };
+
+
+// custom instance method
+export type studentMethod = {
+ isUserExits(id : string)  : Promise<TStudent>
+}
+
+export type studentModel = Model<TStudent, object, studentMethod>;
