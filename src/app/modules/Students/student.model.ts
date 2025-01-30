@@ -1,27 +1,28 @@
 import { Schema, model } from 'mongoose';
 import {
-  Gaurdian,
-  LocalGaurdian,
-  Student,
+
   studentMethod,
   studentModel,
-  UserName,
+  TGaurdian,
+  TLocalGaurdian,
+  TStudent,
+  TUserName,
 } from './student.interface';
 
-const userNameSchema = new Schema<UserName>({
+const userNameSchema = new Schema<TUserName>({
   firstName: { type: String, required: true },
   secoundName: { type: String, required: false }, // Made explicitly not required
   lastName: { type: String, required: true },
 });
 
-const LocalGaurdianSchema = new Schema<LocalGaurdian>({
+const LocalGaurdianSchema = new Schema<TLocalGaurdian>({
   name: { type: String, required: true },
   occupation: { type: String, required: true },
   contactNo: { type: Number, required: true },
   address: { type: String, required: true },
 });
 
-const GaurdianSchema = new Schema<Gaurdian>({
+const GaurdianSchema = new Schema<TGaurdian>({
   fatherName: { type: String, required: true },
   fatherOccupation: { type: String, required: true },
   fatherContactNumber: { type: String, required: true },
@@ -30,7 +31,7 @@ const GaurdianSchema = new Schema<Gaurdian>({
   motherContactNumber: { type: String, required: true },
 });
 
-const studentSchema = new Schema<Student , studentModel , studentMethod>({
+const studentSchema = new Schema<TStudent , studentModel , studentMethod>({
   id: { type: String, required: true , unique : true },
   name: {
     type: userNameSchema,
@@ -58,4 +59,4 @@ const studentSchema = new Schema<Student , studentModel , studentMethod>({
   },
 });
 
-export const StudentModel = model<Student>('Student', studentSchema);
+export const StudentModel = model<TStudent>('Student', studentSchema);
