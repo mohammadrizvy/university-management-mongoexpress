@@ -1,8 +1,7 @@
 import { Schema, model } from 'mongoose';
 import {
-
-  studentMethod,
-  studentModel,
+  studentMethods,
+  StudentModel,
   TGaurdian,
   TLocalGaurdian,
   TStudent,
@@ -31,8 +30,8 @@ const GaurdianSchema = new Schema<TGaurdian>({
   motherContactNumber: { type: String, required: true },
 });
 
-const studentSchema = new Schema<TStudent , studentModel , studentMethod>({
-  id: { type: String, required: true , unique : true },
+const studentSchema = new Schema<TStudent, StudentModel, studentMethods>({
+  id: { type: String, required: true, unique: true },
   name: {
     type: userNameSchema,
     required: true,
@@ -59,4 +58,9 @@ const studentSchema = new Schema<TStudent , studentModel , studentMethod>({
   },
 });
 
-export const StudentModel = model<TStudent>('Student', studentSchema);
+studentSchema.methods.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
+};
+
+export const Student = model<TStudent , StudentModel>('Student', studentSchema);

@@ -1,6 +1,6 @@
 // import { Schema, model, connect } from 'mongoose';
 
-import { Model } from "mongoose";
+import { Model } from 'mongoose';
 
 // 1. Create an interface representing a document in MongoDB.
 export type TGaurdian = {
@@ -42,10 +42,10 @@ export type TStudent = {
   isActive: 'active' | 'inactive';
 };
 
-
 // custom instance method
-export type studentMethod = {
- isUserExits(id : string)  : Promise<TStudent>
-}
+export type studentMethods = {
+  // eslint-disable-next-line no-unused-vars
+  isUserExists(id: string): Promise<TStudent | null >;
+};
 
-export type studentModel = Model<TStudent, object, studentMethod>;
+export type StudentModel = Model<TStudent, object, studentMethods>;

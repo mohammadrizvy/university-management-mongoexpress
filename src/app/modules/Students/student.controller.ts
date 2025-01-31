@@ -4,20 +4,25 @@ import studentValidationSchema from './student.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
-    const { student: studentData } = req.body;
+    // Get the student data directly from req.body
+    const studentData = req.body;
     
     // Validate data
     const zodValidatedData = studentValidationSchema.parse(studentData);
 
     const result = await StudentServices.createStudentIntoDB(zodValidatedData);
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       message: 'Student has been created successfully',
       data: result,
     });
-  } catch (err) {
-    console.log(err)
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message || 'Failed to create student',
+      error: err
+    });
   }
 };
 
@@ -29,8 +34,12 @@ const getStudents = async (req: Request, res: Response) => {
       message: 'Student retrived successfully',
       data: result,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to retrieve students',
+      error: error
+    });
   }
 };
 
@@ -44,8 +53,12 @@ const getSingleStudent = async (req: Request, res: Response) => {
       message: 'Single student retrived successfully',
       data: result,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to retrieve student',
+      error: error
+    });
   }
 };
 
