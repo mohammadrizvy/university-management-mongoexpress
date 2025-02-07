@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import {
-  studentMethods,
   StudentModel,
   TGaurdian,
   TLocalGaurdian,
@@ -39,7 +38,8 @@ const GaurdianSchema = new Schema<TGaurdian>(
   { _id: false },
 );
 
-const studentSchema = new Schema<TStudent, StudentModel, studentMethods>({
+// *For custom method it will have 
+const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, unique: true },
 
   name: userNameSchema,
@@ -64,9 +64,17 @@ const studentSchema = new Schema<TStudent, StudentModel, studentMethods>({
   },
 });
 
-studentSchema.methods.isUserExists = async function (id: string) {
-  const existingUser = await Student.findOne({ id });
-  return existingUser;
-};
+
+studentSchema.statics.isUserExists = async function (id : string){
+  const existingUser = await Student.findOne({id})
+  return existingUser; 
+}
+
+
+// ! creatin a custom instance method 
+// studentSchema.methods.isUserExists = async function (id: string) {
+//   const existingUser = await Student.findOne({ id });
+//   return existingUser;
+// };
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema);

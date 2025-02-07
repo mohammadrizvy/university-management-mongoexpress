@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { studentValidatedSchema } from './student.validation';
 import { StudentServices } from './student.service';
 
-
 const createStudent = async (req: Request, res: Response) => {
   try {
     // Validate the request body
@@ -16,11 +15,11 @@ const createStudent = async (req: Request, res: Response) => {
       message: 'Student created successfully',
       data: result,
     });
-  } catch (error: any) {
+  } catch (err : any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Failed to create student',
-      error: error,
+      message: err.message || 'Failed to create student',
+      error: err,
     });
   }
 };

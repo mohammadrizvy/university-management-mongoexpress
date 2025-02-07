@@ -2,18 +2,21 @@ import { TStudent } from './student.interface';
 import { Student } from './student.model';
 
 const createStudentIntoDB = async (studentData: TStudent) => {
-  try {
-    const student = new Student(studentData);
-
-    if (await student.isUserExists(studentData.id)) {
-      throw new Error('User already exists in Database');
-    }
-
-    const result = await student.save();
-    return result;
-  } catch (error : any) {
-    throw new Error(error.message);
+  if (await Student.isUserExists(studentData.id)) {
+    throw new Error('User already exists');
   }
+
+  const result = await Student.create(studentData);
+  //{---------->
+  // ! creatin a custom instance method
+  // const student = new Student(studentData);
+  // if (await student.isUserExists(studentData.id)) {
+  //   throw new Error('User already exists');
+  // }
+  // const result = await student.save();
+  //<------------}
+
+  return result;
 };
 
 const getStudentsFromDB = async () => {
@@ -26,7 +29,7 @@ const getSingleStudentFromDB = async (id: string) => {
   return result;
 };
 
-export const StudentServices = {  
+export const StudentServices = {
   createStudentIntoDB,
   getStudentsFromDB,
   getSingleStudentFromDB,
