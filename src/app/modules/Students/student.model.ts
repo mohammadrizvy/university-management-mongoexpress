@@ -42,38 +42,45 @@ const GaurdianSchema = new Schema<TGaurdian>(
 );
 
 // *For custom method it will have
-const studentSchema = new Schema<TStudent, StudentModel>({
-  id: { type: String, unique: true },
-  pass: { type: String},
-  name: userNameSchema,
-  gender: { type: String, enum: ['male', 'female'] },
-  contact: { type: Number },
-  emergencyContact: { type: Number },
-  email: { type: String },
-  DOB: { type: String },
-  bloodGroup: {
-    type: String,
-    enum: ['a+', 'ab+', 'a-', 'b+'],
-    required: false,
+const studentSchema = new Schema<TStudent, StudentModel>(
+  {
+    id: { type: String, unique: true },
+    pass: { type: String },
+    name: userNameSchema,
+    gender: { type: String, enum: ['male', 'female'] },
+    contact: { type: Number },
+    emergencyContact: { type: Number },
+    email: { type: String },
+    DOB: { type: String },
+    bloodGroup: {
+      type: String,
+      enum: ['a+', 'ab+', 'a-', 'b+'],
+      required: false,
+    },
+    presentAddress: { type: String },
+    parmanentAddress: { type: String },
+    gaurdian: GaurdianSchema,
+    localGaurdian: LocalGaurdianSchema,
+    profileImage: { type: String },
+    isActive: {
+      type: String,
+      enum: ['active', 'inactive'],
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  presentAddress: { type: String },
-  parmanentAddress: { type: String },
-  gaurdian: GaurdianSchema,
-  localGaurdian: LocalGaurdianSchema,
-  profileImage: { type: String },
-  isActive: {
-    type: String,
-    enum: ['active', 'inactive'],
+  {
+    toJSON: {
+      virtuals: true,
+    },
   },
-  isDeleted : {
-    type : Boolean ,
-    default : false
-  }
-});
+);
 
 // !Applying middlewares / hooks
 
-// Document middlewares 
+//* Document middlewares
 studentSchema.pre('save', async function (this: TStudent, next) {
   try {
     if (!this.pass) {
@@ -91,29 +98,29 @@ studentSchema.post('save', async function (doc, next) {
   next();
 });
 
+//* Query middlewares
 
-
-// Query middlewares 
-
-studentSchema.pre("find" , function (next){
-  this.find({isDeleted : {$ne : true}})
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
   // this.find({isDeleted : {$eq : true}})
-  next()
-})
-studentSchema.pre("findOne" , function (next){
-  this.find({isDeleted : {$ne : true}})
+  next();
+});
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
   // this.find({isDeleted : {$eq : true}})
-  next()
-})
+  next();
+});
 // ?You can also use it in aggregate
-studentSchema.pre("aggregate" , function (next){
-  this.pipeline().unshift({$match : {isDeleted : {$ne : true}}})
-  next()
-})
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
 
+// !Virtual
 
-
-
+studentSchema.virtual('fullName').get(function () {
+  return `${this.name.firstName} ${this.name.secoundName} ${this.name.lastName}`;
+});
 
 // ! creating statics function
 studentSchema.statics.isUserExists = async function (id: string) {
