@@ -11,7 +11,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
 
     const result = await student.save();
     return result;
-  } catch (error: any) {
+  } catch (error : any) {
     throw new Error(error.message);
   }
 };
@@ -26,7 +26,7 @@ const getSingleStudentFromDB = async (id: string) => {
   return result;
 };
 
-export const StudentServices = {
+export const StudentServices = {  
   createStudentIntoDB,
   getStudentsFromDB,
   getSingleStudentFromDB,
