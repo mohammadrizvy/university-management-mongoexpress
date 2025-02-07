@@ -7,6 +7,9 @@ import {
   TUserName,
 } from './student.interface';
 
+import bcrypt from 'bcrypt';
+import config from '../../config';
+
 const userNameSchema = new Schema<TUserName>(
   {
     firstName: { type: String },
@@ -38,10 +41,10 @@ const GaurdianSchema = new Schema<TGaurdian>(
   { _id: false },
 );
 
-// *For custom method it will have 
+// *For custom method it will have
 const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, unique: true },
-
+  pass: { type: String},
   name: userNameSchema,
   gender: { type: String, enum: ['male', 'female'] },
   contact: { type: Number },
@@ -64,14 +67,32 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
 });
 
+// !Applying middlewares / hooks
 
-studentSchema.statics.isUserExists = async function (id : string){
-  const existingUser = await Student.findOne({id})
-  return existingUser; 
-}
+studentSchema.pre('save', async function (this: TStudent, next) {
+  try {
+    if (!this.pass) {
+      throw new Error('Password is required');
+    }
+    this.pass = await bcrypt.hash(this.pass, Number(config.salt_round));
+    next();
+  } catch (err: any) {
+    next(err); // Pass the error to the next middleware
+  }
+});
 
+studentSchema.post('save', async function (doc, next) {
+  doc.pass = '';
+  next();
+});
 
-// ! creatin a custom instance method 
+// ! creating statics function
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
+};
+
+// ! creatin a custom instance method
 // studentSchema.methods.isUserExists = async function (id: string) {
 //   const existingUser = await Student.findOne({ id });
 //   return existingUser;

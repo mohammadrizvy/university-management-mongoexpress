@@ -52,6 +52,9 @@ const guardianSchema = z.object({
   id: z.string({
     required_error: 'Student ID is required',
   }),
+  pass : z.string({
+    required_error: 'Pasword is required',
+  }),
   name: userNameSchema,
   gender: z.enum(['male', 'female'], {
     required_error: 'Gender is required and must be either male or female',
