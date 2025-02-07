@@ -39,6 +39,7 @@ export type TStudent = {
   localGaurdian: TLocalGaurdian;
   profileImage?: string;
   isActive: 'active' | 'inactive';
+  isDeleted : boolean
 };
 
 // ! creating statics function

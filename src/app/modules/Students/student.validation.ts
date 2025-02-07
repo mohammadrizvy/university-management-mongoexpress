@@ -49,42 +49,43 @@ const guardianSchema = z.object({
 });
 
  export const studentValidatedSchema = z.object({
-  id: z.string({
-    required_error: 'Student ID is required',
-  }),
-  pass : z.string({
-    required_error: 'Pasword is required',
-  }),
-  name: userNameSchema,
-  gender: z.enum(['male', 'female'], {
-    required_error: 'Gender is required and must be either male or female',
-  }),
-  contact: z.number({
-    required_error: 'Contact number is required',
-  }),
-  emergencyContact: z.number({
-    required_error: 'Emergency contact number is required',
-  }),
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email(),
-  DOB: z.string({
-    required_error: 'Date of birth is required',
-  }),
-  bloodGroup: z.enum(['a+', 'ab+', 'a-', 'b+']).optional(),
-  presentAddress: z.string({
-    required_error: 'Present address is required',
-  }),
-  parmanentAddress: z.string({
-    required_error: 'Permanent address is required',
-  }),
-  gaurdian: guardianSchema,
-  localGaurdian: localGuardianSchema,
-  profileImage: z.string().optional(),
-  isActive: z.enum(['active', 'inactive'], {
-    required_error: 'Status must be either active or inactive',
-  }),
-});
+   id: z.string({
+     required_error: 'Student ID is required',
+   }),
+   pass: z.string({
+     required_error: 'Pasword is required',
+   }),
+   name: userNameSchema,
+   gender: z.enum(['male', 'female'], {
+     required_error: 'Gender is required and must be either male or female',
+   }),
+   contact: z.number({
+     required_error: 'Contact number is required',
+   }),
+   emergencyContact: z.number({
+     required_error: 'Emergency contact number is required',
+   }),
+   email: z
+     .string({
+       required_error: 'Email is required',
+     })
+     .email(),
+   DOB: z.string({
+     required_error: 'Date of birth is required',
+   }),
+   bloodGroup: z.enum(['a+', 'ab+', 'a-', 'b+']).optional(),
+   presentAddress: z.string({
+     required_error: 'Present address is required',
+   }),
+   parmanentAddress: z.string({
+     required_error: 'Permanent address is required',
+   }),
+   gaurdian: guardianSchema,
+   localGaurdian: localGuardianSchema,
+   profileImage: z.string().optional(),
+   isActive: z.enum(['active', 'inactive'], {
+     required_error: 'Status must be either active or inactive',
+   }),
+   isDeleted : z.boolean()
+ });
 
