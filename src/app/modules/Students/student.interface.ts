@@ -26,7 +26,6 @@ export type TLocalGaurdian = {
 export type TStudent = {
   id: string;
   user: Types.ObjectId;
-  pass: string;
   name: TUserName;
   gender: "male" | "female";
   contact: number;

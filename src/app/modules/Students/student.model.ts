@@ -7,7 +7,6 @@ import {
   TUserName,
 } from './student.interface';
 
-import bcrypt from 'bcrypt';
 import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>(
@@ -51,7 +50,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       // * For refencing the user 
       ref: 'User',
     },
-    pass: { type: String },
     name: userNameSchema,
     gender: { type: String, enum: ['male', 'female'] },
     contact: { type: Number },
@@ -83,23 +81,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 
 // !Applying middlewares / hooks
 
-//* Document middlewares
-studentSchema.pre('save', async function (this: TStudent, next) {
-  try {
-    if (!this.pass) {
-      throw new Error('Password is required');
-    }
-    this.pass = await bcrypt.hash(this.pass, Number(config.salt_round));
-    next();
-  } catch (err: any) {
-    next(err); // Pass the error to the next middleware
-  }
-});
-
-studentSchema.post('save', async function (doc, next) {
-  doc.pass = '';
-  next();
-});
 
 //* Query middlewares
 
@@ -120,7 +101,6 @@ studentSchema.pre('aggregate', function (next) {
 });
 
 // !Virtual
-
 studentSchema.virtual('fullName').get(function () {
   return `${this.name.firstName} ${this.name.secoundName} ${this.name.lastName}`;
 });
