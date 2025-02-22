@@ -3,9 +3,9 @@ import express from "express"
 const router = express.Router(); 
 
 
-router.post("/create-students")
-router.post("/create-faculty")
-router.post("/create-admin")
+// router.post("/create-students")
+// router.post("/create-faculty")
+// router.post("/create-admin")
 
 
 

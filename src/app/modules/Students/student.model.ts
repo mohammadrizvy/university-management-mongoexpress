@@ -41,10 +41,16 @@ const GaurdianSchema = new Schema<TGaurdian>(
   { _id: false },
 );
 
-// *For custom method it will have
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
     id: { type: String, unique: true },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      unique: true,
+      // * For refencing the user 
+      ref: 'User',
+    },
     pass: { type: String },
     name: userNameSchema,
     gender: { type: String, enum: ['male', 'female'] },
@@ -62,10 +68,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     gaurdian: GaurdianSchema,
     localGaurdian: LocalGaurdianSchema,
     profileImage: { type: String },
-    isActive: {
-      type: String,
-      enum: ['active', 'inactive'],
-    },
+    
     isDeleted: {
       type: Boolean,
       default: false,
