@@ -4,6 +4,7 @@ import { studentRoutes } from './app/modules/Students/student.route';
 import { userRoutes } from './app/modules/user/user.routes';
 import { any } from 'zod';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFoundRoute from './app/middlewares/notFoundRoute';
 const app: Application = express();
 
 // parsers
@@ -14,6 +15,10 @@ app.use(cors());
 //applications routes
 app.use('/api/v1/students', studentRoutes);
 app.use('/api/v1/users', userRoutes);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// @ts-ignore
+app.use(notFoundRoute)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hellsso Wddossrld!');
