@@ -68,7 +68,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     gaurdian: GaurdianSchema,
     localGaurdian: LocalGaurdianSchema,
     profileImage: { type: String },
-    
+  
     isDeleted: {
       type: Boolean,
       default: false,

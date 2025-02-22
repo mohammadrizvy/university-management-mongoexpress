@@ -1,6 +1,12 @@
 import { Model, Types } from 'mongoose';
 
 // 1. Create an interface representing a document in MongoDB.
+export type TUserName = {
+  firstName: string;
+  secoundName?: string;
+  lastName: string;
+};
+
 export type TGaurdian = {
   fatherName: string;
   fatherOccupation: string;
@@ -8,12 +14,6 @@ export type TGaurdian = {
   motherName: string;
   motherOccupation: string;
   motherContactNumber: string;
-};
-
-export type TUserName = {
-  firstName: string;
-  secoundName?: string; // Made optional with ?
-  lastName: string;
 };
 
 export type TLocalGaurdian = {
@@ -25,23 +25,22 @@ export type TLocalGaurdian = {
 
 export type TStudent = {
   id: string;
-  user : Types.ObjectId; 
-  pass : string; 
+  user: Types.ObjectId;
+  pass: string;
   name: TUserName;
-  gender: 'male' | 'female';
+  gender: "male" | "female";
   contact: number;
   emergencyContact: number;
   email: string;
   DOB: string;
-  bloodGroup?: 'a+' | 'ab+' | 'a-' | 'b+';
+  bloodGroup?: "a+" | "ab+" | "a-" | "b+";
   presentAddress: string;
   parmanentAddress: string;
   gaurdian: TGaurdian;
   localGaurdian: TLocalGaurdian;
   profileImage?: string;
-  isDeleted : boolean
+  isDeleted: boolean;
 };
-
 // ! creating statics function
 
 export interface StudentModel extends Model<TStudent> {
