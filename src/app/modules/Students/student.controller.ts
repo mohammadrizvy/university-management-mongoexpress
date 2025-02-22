@@ -1,10 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { studentValidatedSchema } from './student.validation';
 import { StudentServices } from './student.service';
 
-
-
-const getStudents = async (req: Request, res: Response) => {
+const getStudents = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await StudentServices.getStudentsFromDB();
     res.status(202).json({
@@ -13,15 +11,11 @@ const getStudents = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to retrieve students',
-      error: error,
-    });
+    next(error)
   }
 };
 
-const getSingleStudent = async (req: Request, res: Response) => {
+const getSingleStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const studentId = req.params.studentId;
     const result = await StudentServices.getSingleStudentFromDB(studentId);
@@ -31,16 +25,11 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to retrieve student',
-      error: error,
-    });
+    next(error)
   }
 };
 
-
-const DeleteStudent = async (req: Request, res: Response) => {
+const DeleteStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const studentId = req.params.studentId;
     const result = await StudentServices.deleteStudentFromDB(studentId);
@@ -50,11 +39,7 @@ const DeleteStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to retrieve student',
-      error: error,
-    });
+    next(error)
   }
 };
 
