@@ -3,12 +3,9 @@ import { studentValidatedSchema } from './student.validation';
 import { StudentServices } from './student.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
 
-const catchAsync = (fn: RequestHandler) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch((err) => next(err));
-  };
-};
+
 
 const getSingleStudent = catchAsync(async (req, res, next) => {
   const studentId = req.params.studentId;
