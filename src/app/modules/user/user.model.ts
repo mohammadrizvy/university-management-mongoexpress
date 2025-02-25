@@ -1,37 +1,40 @@
-import { model, Schema } from "mongoose";
-import { TUser } from "./user.interface";
-import config from "../../config";
+import { model, Schema } from 'mongoose';
+import { TUser } from './user.interface';
+import config from '../../config';
 import bcrypt from 'bcrypt';
 
-const userSchema = new Schema<TUser>({
-    id : {type : String},
-    password : {type : String},
-    needsPasswordChange : {type : Boolean , default : true},
-    role : {type : String , enum : ['admin', 'student', 'faculty']},
-    status : {type : String , enum : ['in-progress' , 'blocked'] , default : "in-progress"},
-    isDeleted : {type : Boolean, default : true}
-
-}, {timestamps: true })
-
+const userSchema = new Schema<TUser>(
+  {
+    id: { type: String },
+    password: { type: String },
+    needsPasswordChange: { type: Boolean, default: true },
+    role: { type: String, enum: ['admin', 'student', 'faculty'] },
+    status: {
+      type: String,
+      enum: ['in-progress', 'blocked'],
+      default: 'in-progress',
+    },
+    isDeleted: { type: Boolean, default: true },
+  },
+  { timestamps: true },
+);
 
 // Document middlewares
 userSchema.pre('save', async function (this: TUser, next) {
-    try {
-      if (!this.password ) {
-        throw new Error('password is required');
-      }
-      this.password  = await bcrypt.hash(this.password , Number(config.salt_round));
-      next();
-    } catch (err: any) {
-      next(err); //* password  the error to the next middleware
+  try {
+    if (!this.password) {
+      throw new Error('password is required');
     }
-  });
-  
-  userSchema.post('save', async function (doc, next) {
-    doc.password  = '';
+    this.password = await bcrypt.hash(this.password, Number(config.salt_round));
     next();
-  });
+  } catch (err: any) {
+    next(err); //* password  the error to the next middleware
+  }
+});
 
-export const User = model<TUser>("User" , userSchema)
+userSchema.post('save', async function (doc, next) {
+  doc.password = '';
+  next();
+});
 
-
+export const User = model<TUser>('User', userSchema);

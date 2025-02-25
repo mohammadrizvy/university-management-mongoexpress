@@ -1,8 +1,6 @@
 import { TStudent } from './student.interface';
 import { Student } from './student.model';
 
-
-
 const getStudentsFromDB = async () => {
   const result = await Student.find();
   return result;
@@ -11,14 +9,12 @@ const getStudentsFromDB = async () => {
 const getSingleStudentFromDB = async (id: string) => {
   // const result = await Student.findOne({ id });
 
-  const result = Student.aggregate([
-    {$match : {id : id }}
-  ])
+  const result = Student.aggregate([{ $match: { id: id } }]);
   return result;
 };
 
 const deleteStudentFromDB = async (id: string) => {
-  const result = await Student.updateOne({ id }, { isDeleted  : true});
+  const result = await Student.updateOne({ id }, { isDeleted: true });
   return result;
 };
 

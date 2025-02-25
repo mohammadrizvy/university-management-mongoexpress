@@ -47,7 +47,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       type: Schema.Types.ObjectId,
       required: true,
       unique: true,
-      // * For refencing the user 
+      // * For refencing the user
       ref: 'User',
     },
     name: userNameSchema,
@@ -66,7 +66,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     gaurdian: GaurdianSchema,
     localGaurdian: LocalGaurdianSchema,
     profileImage: { type: String },
-  
+
     isDeleted: {
       type: Boolean,
       default: false,
@@ -80,7 +80,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 );
 
 // !Applying middlewares / hooks
-
 
 //* Query middlewares
 

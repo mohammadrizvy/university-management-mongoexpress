@@ -15,7 +15,6 @@ const modulesRoutes = [
 // router.use('/users', userRoutes);
 // router.use('/students', studentRoutes);
 
-modulesRoutes.forEach(route => router.use(route.path , route.route))
-
+modulesRoutes.forEach((route) => router.use(route.path, route.route));
 
 export default router;

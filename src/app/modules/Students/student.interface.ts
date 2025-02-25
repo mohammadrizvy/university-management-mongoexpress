@@ -27,12 +27,12 @@ export type TStudent = {
   id: string;
   user: Types.ObjectId;
   name: TUserName;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   contact: number;
   emergencyContact: number;
   email: string;
   DOB: string;
-  bloodGroup?: "a+" | "ab+" | "a-" | "b+";
+  bloodGroup?: 'a+' | 'ab+' | 'a-' | 'b+';
   presentAddress: string;
   parmanentAddress: string;
   gaurdian: TGaurdian;

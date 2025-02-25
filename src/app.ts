@@ -17,7 +17,7 @@ app.use('/api/v1', router);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore
-app.use(notFoundRoute)
+app.use(notFoundRoute);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hellsso Wddossrld!');
