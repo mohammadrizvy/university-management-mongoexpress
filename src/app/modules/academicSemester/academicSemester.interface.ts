@@ -1,6 +1,6 @@
 
 
-export type Month = | "January"
+export type Months = | "January"
 | "February"
 | "March"
 | "April"
@@ -17,6 +17,6 @@ export type TacademicSemester = {
     name : "Autum" | "Summer" | "Fall",
     code : "01" | "04" | "03",
     year : Date ,
-    startMonth :  Month,
-    endMonth : Month 
+    startMonth :  Months,
+    endMonth : Months 
 }
