@@ -7,7 +7,6 @@ import {
   TUserName,
 } from './student.interface';
 
-import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>(
   {
@@ -55,7 +54,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     contact: { type: Number },
     emergencyContact: { type: Number },
     email: { type: String },
-    DOB: { type: String },
+    DOB: { type: Date },
     bloodGroup: {
       type: String,
       enum: ['a+', 'ab+', 'a-', 'b+'],
