@@ -17,7 +17,7 @@ const academicSemesterSchema = new Schema<TacademicSemester>({
   },
 
   year: { 
-    type: Date, 
+    type: String, 
     required: true
   },
 
