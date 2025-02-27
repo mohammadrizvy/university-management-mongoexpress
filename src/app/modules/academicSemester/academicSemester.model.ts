@@ -32,6 +32,8 @@ const academicSemesterSchema = new Schema<TacademicSemester>({
     enum: MonthList, 
     required: true
   },
+},{
+  timestamps : true
 });
 
 export const AcademicSemester = model<TacademicSemester>("academicSemester", academicSemesterSchema);
