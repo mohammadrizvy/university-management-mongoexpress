@@ -45,9 +45,12 @@ academicSemesterSchema.pre("save", async function (next){
 
   if(isSemesterExists){
     throw new Error ("Semester is already exists !")
-  }next()
+  }next() 
   
 })
 
 
 export const AcademicSemester = model<TacademicSemester>("academicSemester", academicSemesterSchema);
+
+
+// testing all project 
