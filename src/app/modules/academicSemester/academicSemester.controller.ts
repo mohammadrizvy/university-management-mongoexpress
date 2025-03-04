@@ -6,7 +6,9 @@ import { academicSemesterServices } from './academicSemester.service';
 
 const createAcademicSemester = catchAsync(async (req, res, next) => {
   try {
-    const result = await academicSemesterServices.createAcademicSemesterIntoDB(req.body);
+    const result = await academicSemesterServices.createAcademicSemesterIntoDB(
+      req.body,
+    );
 
     sendResponse(res, {
       sucess: true,
@@ -19,19 +21,21 @@ const createAcademicSemester = catchAsync(async (req, res, next) => {
   }
 });
 
-const getSemesters = catchAsync(async(req , res , next) => {
-
+const getSemesters = catchAsync(async (req, res, next) => {
   try {
-    
-    const result = await 
-
+    const result = await academicSemesterServices.getAcademicSemesterFromDB();
+    sendResponse(res, {
+      sucess: true,
+      statusCode: httpStatus.FOUND,
+      message: 'Academic semesters retrived',
+      data: result,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-
-})
-
+});
 
 export const academicSemesterController = {
-    createAcademicSemester
-} 
+  createAcademicSemester,
+  getSemesters
+};

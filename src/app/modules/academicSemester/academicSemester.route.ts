@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/create-academic-semester',validateRequest(academicSemesterValidation.createAcademicSemesterValidationSchema,),
   academicSemesterController.createAcademicSemester,
 );
-router.get("/",  )
+router.get("/", academicSemesterController.getSemesters )
 // router.get('/students', studentControllers.getStudents);
 // router.get('/:studentId', studentControllers.getSingleStudent);
 // router.delete('/:studentId', studentControllers.DeleteStudent);
