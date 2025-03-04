@@ -1,14 +1,23 @@
-import { TacademicSemester } from "./academicSemester.interface"
-import { AcademicSemester } from "./academicSemester.model"
+import { TacademicSemester } from './academicSemester.interface';
+import { AcademicSemester } from './academicSemester.model';
 
-const createAcademicSemesterIntoDB = async (payload : TacademicSemester) => {
- 
-    const reslut = await AcademicSemester.create(payload)
-    return reslut
-    
+const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
+  //* MATCHING (Semester name ---> Semester code)
 
-}
+  type TacademicSemesterNameCodeMapper ={
+    [Key : string] : string
+  }
+
+  const academicSemesterNameCodeMapper : TacademicSemesterNameCodeMapper = {
+    Autum: '01',
+    Summer: '02',
+    Fall: '03',
+  };
+
+  const reslut = await AcademicSemester.create(payload);
+  return reslut;
+};
 
 export const academicSemesterServices = {
-    createAcademicSemesterIntoDB
-}
+  createAcademicSemesterIntoDB,
+};

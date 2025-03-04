@@ -36,6 +36,8 @@ const academicSemesterSchema = new Schema<TacademicSemester>({
   timestamps : true
 });
 
+// using this prehook because of the dublicate semester error handleing
+
 academicSemesterSchema.pre("save", async function (next){
 
   const isSemesterExists = await AcademicSemester.findOne({
