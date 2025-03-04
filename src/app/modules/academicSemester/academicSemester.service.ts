@@ -5,8 +5,8 @@ import { AcademicSemester } from './academicSemester.model';
 const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
   //* MATCHING (Semester name ---> Semester code)
 
-  if(academicSemesterNameCodeMapper[payload.name] !== payload.code){
-    throw new Error ("Invalid Semester Code")
+  if (academicSemesterNameCodeMapper[payload.name] !== payload.code) {
+    throw new Error('Invalid Semester Code');
   }
 
   const reslut = await AcademicSemester.create(payload);
@@ -14,13 +14,18 @@ const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
 };
 
 const getAcademicSemesterFromDB = async () => {
-  const result = await AcademicSemester.find(); 
-  return result; 
-}
+  const result = await AcademicSemester.find();
+  return result;
+};
 
+const getSingleAcademicSemesterFromDB = async (_id: string) => {
+  const result = await AcademicSemester.findOne({ _id });
 
+  return result;
+};
 
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
-  getAcademicSemesterFromDB
+  getAcademicSemesterFromDB,
+  getSingleAcademicSemesterFromDB
 };
