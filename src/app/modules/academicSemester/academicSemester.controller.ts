@@ -19,6 +19,18 @@ const createAcademicSemester = catchAsync(async (req, res, next) => {
   }
 });
 
+const getSemesters = catchAsync(async(req , res , next) => {
+
+  try {
+    
+    const result = await 
+
+  } catch (error) {
+    next(error)
+  }
+
+})
+
 
 export const academicSemesterController = {
     createAcademicSemester

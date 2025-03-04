@@ -22,7 +22,7 @@ const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
   return reslut;
 };
 
-("Hi There")dfsdfsdfsdfsdfsdfsddf 
+
 
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
