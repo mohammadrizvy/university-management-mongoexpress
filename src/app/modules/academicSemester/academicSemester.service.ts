@@ -24,8 +24,40 @@ const getSingleAcademicSemesterFromDB = async (_id: string) => {
   return result;
 };
 
+const updateSingleAcademicSemesterIntoDB = async (
+  semesterId: string,
+  updatedData: Partial<TacademicSemester>,
+) => {
+  // Check if both name and code are provided in update data
+  if (updatedData.name && updatedData.code) {
+    // Get the expected code for the given semester name
+    const expectedCode = academicSemesterNameCodeMapper[updatedData.name];
+    if (expectedCode !== updatedData.code) {
+      throw new Error(
+        `Invalid semester code. ${updatedData.name} semester must use code ${expectedCode}`
+      );
+    }
+  }
+
+  const result = await AcademicSemester.findByIdAndUpdate(
+    semesterId, // Using semesterId directly since we're using findByIdAndUpdate
+    updatedData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!result) {
+    throw new Error('Academic semester not found');
+  }
+
+  return result;
+};
+
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
   getAcademicSemesterFromDB,
-  getSingleAcademicSemesterFromDB
+  getSingleAcademicSemesterFromDB,
+  updateSingleAcademicSemesterIntoDB,
 };

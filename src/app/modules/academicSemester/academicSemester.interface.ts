@@ -18,6 +18,7 @@ export type TacademicSemesterName = "Autumn" | "Summer" | "Fall";
 
 export type TacademicSemesterCode = "01" | "02" | "03";
 
+//* Main
 export type TacademicSemester = {
     name: TacademicSemesterName,
     code: TacademicSemesterCode,
