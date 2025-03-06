@@ -69,7 +69,7 @@ const createSudentValidatedSchema = z.object({
           required_error: 'Email is required',
         })
         .email(),
-      DOB: z.date({
+      DOB: z.string({
         required_error: 'Date of birth is required',
       }),
       bloodGroup: z.enum(['a+', 'ab+', 'a-', 'b+']).optional(),
