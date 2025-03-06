@@ -7,7 +7,6 @@ import {
   TUserName,
 } from './student.interface';
 
-
 const userNameSchema = new Schema<TUserName>(
   {
     firstName: { type: String },
@@ -64,6 +63,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     parmanentAddress: { type: String },
     gaurdian: GaurdianSchema,
     localGaurdian: LocalGaurdianSchema,
+    admissionSemester: { type: Schema.Types.ObjectId, ref: 'AcademicSemester' },
     profileImage: { type: String },
 
     isDeleted: {

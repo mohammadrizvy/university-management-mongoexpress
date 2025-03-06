@@ -28,6 +28,7 @@ const updateSingleAcademicSemesterIntoDB = async (
   semesterId: string,
   updatedData: Partial<TacademicSemester>,
 ) => {
+  // TODO : Uderstand this concept later !!
   // Check if both name and code are provided in update data
   if (updatedData.name && updatedData.code) {
     // Get the expected code for the given semester name
