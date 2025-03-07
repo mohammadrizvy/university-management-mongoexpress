@@ -2,6 +2,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import { academicFacultyServices } from './academicFaculty.service';
+import { Types } from 'mongoose';
 
 const createAcademicFaculty = catchAsync(async (req, res) => {
   const result = await academicFacultyServices.createAcademicFacultyIntoDB(
@@ -34,25 +35,45 @@ const getSingleAcademicFaculty = catchAsync(async (req, res) => {
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.OK,
-    message: 'Academic faculty retrieved successfully',
+    message: 'Single Academic faculty retrieved successfully',
     data: result,
   });
 });
 
 const updateAcademicFaculty = catchAsync(async (req, res) => {
-  const { facultyId } = req.params;
-  const result = await academicFacultyServices.updateSingleAcademicFacultyIntoDB(
-    facultyId,
-    req.body,
-  );
+    const { facultyId } = req.params;
   
-  sendResponse(res, {
-    sucess: true,
-    statusCode: httpStatus.OK,
-    message: 'Academic faculty updated successfully',
-    data: result,
+    // Validate if facultyId is a valid ObjectId
+    if (!Types.ObjectId.isValid(facultyId)) {
+      return sendResponse(res, {
+        sucess: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: 'Invalid faculty ID',
+        data: null,
+      });
+    }
+  
+    const result = await academicFacultyServices.updateSingleAcademicFacultyIntoDB(
+      facultyId,
+      req.body,
+    );
+  
+    if (!result) {
+      return sendResponse(res, {
+        sucess: false,
+        statusCode: httpStatus.NOT_FOUND,
+        message: 'Academic Faculty not found',
+        data: null,
+      });
+    }
+    
+    sendResponse(res, {
+      sucess: true,
+      statusCode: httpStatus.OK,
+      message: 'Academic faculty updated successfully',
+      data: result,
+    });
   });
-});
 
 export const academicFacultyController = {
   createAcademicFaculty,
