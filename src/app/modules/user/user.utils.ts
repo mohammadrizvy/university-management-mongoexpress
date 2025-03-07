@@ -1,32 +1,48 @@
 import { TacademicSemester } from '../academicSemester/academicSemester.interface';
 import { User } from './user.model';
 
-const findLastStudnt = async () => {
-  const lastStudent = await User.findOne(
-    {
-      role: 'student',
-    },
-    {
-      id: 1,
-      _id: 0,
-    },
-  )
-    .sort({
-      createdAt: -1,
-    })
-    .lean();
+const findLastStudent = async () => {
+    const lastStudent = await User.findOne(
+        {
+            role: 'student',
+        },
+        {
+            id: 1,
+            _id: 0,
+        },
+    )
+        .sort({
+            createdAt: -1,
+        })
+        .lean();
 
-  return lastStudent?.id ? lastStudent.id.substring(6) : undefined;
+    return lastStudent?.id ? lastStudent.id : undefined;
 };
 
-// * year , semester , 4 digit number // // 2028 03 0001
-export const genareateStudentId = async (payload: TacademicSemester) => {
-  //   This will happen only first time ,
-  const currentId = (await findLastStudnt()) || (0).toString();
+export const generateStudentId = async (payload: TacademicSemester) => {
+    // First time: starting from 0001
+    let currentId = '0000';
 
-  let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+    const lastStudentId = await findLastStudent();
 
-  incrementId = `${payload.year}${payload.code}${incrementId}`;
+    if (lastStudentId) {
+        // Get last 4 digits of student ID
+        const lastStudentSemesterCode = lastStudentId.substring(4, 6); // Extract semester code
+        const lastStudentYear = lastStudentId.substring(0, 4); // Extract year
+        const currentSemesterCode = payload.code;
+        const currentYear = payload.year;
 
-  return incrementId;
+        // If same year and same semester, increment the ID
+        if (lastStudentYear === currentYear && lastStudentSemesterCode === currentSemesterCode) {
+            currentId = lastStudentId.substring(6); // Get the numeric part
+        }
+    }
+
+    // Increment and pad with zeros
+    let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+    
+    // Combine year, semester code, and incremented ID
+    const generatedId = `${payload.year}${payload.code}${incrementId}`;
+
+    return generatedId;
 };
