@@ -1,56 +1,66 @@
 import { model, Schema } from 'mongoose';
-import { TacademicSemester, TacademicSemesterCode, TacademicSemesterName } from './academicSemester.interface';
-import { AcademicSemesterCode, AcademicSemesterName, MonthList } from './academicSemester.const';
+import {
+  TacademicSemester,
+  TacademicSemesterCode,
+  TacademicSemesterName,
+} from './academicSemester.interface';
+import {
+  AcademicSemesterCode,
+  AcademicSemesterName,
+  MonthList,
+} from './academicSemester.const';
 
+const academicSemesterSchema = new Schema<TacademicSemester>(
+  {
+    name: {
+      type: String,
+      enum: AcademicSemesterName,
+      required: true,
+    },
 
-const academicSemesterSchema = new Schema<TacademicSemester>({
-  name: { 
-    type: String, 
-    enum: AcademicSemesterName, 
-    required: true
+    code: {
+      type: String,
+      enum: AcademicSemesterCode,
+      required: true,
+    },
+
+    year: {
+      type: String,
+      required: true,
+    },
+
+    startMonth: {
+      type: String,
+      enum: MonthList,
+      required: true,
+    },
+
+    endMonth: {
+      type: String,
+      enum: MonthList,
+      required: true,
+    },
   },
-
-  code: { 
-    type: String, 
-    enum: AcademicSemesterCode, 
-    required: true
+  {
+    timestamps: true,
   },
-
-  year: { 
-    type: String, 
-    required: true
-  },
-
-  startMonth: { 
-    type: String, 
-    enum: MonthList, 
-    required: true
-  },
-
-  endMonth: { 
-    type: String, 
-    enum: MonthList, 
-    required: true
-  },
-},{
-  timestamps : true
-});
+);
 
 // using this prehook because of the dublicate semester error handleing
 
-academicSemesterSchema.pre("save", async function (next){
-
+academicSemesterSchema.pre('save', async function (next) {
   const isSemesterExists = await AcademicSemester.findOne({
-    year : this.year,
-    name : this.name ,
-  })
+    year: this.year,
+    name: this.name,
+  });
 
-  if(isSemesterExists){
-    throw new Error ("Semester is already exists !")
-  }next() 
-  
-})
+  if (isSemesterExists) {
+    throw new Error('Semester is already exists !');
+  }
+  next();
+});
 
-
-export const AcademicSemester = model<TacademicSemester>("academicSemester", academicSemesterSchema);
-
+export const AcademicSemester = model<TacademicSemester>(
+  'academicSemester',
+  academicSemesterSchema,
+);

@@ -4,8 +4,6 @@ import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 
-
-
 const getSingleStudent = catchAsync(async (req, res, next) => {
   const studentId = req.params.studentId;
   const result = await StudentServices.getSingleStudentFromDB(studentId);

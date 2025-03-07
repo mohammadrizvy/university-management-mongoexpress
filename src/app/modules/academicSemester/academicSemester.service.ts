@@ -35,7 +35,7 @@ const updateSingleAcademicSemesterIntoDB = async (
     const expectedCode = academicSemesterNameCodeMapper[updatedData.name];
     if (expectedCode !== updatedData.code) {
       throw new Error(
-        `Invalid semester code. ${updatedData.name} semester must use code ${expectedCode}`
+        `Invalid semester code. ${updatedData.name} semester must use code ${expectedCode}`,
       );
     }
   }
@@ -46,7 +46,7 @@ const updateSingleAcademicSemesterIntoDB = async (
     {
       new: true,
       runValidators: true,
-    }
+    },
   );
 
   if (!result) {

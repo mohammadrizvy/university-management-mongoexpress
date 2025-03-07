@@ -1,6 +1,6 @@
-// ! This is a very important concept. Using higher oder function to avoid try-catch repetition 
+// ! This is a very important concept. Using higher oder function to avoid try-catch repetition
 
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 
 // TODO : Understand this concept for later.
 const catchAsync = (fn: RequestHandler) => {
@@ -9,5 +9,4 @@ const catchAsync = (fn: RequestHandler) => {
   };
 };
 
-export default catchAsync; 
-
+export default catchAsync;
