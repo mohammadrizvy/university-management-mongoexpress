@@ -2,12 +2,13 @@ import { model, Schema } from 'mongoose';
 import { TAcademicFaculty } from './academicFaculty.interface';
 
 const academicFacultySchema = new Schema<TAcademicFaculty>(
-    {
-        name: { type: String, required: true, unique: true }
-    },
-    { timestamps: true },
+  {
+    name: { type: String, required: true, unique: true },
+  },
+  { timestamps: true },
 );
 
-
-
-export const academicFaculty = model<TAcademicFaculty>('academicFaculty', academicFacultySchema);
+export const academicFaculty = model<TAcademicFaculty>(
+  'academicFaculty',
+  academicFacultySchema,
+);
