@@ -5,9 +5,8 @@ import { academicDepartmentServices } from './academicDepartment.service';
 import { Types } from 'mongoose';
 
 const createAcademicDepartment = catchAsync(async (req, res) => {
-  const result = await academicDepartmentServices.createAcademicDepartmentIntoDB(
-    req.body,
-  );
+  const result =
+    await academicDepartmentServices.createAcademicDepartmentIntoDB(req.body);
 
   sendResponse(res, {
     sucess: true,
@@ -18,8 +17,9 @@ const createAcademicDepartment = catchAsync(async (req, res) => {
 });
 
 const getAllAcademicDepartments = catchAsync(async (req, res) => {
-  const result = await academicDepartmentServices.getAllAcademicDepartmentFromDB();
-  
+  const result =
+    await academicDepartmentServices.getAllAcademicDepartmentFromDB();
+
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.OK,
@@ -30,7 +30,10 @@ const getAllAcademicDepartments = catchAsync(async (req, res) => {
 
 const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   const { departmentId } = req.params;
-  const result = await academicDepartmentServices.getSingleAcademicDepartmentFromDB(departmentId);
+  const result =
+    await academicDepartmentServices.getSingleAcademicDepartmentFromDB(
+      departmentId,
+    );
 
   sendResponse(res, {
     sucess: true,
@@ -40,12 +43,13 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   });
 });
 
-const updateAcademicDepartment = catchAsync(async (req ,res) => {
+const updateAcademicDepartment = catchAsync(async (req, res) => {
   const { departmentId } = req.params;
-  const result = await academicDepartmentServices.updateAcademicDepartmentFromDB(
-    departmentId,
-    req.body,
-  );
+  const result =
+    await academicDepartmentServices.updateAcademicDepartmentFromDB(
+      departmentId,
+      req.body,
+    );
 
   sendResponse(res, {
     sucess: true,
@@ -54,7 +58,6 @@ const updateAcademicDepartment = catchAsync(async (req ,res) => {
     data: result,
   });
 });
-
 
 export const academicDepartmentController = {
   createAcademicDepartment,

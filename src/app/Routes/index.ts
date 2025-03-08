@@ -15,7 +15,7 @@ const modulesRoutes = [
   { path: '/students', route: studentRoutes },
   { path: '/academic-semesters', route: academicSemesterRoutes },
   { path: '/academic-faculty', route: academicFacultyRoutes },
-  { path: '/academic-department', route:academicDepartmentRoutes  },
+  { path: '/academic-department', route: academicDepartmentRoutes },
 ];
 
 // router.use('/users', userRoutes);

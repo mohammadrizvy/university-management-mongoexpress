@@ -7,18 +7,25 @@ const router = express.Router();
 
 router.post(
   '/create-academic-department',
-  validateRequest(academicDepartmentValidation.createAcademicDepartmentValidationSchema),
-  academicDepartmentController.createAcademicDepartment
+  validateRequest(
+    academicDepartmentValidation.createAcademicDepartmentValidationSchema,
+  ),
+  academicDepartmentController.createAcademicDepartment,
 );
 
 router.get('/', academicDepartmentController.getAllAcademicDepartments); // Fixed function name
 
-router.get('/:departmentId', academicDepartmentController.getSingleAcademicDepartment);
+router.get(
+  '/:departmentId',
+  academicDepartmentController.getSingleAcademicDepartment,
+);
 
 router.patch(
   '/:departmentId',
-  validateRequest(academicDepartmentValidation.updateAcademicDepartmentValidationSchema),
-  academicDepartmentController.updateAcademicDepartment
+  validateRequest(
+    academicDepartmentValidation.updateAcademicDepartmentValidationSchema,
+  ),
+  academicDepartmentController.updateAcademicDepartment,
 );
 
 export const academicDepartmentRoutes = router;

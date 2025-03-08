@@ -3,12 +3,6 @@ import { TAcademicDepartment } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
-  const isDepartmentExits = await AcademicDepartment.findOne({ name: payload.name })
-
-  if (isDepartmentExits) {
-    throw new Error("Department already exits!")
-  }
-
   const result = await AcademicDepartment.create(payload);
   return result;
 };
@@ -40,14 +34,10 @@ const updateAcademicDepartmentFromDB = async (
     throw new Error('Invalid department ID');
   }
 
-  const result = await AcademicDepartment.findByIdAndUpdate(
-    id,
-    payload,
-    {
-      new: true,
-      runValidators: true,
-    },
-  );
+  const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!result) {
     throw new Error('Academic Department not found');
@@ -61,4 +51,4 @@ export const academicDepartmentServices = {
   getAllAcademicDepartmentFromDB,
   getSingleAcademicDepartmentFromDB,
   updateAcademicDepartmentFromDB,
-}
+};

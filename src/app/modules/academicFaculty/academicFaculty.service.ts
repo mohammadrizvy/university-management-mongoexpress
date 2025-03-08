@@ -18,29 +18,29 @@ const getSingleAcademicFacultyFromDB = async (id: string) => {
 };
 
 const updateSingleAcademicFacultyIntoDB = async (
-    id: string,
-    payload: Partial<TAcademicFaculty>,
-  ) => {
-    // Ensure id is a valid ObjectId
-    if (!Types.ObjectId.isValid(id)) {
-      throw new Error('Invalid ID');
-    }
-  
-    const result = await AcademicFaculty.findByIdAndUpdate(
-      new Types.ObjectId(id),
-      payload,
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
-  
-    if (!result) {
-      throw new Error('Academic Faculty not found');
-    }
-  
-    return result;
-  };
+  id: string,
+  payload: Partial<TAcademicFaculty>,
+) => {
+  // Ensure id is a valid ObjectId
+  if (!Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid ID');
+  }
+
+  const result = await AcademicFaculty.findByIdAndUpdate(
+    new Types.ObjectId(id),
+    payload,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!result) {
+    throw new Error('Academic Faculty not found');
+  }
+
+  return result;
+};
 
 export const academicFacultyServices = {
   createAcademicFacultyIntoDB,
