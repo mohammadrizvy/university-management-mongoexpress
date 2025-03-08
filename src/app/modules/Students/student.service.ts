@@ -16,12 +16,24 @@ const getStudentsFromDB = async () => {
 const getSingleStudentFromDB = async (id: string) => {
   // const result = await Student.findOne({ id });
 
-  const result = Student.aggregate([{ $match: { id: id } }]);
+  const result = Student.findById(id).populate('admissionSemester')  .populate('admissionSemester')
+  .populate({
+    path : "academicDepartment", 
+    populate : {
+      path : "academicFaculty"
+    }
+  })
   return result;
 };
 
 const deleteStudentFromDB = async (id: string) => {
-  const result = await Student.updateOne({ id }, { isDeleted: true });
+  const result = await Student.updateOne({ id }, { isDeleted: true })  .populate('admissionSemester')
+  .populate({
+    path : "academicDepartment", 
+    populate : {
+      path : "academicFaculty"
+    }
+  });
   return result;
 };
 
