@@ -11,7 +11,7 @@ router.post(
   academicDepartmentController.createAcademicDepartment
 );
 
-router.get('/', academicDepartmentController.getAllAcademicFaculties);
+router.get('/', academicDepartmentController.getAllAcademicDepartments); // Fixed function name
 
 router.get('/:departmentId', academicDepartmentController.getSingleAcademicDepartment);
 
