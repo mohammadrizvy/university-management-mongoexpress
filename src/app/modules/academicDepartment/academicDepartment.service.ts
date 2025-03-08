@@ -3,6 +3,12 @@ import { TAcademicDepartment } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
+  const isDepartmentExits = await AcademicDepartment.findOne({ name: payload.name })
+
+  if (isDepartmentExits) {
+    throw new Error("Department already exits!")
+  }
+
   const result = await AcademicDepartment.create(payload);
   return result;
 };
@@ -18,11 +24,11 @@ const getSingleAcademicDepartmentFromDB = async (id: string) => {
   }
 
   const result = await AcademicDepartment.findById(id);
-  
+
   if (!result) {
     throw new Error('Academic Department not found');
   }
-  
+
   return result;
 };
 
