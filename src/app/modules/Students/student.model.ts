@@ -64,6 +64,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     gaurdian: GaurdianSchema,
     localGaurdian: LocalGaurdianSchema,
     admissionSemester: { type: Schema.Types.ObjectId, ref: 'AcademicSemester' },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+    },
     profileImage: { type: String },
 
     isDeleted: {
