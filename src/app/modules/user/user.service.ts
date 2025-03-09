@@ -50,7 +50,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
       if (!newStudnet) {
         throw new AppError(
           httpStatus.BAD_REQUEST,
-          'Fail to create new student ',
+          'Faild to create new student ',
         );
       }
 
@@ -62,6 +62,10 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Faild to create new student ',
+    );
   }
 };
 
