@@ -28,18 +28,14 @@ academicDepartmentSchema.pre('save', async function (next) {
   next();
 });
 
-
-
-
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
   console.log(query);
 
   const isDepartmentExits = await AcademicDepartment.findOne(query);
 
-
   if (!isDepartmentExits) {
-    throw new AppError(404 , "This department dosen't exits");
+    throw new AppError(404, "This department dosen't exits");
   }
 
   next();
