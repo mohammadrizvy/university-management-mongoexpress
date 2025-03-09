@@ -13,10 +13,10 @@ const getStudentsFromDB = async () => {
   return result;
 };
 
-const getSingleStudentFromDB = async (id: string) => {
+const getSingleStudentFromDB = async (studentId : string) => {
   // const result = await Student.findOne({ id });
 
-  const result = Student.findById(id).populate('admissionSemester')  .populate('admissionSemester')
+  const result = Student.findOne({ id: studentId }).populate('admissionSemester')
   .populate({
     path : "academicDepartment", 
     populate : {

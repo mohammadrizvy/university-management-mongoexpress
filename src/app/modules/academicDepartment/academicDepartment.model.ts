@@ -27,14 +27,31 @@ academicDepartmentSchema.pre('save', async function (next) {
   next();
 });
 
+
+// TODO : Important concept / understand this concept later !! 😡
+class AppError extends Error {
+  public statusCode: number;
+  constructor(statusCode: number, message: string, stack = "") {
+    super(message);
+    this.statusCode = statusCode;
+
+    if (stack) {
+      this.stack = stack
+    } else {
+      Error.captureStackTrace(this, this.constructor)
+    }
+  }
+}
+
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
   console.log(query);
 
   const isDepartmentExits = await AcademicDepartment.findOne(query);
 
+
   if (!isDepartmentExits) {
-    throw new Error("This department dosen't exits");
+    throw new AppError(404 , "This department dosen't exits");
   }
 
   next();

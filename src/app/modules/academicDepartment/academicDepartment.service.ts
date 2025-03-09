@@ -22,10 +22,10 @@ const getSingleAcademicDepartmentFromDB = async (id: string) => {
 };
 
 const updateAcademicDepartmentFromDB = async (
-  id: string,
+  _id: string,
   payload: Partial<TAcademicDepartment>,
 ) => {
-  const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
+  const result = await AcademicDepartment.findByIdAndUpdate(_id, payload, {
     new: true,
     runValidators: true,
   });

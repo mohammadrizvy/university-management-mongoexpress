@@ -44,11 +44,11 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
 });
 
 const updateAcademicDepartment = catchAsync(async (req, res) => {
-  const id = req.params.departmentId;
+  const _id = req.params.departmentId;
   const payload = req.body;
   const result =
     await academicDepartmentServices.updateAcademicDepartmentFromDB(
-      id,
+      _id,
       payload,
     );
 
