@@ -8,8 +8,8 @@ import { User } from './user.model';
 import { generateStudentId } from './user.utils';
 import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
-// TODO : Important concept !!!
 
+// TODO : Important concept !!!
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   const userData: Partial<TUser> = {}; //? create a user object
 
