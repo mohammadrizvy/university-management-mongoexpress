@@ -7,7 +7,7 @@ import catchAsync from '../../utils/catchAsync';
 const getStudents = catchAsync(async (req, res, next) => {
   const result = await StudentServices.getStudentsFromDB();
 
-  console.log(result)
+  console.log(result);
 
   sendResponse(res, {
     sucess: true,

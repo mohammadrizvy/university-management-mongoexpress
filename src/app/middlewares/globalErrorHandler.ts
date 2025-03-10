@@ -1,18 +1,23 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore
 
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler} from 'express';
 
-const globalErrorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
+
+  // setting default values 
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Something went wrong';
 
-  return res.status(statusCode).json({
+  type TErrorSources = {
+   
+  }
+
+  const errorSources = [{
+
+  }]
+
+  res.status(statusCode).json({
     success: false,
     message,
     error: err,
@@ -20,3 +25,23 @@ const globalErrorHandler = (
 };
 
 export default globalErrorHandler;
+
+
+
+
+
+
+
+
+//?error response pattern
+/*
+{
+  success: "",
+  message: "",
+  errorSources: [
+    path: "",
+    message: ""
+  ],
+  stack  // only included in development environment
+}
+*/
