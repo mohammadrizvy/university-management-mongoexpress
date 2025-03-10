@@ -3,18 +3,19 @@
 import { ErrorRequestHandler } from 'express';
 import { ZodError, ZodIssue } from 'zod';
 import { TErrorSources } from '../Interface/error';
+import config from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // setting default values
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Something went wrong';
-
   let errorSources: TErrorSources = [
     {
       path: '',
       message: 'Something went wrong',
     },
   ];
+
 
   const handleZodErro = (err: ZodError) => {
     const errorSources: TErrorSources = err.issues.map((issue: ZodIssue) => {
@@ -26,7 +27,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
     return {
       statusCode,
-      message: 'Zod validation error',
+      message: 'Validation Error',
       errorSources,
     };
   };
@@ -44,6 +45,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorSources,
+    stack : config.NODE_ENV === "development" ? err?.stack : null ,
   });
 };
 
