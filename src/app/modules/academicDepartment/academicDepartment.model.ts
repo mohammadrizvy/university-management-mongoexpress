@@ -23,7 +23,7 @@ academicDepartmentSchema.pre('save', async function (next) {
   });
 
   if (isDepartmentExits) {
-      throw new AppError(httpStatus.NOT_FOUND, 'Department already exits!');
+    throw new AppError(httpStatus.NOT_FOUND, 'Department already exits!');
   }
 
   next();

@@ -1,27 +1,49 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore
 import { ErrorRequestHandler } from 'express';
+import { ZodError, ZodIssue } from 'zod';
+import { TErrorSources } from '../Interface/error';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // setting default values
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Something went wrong';
+  let statusCode = err.statusCode || 500;
+  let message = err.message || 'Something went wrong';
 
-  type TErrorSources = {
-    path : string | number ; 
-    message : string; 
-  }[];
+  let errorSources: TErrorSources = [
+    {
+      path: '',
+      message: 'Something went wrong',
+    },
+  ];
 
-  const errorSources : TErrorSources = [{
-    path : "",
-    message : 'Something went wrong'
-  }];
+  const handleZodErro = (err: ZodError) => {
+    const errorSources: TErrorSources = err.issues.map((issue: ZodIssue) => {
+      return {
+        path: issue?.path[issue.path.length - 1],
+        message: issue.message,
+      };
+    });
+
+    return {
+      statusCode,
+      message: 'Zod validation error',
+      errorSources,
+    };
+  };
+
+  if (err instanceof ZodError) {
+    const simplifiedError = handleZodErro(err);
+
+    statusCode = simplifiedError?.statusCode,
+    message = simplifiedError?.message,
+    errorSources = simplifiedError?.errorSources
+  
+  }
 
   res.status(statusCode).json({
     success: false,
     message,
-    errorSources
-    // error: err,
+    errorSources,
   });
 };
 
