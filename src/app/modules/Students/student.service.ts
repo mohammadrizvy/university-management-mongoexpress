@@ -32,41 +32,36 @@ const getSingleStudentFromDB = async (studentId: string) => {
 };
 
 const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+  const { name, gaurdian, localGaurdian, ...reamainngStudentData } = payload;
 
-  const  {name , gaurdian , localGaurdian , ...reamainngStudentData} = payload 
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...reamainngStudentData,
+  };
 
-  const modifiedUpdatedData : Record<string , unknown> = {... reamainngStudentData}
+  //TODO : Important concept
 
-  //TODO : Important concept 
-
-  if(name && Object.keys(name).length){
-    for (const [key , value] of Object.entries(name)){
-      modifiedUpdatedData[`name.${key}`] = value; 
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedUpdatedData[`name.${key}`] = value;
     }
   }
-  if(gaurdian && Object.keys(gaurdian).length){
-    for (const [key , value] of Object.entries(gaurdian)){
-      modifiedUpdatedData[`gaurdian.${key}`] = value; 
+  if (gaurdian && Object.keys(gaurdian).length) {
+    for (const [key, value] of Object.entries(gaurdian)) {
+      modifiedUpdatedData[`gaurdian.${key}`] = value;
     }
   }
-  if(localGaurdian && Object.keys(localGaurdian).length){
-    for (const [key , value] of Object.entries(localGaurdian)){
-      modifiedUpdatedData[`localGaurdian.${key}`] = value; 
+  if (localGaurdian && Object.keys(localGaurdian).length) {
+    for (const [key, value] of Object.entries(localGaurdian)) {
+      modifiedUpdatedData[`localGaurdian.${key}`] = value;
     }
   }
 
-console.log(modifiedUpdatedData)
+  console.log(modifiedUpdatedData);
 
-
-
-  const result = await Student.findOneAndUpdate(
-   { id},
-    modifiedUpdatedData,
-    {
-      new: true, // This ensures the updated document is returned
-      runValidators: true,
-    }
-  );
+  const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
+    new: true, // This ensures the updated document is returned
+    runValidators: true,
+  });
 
   return result;
 };
@@ -97,10 +92,7 @@ const deleteStudentFromDB = async (id: string) => {
     return deletedStudent;
   } catch (error) {
     await session.abortTransaction(), await session.endSession();
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Faild to delete student ',
-    );
+    throw new AppError(httpStatus.BAD_REQUEST, 'Faild to delete student ');
   }
 };
 
