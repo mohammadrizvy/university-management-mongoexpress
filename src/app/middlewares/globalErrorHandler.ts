@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore
-
 import { ErrorRequestHandler } from 'express';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -8,14 +7,21 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Something went wrong';
 
-  type TErrorSources = {};
+  type TErrorSources = {
+    path : string | number ; 
+    message : string; 
+  }[];
 
-  const errorSources = [{}];
+  const errorSources : TErrorSources = [{
+    path : "",
+    message : 'Something went wrong'
+  }];
 
   res.status(statusCode).json({
     success: false,
     message,
-    error: err,
+    errorSources
+    // error: err,
   });
 };
 
