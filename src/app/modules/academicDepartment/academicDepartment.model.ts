@@ -17,17 +17,17 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
   },
 );
 
-academicDepartmentSchema.pre('save', async function (next) {
-  const isDepartmentExits = await AcademicDepartment.findOne({
-    name: this.name,
-  });
+// academicDepartmentSchema.pre('save', async function (next) {
+//   const isDepartmentExits = await AcademicDepartment.findOne({
+//     name: this.name,
+//   });
 
-  if (isDepartmentExits) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Department already exits!');
-  }
+//   if (isDepartmentExits) {
+//     throw new AppError(httpStatus.NOT_FOUND, 'Department already exits!');
+//   }
 
-  next();
-});
+//   next();
+// });
 
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
