@@ -6,6 +6,7 @@ import { TErrorSources } from '../Interface/error';
 import config from '../config';
 import handleZodErro from '../Errors/handleZodError';
 import handleValidationError from '../Errors/handleValidationError';
+import handleCastError from '../Errors/handleCastError';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // setting default values
@@ -30,12 +31,18 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     (statusCode = simplifiedError?.statusCode),
       (message = simplifiedError?.message),
       (errorSources = simplifiedError?.errorSources);
+  } else if(err.name === "CastError") {
+    const simplifiedError = handleCastError(err); 
+    (statusCode = simplifiedError?.statusCode),
+      (message = simplifiedError?.message),
+      (errorSources = simplifiedError?.errorSources);
   }
 
   //! The ultimate return !//
   res.status(statusCode).json({
     success: false,
     message,
+    // err,
     errorSources,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,
   });
