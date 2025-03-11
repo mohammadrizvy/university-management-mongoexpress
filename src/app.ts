@@ -13,13 +13,17 @@ app.use(cors());
 //applications routes
 app.use('/api/v1', router);
 
+// ! ------
+
+const test = async (req: Request, res: Response) => {
+  Promise.reject();
+};
+
+app.get('/', test);
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore
 app.use(notFoundRoute);
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hellsso Wddossrld!');
-});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // @ts-ignore

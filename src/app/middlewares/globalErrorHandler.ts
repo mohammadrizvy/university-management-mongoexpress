@@ -12,7 +12,7 @@ import { AppError } from '../Errors/AppErrors';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // setting default values
-  let statusCode =  500;
+  let statusCode = 500;
   let message = err.message || 'Something went wrong';
   let errorSources: TErrorSources = [
     {
@@ -46,21 +46,20 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   } else if (err instanceof AppError) {
     (statusCode = err?.statusCode),
       (message = err.message),
-      errorSources = [
+      (errorSources = [
         {
-          path: "",
+          path: '',
           message: err?.message,
-        }
-      ]
-  }
-   else if (err instanceof Error) {
-      (message = err.message),
-      errorSources = [
+        },
+      ]);
+  } else if (err instanceof Error) {
+    (message = err.message),
+      (errorSources = [
         {
-          path: "",
+          path: '',
           message: err?.message,
-        }
-      ]
+        },
+      ]);
   }
 
   //! The ultimate return !//
