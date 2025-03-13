@@ -5,7 +5,8 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 
 const getStudents = catchAsync(async (req, res, next) => {
-  const result = await StudentServices.getStudentsFromDB();
+  console.log(req.query)
+  const result = await StudentServices.getStudentsFromDB(req.query); //Sending req.query to services 
 
   console.log(result);
 
