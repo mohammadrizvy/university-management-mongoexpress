@@ -59,7 +59,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
       return newStudnet;
     }
-  } catch ( err : any ) {
+  } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
     throw new Error(err);

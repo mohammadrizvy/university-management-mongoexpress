@@ -5,13 +5,15 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
+
+// TODO GetStudentFromDB (Many important concepet to clear for later)
+
 const getStudentsFromDB = async (query: Record<string, unknown>) => {
+  console.log('base query', query);
 
-  console.log("base query", query)
+  const queryObj = { ...query };
 
-  const queryObj = { ...query }
-
-  console.log("duplicate query obj", queryObj)
+  console.log('duplicate query obj', queryObj);
 
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
@@ -19,28 +21,28 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // TODO: (Raw Searching ) for later to understand
 
-  const StudentSearchableFields = ["email", "name.firstName", 'presentAddress']
+  const StudentSearchableFields = ['email', 'name.firstName', 'presentAddress'];
 
-  let searchTerm = ""
+  let searchTerm = '';
 
   if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string
+    searchTerm = query?.searchTerm as string;
   }
 
   const searchQuery = Student.find({
     $or: StudentSearchableFields.map((field) => ({
-      [field]: { $regex: searchTerm, $options: "i" }
-    }))
-  })
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
 
-  // *Filtering 
+  // *Filtering
 
-  const excludeFields = ["searchTerm", "sort"]
+  const excludeFields = ['searchTerm', 'sort',"limit"];
 
-  excludeFields.forEach(el => delete queryObj[el])
+  excludeFields.forEach((el) => delete queryObj[el]);
 
-
-  const filterQuery = searchQuery.find(queryObj)
+  const filterQuery = searchQuery
+    .find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -49,19 +51,24 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
       },
     });
 
-  let sort = "-cretedAt"
+  let sort = '-cretedAt';
 
   if (query.sort) {
-    sort = query.sort as string
+    sort = query.sort as string;
   }
 
+  const sortQuery = filterQuery.sort(sort);
 
-  const sortQuery = await filterQuery.sort(sort)
+  let limit = 1
+
+  if(query.limit){
+    limit = query.limit as number; 
+  }
+
+  const limitQuery = await sortQuery.limit(limit)
 
 
-
-
-  return sortQuery;
+  return limitQuery;
 };
 
 const getSingleStudentFromDB = async (studentId: string) => {
