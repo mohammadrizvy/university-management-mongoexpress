@@ -5,7 +5,7 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
-const getStudentsFromDB = async (query: Record<string, string>) => {
+const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   console.log("base query", query)
 
@@ -24,7 +24,7 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
   let searchTerm = ""
 
   if (query?.searchTerm) {
-    searchTerm = query?.searchTerm
+    searchTerm = query?.searchTerm as string
   }
 
   const searchQuery = Student.find({
@@ -40,7 +40,7 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
   excludeFields.forEach(el => delete queryObj[el])
 
 
-  const result = await searchQuery.find(queryObj)
+  const filterQuery = searchQuery.find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -48,7 +48,20 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
         path: 'academicFaculty',
       },
     });
-  return result;
+
+  let sort = "-cretedAt"
+
+  if (query.sort) {
+    sort = query.sort as string
+  }
+
+
+  const sortQuery = await filterQuery.sort(sort)
+
+
+
+
+  return sortQuery;
 };
 
 const getSingleStudentFromDB = async (studentId: string) => {
