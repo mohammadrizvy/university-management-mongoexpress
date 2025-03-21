@@ -9,6 +9,10 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
 
   console.log("base query", query)
 
+  const queryObj = { ...query }
+
+  console.log("query obj",queryObj)
+
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
   //{"name.firstname" : {$regex : query.searchTerm , $options : i}}
@@ -29,7 +33,14 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
     }))
   })
 
-  const result = await searchQuery.find(query)
+  // *Filtering 
+
+  const excludeFields = ["searchTerm"]
+
+  excludeFields.forEach(el => delete queryObj[el])
+
+
+  const result = await searchQuery.find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
