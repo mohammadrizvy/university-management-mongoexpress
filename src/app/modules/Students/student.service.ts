@@ -7,13 +7,15 @@ import { TStudent } from './student.interface';
 
 const getStudentsFromDB = async (query: Record<string, string>) => {
 
+  console.log("base query", query)
+
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
   //{"name.firstname" : {$regex : query.searchTerm , $options : i}}
 
   // TODO: (Raw Searching ) for later to understand
 
-  const StudentSearchebaleFieds = ["email", "name.firstName", 'presentAddress']
+  const StudentSearchableFields = ["email", "name.firstName", 'presentAddress']
 
   let searchTerm = ""
 
@@ -21,11 +23,13 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
     searchTerm = query?.searchTerm
   }
 
-  const result = await Student.find({
-    $or: StudentSearchebaleFieds.map((field) => ({
+  const searchQuery = Student.find({
+    $or: StudentSearchableFields.map((field) => ({
       [field]: { $regex: searchTerm, $options: "i" }
     }))
   })
+
+  const result = await searchQuery.find(query)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
