@@ -11,7 +11,7 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
 
   const queryObj = { ...query }
 
-  console.log("query obj",queryObj)
+  console.log("duplicate query obj", queryObj)
 
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
@@ -35,7 +35,7 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
 
   // *Filtering 
 
-  const excludeFields = ["searchTerm"]
+  const excludeFields = ["searchTerm", "sort"]
 
   excludeFields.forEach(el => delete queryObj[el])
 
