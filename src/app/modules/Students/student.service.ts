@@ -5,15 +5,12 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
-
 // TODO GetStudentFromDB (Many important concepet to clear for later)
 
 const getStudentsFromDB = async (query: Record<string, unknown>) => {
-  console.log('base query', query);
 
   const queryObj = { ...query };
 
-  console.log('duplicate query obj', queryObj);
 
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
@@ -37,9 +34,12 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // *Filtering
 
-  const excludeFields = ['searchTerm', 'sort',"limit"];
+  const excludeFields = ['searchTerm', 'sort', 'limit', "page"];
 
   excludeFields.forEach((el) => delete queryObj[el]);
+
+  console.log({ query }, { queryObj });
+
 
   const filterQuery = searchQuery
     .find(queryObj)
@@ -59,13 +59,24 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   const sortQuery = filterQuery.sort(sort);
 
-  let limit = 1
+  // *Pagination
+  //FORMULA : #limit = 10 , page = n , skip = (page-1 ) x limit
 
-  if(query.limit){
-    limit = query.limit as number; 
+  let limit = 1;
+  let page = 1;
+  let skip = 0;
+
+  if (query.limit) {
+    limit = query.limit as number;
   }
 
-  const limitQuery = await sortQuery.limit(limit)
+  if (query.page) {
+    page = query.page as number;
+  }
+
+  const paginateQuery = sortQuery.skip(skip);
+
+  const limitQuery = await paginateQuery.limit(limit);
 
 
   return limitQuery;
