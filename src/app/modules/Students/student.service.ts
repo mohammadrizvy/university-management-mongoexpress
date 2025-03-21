@@ -12,6 +12,9 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
   //{"name.firstname" : {$regex : query.searchTerm , $options : i}}
 
   // TODO: (Raw Searching ) for later to understand
+
+  const StudentSearchebaleFieds = ["email", "name.firstName", 'presentAddress']
+
   let searchTerm = ""
 
   if (query?.searchTerm) {
@@ -19,7 +22,7 @@ const getStudentsFromDB = async (query: Record<string, string>) => {
   }
 
   const result = await Student.find({
-    $or: ["email", "name.firstName", 'presentAddress'].map((field) => ({
+    $or: StudentSearchebaleFieds.map((field) => ({
       [field]: { $regex: searchTerm, $options: "i" }
     }))
   })
