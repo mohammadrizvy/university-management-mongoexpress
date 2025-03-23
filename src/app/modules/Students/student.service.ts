@@ -56,11 +56,11 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   const sortQuery = filterQuery.sort(sort);
 
-  // *Pagination
+  // *Pagination (Important)
   //FORMULA : #limit = 10 , page = n , skip = (page-1 ) x limit
 
-  let limit = 1;
   let page = 1;
+  let limit = 1;
   let skip = 0;
 
   if (query.limit) {
@@ -69,6 +69,7 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   if (query.page) {
     page = query.page as number;
+    skip = (page-1)*limit; 
   }
 
   const paginateQuery = sortQuery.skip(skip);
