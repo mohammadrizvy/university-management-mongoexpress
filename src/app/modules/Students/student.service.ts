@@ -8,9 +8,7 @@ import { TStudent } from './student.interface';
 // TODO GetStudentFromDB (Many important concepet to clear for later)
 
 const getStudentsFromDB = async (query: Record<string, unknown>) => {
-
   const queryObj = { ...query };
-
 
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
@@ -34,12 +32,11 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // *Filtering
 
-  const excludeFields = ['searchTerm', 'sort', 'limit', "page"];
+  const excludeFields = ['searchTerm', 'sort', 'limit', 'page'];
 
   excludeFields.forEach((el) => delete queryObj[el]);
 
   console.log({ query }, { queryObj });
-
 
   const filterQuery = searchQuery
     .find(queryObj)
@@ -77,7 +74,6 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
   const paginateQuery = sortQuery.skip(skip);
 
   const limitQuery = await paginateQuery.limit(limit);
-
 
   return limitQuery;
 };
