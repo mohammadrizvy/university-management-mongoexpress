@@ -82,12 +82,12 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // { fields: 'name,email' } ----> { fields: 'name email' } , Need to add space in here
 
-  if(query.fields){
-    fields = (query.fields as String).split(",").join(" ")
+  if (query.fields) {
+    fields = (query.fields as String).split(',').join(' ');
     // console.log({fields})
   }
 
-  const fieldQuery = await limitQuery.select(fields)
+  const fieldQuery = await limitQuery.select(fields);
 
   return fieldQuery;
 };
