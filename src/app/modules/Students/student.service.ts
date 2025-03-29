@@ -32,7 +32,7 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // *Filtering
 
-  const excludeFields = ['searchTerm', 'sort', 'limit', 'page'];
+  const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
 
   excludeFields.forEach((el) => delete queryObj[el]);
 
@@ -69,12 +69,23 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   if (query.page) {
     page = query.page as number;
-    skip = (page-1)*limit; 
+    skip = (page - 1) * limit;
   }
 
   const paginateQuery = sortQuery.skip(skip);
 
   const limitQuery = await paginateQuery.limit(limit);
+
+  // * Field Liminting
+
+  let fields = '-__v';
+
+  // { fields: 'name,email' } ----> { fields: 'name email' } , Need to add space in here
+
+  if(query.fields){
+    fields = (query.fields as String).split(",").join(" ")
+    console.log({fields})
+  }
 
   return limitQuery;
 };
