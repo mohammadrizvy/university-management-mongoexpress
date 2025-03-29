@@ -35,6 +35,7 @@ class QueryBuilder<T> {
   }
 
   sort() {
+    // todo : add multiple sort 
     const sort = this?.query?.sort || '-cretedAt';
 
     this.modelQuery = this.modelQuery.sort(sort as string);
