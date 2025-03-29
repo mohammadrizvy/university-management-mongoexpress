@@ -10,7 +10,7 @@ class QueryBuilder<T> {
     this.query = query;
   }
 
-//   this is for searhing
+  //   this is for searhing
   search(searchableFields: string[]) {
     if (this?.query?.searchTerm) {
       this.modelQuery = this.modelQuery.find({
@@ -19,10 +19,17 @@ class QueryBuilder<T> {
         })),
       });
     }
-    return this
+    return this;
   }
+  // this is for filtering
+  filter() {
+    const queryObj = { ...this.query };
+    const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
 
-  
+    excludeFields.forEach((el) => delete queryObj[el]);
 
+    this.modelQuery = this.modelQuery.find(queryObj);
 
+    return this;
+  }
 }
