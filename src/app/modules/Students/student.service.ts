@@ -4,6 +4,8 @@ import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { StudentSearchableFields } from './student.const';
 
 // TODO GetStudentFromDB (!!!Many important concepet to clear for later)
 
@@ -48,48 +50,61 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
   //     },
   //   });
 
-  let sort = '-cretedAt';
+  // let sort = '-cretedAt';
 
-  if (query.sort) {
-    sort = query.sort as string;
-  }
+  // if (query.sort) {
+  //   sort = query.sort as string;
+  // }
 
-  const sortQuery = filterQuery.sort(sort);
+  // const sortQuery = filterQuery.sort(sort);
 
   // *Pagination (Important)
   //FORMULA : #limit = 10 , page = n , skip = (page-1 ) x limit
 
-  let page = 1;
-  let limit = 1;
-  let skip = 0;
+  // let page = 1;
+  // let limit = 1;
+  // let skip = 0;
 
-  if (query.limit) {
-    limit = query.limit as number;
-  }
+  // if (query.limit) {
+  //   limit = query.limit as number;
+  // }
 
-  if (query.page) {
-    page = query.page as number;
-    skip = (page - 1) * limit;
-  }
+  // if (query.page) {
+  //   page = query.page as number;
+  //   skip = (page - 1) * limit;
+  // }
 
-  const paginateQuery = sortQuery.skip(skip);
+  // const paginateQuery = sortQuery.skip(skip);
 
-  const limitQuery = paginateQuery.limit(limit);
+  // const limitQuery = paginateQuery.limit(limit);
 
   // * Field Liminting
 
-  let fields = '-__v';
+  // let fields = '-__v';
 
   // { fields: 'name,email' } ----> { fields: 'name email' } , Need to add space in here
 
-  if (query.fields) {
-    fields = (query.fields as String).split(',').join(' ');
-    // console.log({fields})
-  }
+  // if (query.fields) {
+  //   fields = (query.fields as String).split(',').join(' ');
+  // console.log({fields})
+  // }
 
-  const fieldQuery = await limitQuery.select(fields);
+  // const fieldQuery = await limitQuery.select(fields);
 
-  return fieldQuery;
+  // return fieldQuery;
+
+  const studentQuery = new QueryBuilder(Student.find().populate('admissionSemester')
+  .populate({
+    path: 'academicDepartment',
+    populate: {
+      path: 'academicFaculty',
+    },
+  }), query).search(
+    StudentSearchableFields,
+  ).filter().sort().peginate().fields();
+
+  const result = await studentQuery.modelQuery;
+  return result;
 };
 
 const getSingleStudentFromDB = async (studentId: string) => {
@@ -106,6 +121,7 @@ const getSingleStudentFromDB = async (studentId: string) => {
   return result;
 };
 
+// !Update student ----
 const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
   const { name, gaurdian, localGaurdian, ...reamainngStudentData } = payload;
 

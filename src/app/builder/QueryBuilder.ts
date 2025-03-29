@@ -1,6 +1,6 @@
 import { Query } from 'mongoose';
 import { Student } from '../modules/Students/student.model';
-
+// TODO : (QueryBuilder) Important concept to understand for later!!
 class QueryBuilder<T> {
   public modelQuery: Query<T[], T>;
   public query: Record<string, unknown>;
@@ -52,12 +52,12 @@ class QueryBuilder<T> {
     return this;
   }
 
-  fields(){
-    const fields = (this?.query?.fields as String).split(',').join(' ') || '-__v'
-    this.modelQuery = this.modelQuery.select(fields)
-    return this
+  fields() {
+    const fields =
+      (this?.query?.fields as String)?.split(',').join(' ') || '-__v';
+    this.modelQuery = this.modelQuery.select(fields);
+    return this;
   }
-
-
-
 }
+
+export default QueryBuilder;
