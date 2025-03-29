@@ -12,7 +12,8 @@ class QueryBuilder<T> {
 
   //   this is for searhing
   search(searchableFields: string[]) {
-    if (this?.query?.searchTerm) {
+    const searchTerm = this?.query?.searchTerm
+    if (searchTerm) {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map((field) => ({
           [field]: { $regex: searchTerm, $options: 'i' },
@@ -32,4 +33,17 @@ class QueryBuilder<T> {
 
     return this;
   }
+
+
+  sort(){
+    const sort = this?.query?.sort || '-cretedAt'
+
+    this.modelQuery = this.modelQuery.sort(sort as string)
+     
+    return this
+
+  }
+
+  
+
 }

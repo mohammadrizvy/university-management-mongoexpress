@@ -8,7 +8,7 @@ import { TStudent } from './student.interface';
 // TODO GetStudentFromDB (!!!Many important concepet to clear for later)
 
 const getStudentsFromDB = async (query: Record<string, unknown>) => {
-  const queryObj = { ...query };
+  // const queryObj = { ...query };
 
   //{email : {$regex : query.searchTerm , $options : i}}
   //{presentAddress : {$regex : query.searchTerm , $options : i}}
@@ -16,37 +16,37 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // TODO: (Raw Searching ) for later to understand
 
-  const StudentSearchableFields = ['email', 'name.firstName', 'presentAddress'];
+  // const StudentSearchableFields = ['email', 'name.firstName', 'presentAddress'];
 
-  let searchTerm = '';
+  // let searchTerm = '';
 
-  if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string;
-  }
+  // if (query?.searchTerm) {
+  //   searchTerm = query?.searchTerm as string;
+  // }
 
-  const searchQuery = Student.find({
-    $or: StudentSearchableFields.map((field) => ({
-      [field]: { $regex: searchTerm, $options: 'i' },
-    })),
-  });
+  // const searchQuery = Student.find({
+  //   $or: StudentSearchableFields.map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: 'i' },
+  //   })),
+  // });
 
   // *Filtering
 
-  const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+  // const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
 
-  excludeFields.forEach((el) => delete queryObj[el]);
+  // excludeFields.forEach((el) => delete queryObj[el]);
 
-  console.log({ query }, { queryObj });
+  // console.log({ query }, { queryObj });
 
-  const filterQuery = searchQuery
-    .find(queryObj)
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
+  // const filterQuery = searchQuery
+  //   .find(queryObj)
+  //   .populate('admissionSemester')
+  //   .populate({
+  //     path: 'academicDepartment',
+  //     populate: {
+  //       path: 'academicFaculty',
+  //     },
+  //   });
 
   let sort = '-cretedAt';
 
