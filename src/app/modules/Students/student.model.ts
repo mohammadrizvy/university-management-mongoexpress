@@ -106,7 +106,7 @@ studentSchema.pre('aggregate', function (next) {
 
 // !Virtual
 studentSchema.virtual('fullName').get(function () {
-  return `${this.name.firstName} ${this.name.secoundName} ${this.name.lastName}`;
+  return `${this?.name?.firstName} ${this?.name?.secoundName} ${this?.name?.lastName}`;
 });
 
 // ! creating statics function
