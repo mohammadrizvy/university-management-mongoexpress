@@ -12,7 +12,7 @@ class QueryBuilder<T> {
 
   //   this is for searhing
   search(searchableFields: string[]) {
-    const searchTerm = this?.query?.searchTerm
+    const searchTerm = this?.query?.searchTerm;
     if (searchTerm) {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map((field) => ({
@@ -34,16 +34,30 @@ class QueryBuilder<T> {
     return this;
   }
 
+  sort() {
+    const sort = this?.query?.sort || '-cretedAt';
 
-  sort(){
-    const sort = this?.query?.sort || '-cretedAt'
+    this.modelQuery = this.modelQuery.sort(sort as string);
 
-    this.modelQuery = this.modelQuery.sort(sort as string)
-     
-    return this
-
+    return this;
   }
 
-  
+  peginate() {
+    const page = Number(this.query.page || 1);
+    const limit = Number(this.query.limit || 10);
+    const skip = (page - 1) * limit;
+
+    this.modelQuery = this.modelQuery.skip(skip).limit(limit);
+
+    return this;
+  }
+
+  fields(){
+    const fields = (this?.query?.fields as String).split(',').join(' ') || '-__v'
+    this.modelQuery = this.modelQuery.select(fields)
+    return this
+  }
+
+
 
 }
