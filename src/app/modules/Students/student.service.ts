@@ -5,7 +5,7 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
-// TODO GetStudentFromDB (Many important concepet to clear for later)
+// TODO GetStudentFromDB (!!!Many important concepet to clear for later)
 
 const getStudentsFromDB = async (query: Record<string, unknown>) => {
   const queryObj = { ...query };
