@@ -74,7 +74,7 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
 
   const paginateQuery = sortQuery.skip(skip);
 
-  const limitQuery = await paginateQuery.limit(limit);
+  const limitQuery = paginateQuery.limit(limit);
 
   // * Field Liminting
 
@@ -87,7 +87,9 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
     console.log({fields})
   }
 
-  return limitQuery;
+  const fieldQuery = await limitQuery.select(fields)
+
+  return fieldQuery;
 };
 
 const getSingleStudentFromDB = async (studentId: string) => {
