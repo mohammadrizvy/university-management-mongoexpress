@@ -8,6 +8,7 @@ import { User } from './user.model';
 import { generateStudentId } from './user.utils';
 import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
+import { TFaculty } from '../Faculty/faculty.interface';
 
 // TODO : Important concept !!!
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
@@ -66,6 +67,33 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   }
 };
 
+const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
+
+  const userData: Partial<TUser> = {};
+
+  userData.password = password || config.default_password;
+
+  userData.role = "faculty";
+
+  const session = await mongoose.startSession(); 
+
+  try {
+
+    session.startTransaction(); 
+
+    
+
+    
+  } catch (error) {
+    
+  }
+
+
+
+}
+
+
 export const UserService = {
   createStudentIntoDB,
+  createFacultyIntoDB
 };
