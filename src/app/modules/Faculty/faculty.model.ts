@@ -15,7 +15,7 @@ const facultyNameSchema = new Schema<TFacultyName>({
 
 const facultySchema = new Schema<TFaculty>(
   {
-    id: { type: String, unique: true },
+    id: { type: String, unique : true },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
