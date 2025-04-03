@@ -1,6 +1,9 @@
 // Import the required types and models
 import { TacademicSemester } from '../academicSemester/academicSemester.interface'; // Type for academic semester
+import { TFaculty } from '../Faculty/faculty.interface';
 import { User } from './user.model'; // User model for interacting with user data in the database
+
+// !Student_______!
 
 // Function to find the most recent student ID from the database
 const findLastStudent = async () => {
@@ -63,4 +66,28 @@ export const generateStudentId = async (payload: TacademicSemester) => {
 
   // Return the generated student ID
   return generatedId;
+};
+
+// !Faculty_______!
+
+// Id Format : -->
+// F-0001
+// F-0002
+
+const findLastFaculty = async () => {
+  const lastFaculty = await User.findOne(
+    {
+      role: 'faculty',
+    },
+    {
+      id: 1,
+      _id: 0,
+    },
+  ).lean();
+
+  return lastFaculty?.id ? lastFaculty.id.substring(1) : undefined;
+};
+
+export const generateFacultyId = async (payload: TFaculty) => {
+  console.log(await findLastFaculty());
 };

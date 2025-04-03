@@ -5,7 +5,7 @@ import { TStudent } from '../Students/student.interface';
 import { Student } from '../Students/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generateStudentId } from './user.utils';
+import { generateFacultyId, generateStudentId } from './user.utils';
 import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
 import { TFaculty } from '../Faculty/faculty.interface';
@@ -68,32 +68,20 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 };
 
 const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
-
   const userData: Partial<TUser> = {};
 
   userData.password = password || config.default_password;
 
-  userData.role = "faculty";
+  userData.role = 'faculty';
 
-  const session = await mongoose.startSession(); 
+  const session = await mongoose.startSession();
 
   try {
-
-    session.startTransaction(); 
-
-    
-
-    
-  } catch (error) {
-    
-  }
-
-
-
-}
-
+    session.startTransaction();
+  } catch (error) {}
+};
 
 export const UserService = {
   createStudentIntoDB,
-  createFacultyIntoDB
+  createFacultyIntoDB,
 };
