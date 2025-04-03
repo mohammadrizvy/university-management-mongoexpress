@@ -74,11 +74,17 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
   userData.role = 'faculty';
 
+  userData.id = generateFacultyId()
+
+
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
-  } catch (error) {}
+
+
+
+  } catch (error) { }
 };
 
 export const UserService = {

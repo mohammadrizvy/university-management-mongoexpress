@@ -83,11 +83,30 @@ const findLastFaculty = async () => {
       id: 1,
       _id: 0,
     },
-  ).lean();
+  ).sort({
+    createdAt: -1,
+  }).lean();
 
-  return lastFaculty?.id ? lastFaculty.id.substring(1) : undefined;
+  return lastFaculty?.id ? lastFaculty.id : undefined;
 };
 
 export const generateFacultyId = async (payload: TFaculty) => {
-  console.log(await findLastFaculty());
+
+  let currentId = '0000'
+
+  const lastFacultyId = await findLastFaculty()
+
+  // If last ID exists, extract and increment number
+  if (lastFacultyId) {
+    const lastIdNumber = lastFacultyId.substring(2)
+    currentId = lastIdNumber
+  }
+
+  const incrementId = (Number(currentId + 1)).toString().padStart(5, "0")
+
+  const facultyId = `F-${incrementId}`
+
+  return facultyId
+
+
 };
