@@ -26,7 +26,7 @@ const createStudent: RequestHandler = async (req, res, next) => {
 
 const createFaculty: RequestHandler = async (req, res, next) => {
   try {
-    const { password, payload: facultyData } = req.body;
+    const { password, faculty: facultyData } = req.body;
 
     const result = await UserService.createFacultyIntoDB(password, facultyData);
 

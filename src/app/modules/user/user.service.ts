@@ -9,6 +9,7 @@ import { generateFacultyId, generateStudentId } from './user.utils';
 import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
 import { TFaculty } from '../Faculty/faculty.interface';
+import { Faculty } from '../Faculty/faculty.model';
 
 // TODO : Important concept !!!
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
@@ -74,17 +75,40 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
   userData.role = 'faculty';
 
-  userData.id = generateFacultyId()
-
-
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
+    userData.id = await generateFacultyId(payload);
 
+    const newUser = await User.create([userData], { session });
 
+    if (!newUser.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Fail to create new user');
+    }
 
-  } catch (error) { }
+    // create a Faculty
+    // * set id & _id as user (ref)
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id; //*This will be the {ref} id that will be in student data,
+
+    const newFaculty = await Faculty.create([payload], { session });
+
+    if (!newFaculty.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Fail to create new Faculty');
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    console.log(newFaculty);
+
+    return newFaculty;
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw new Error();
+  }
 };
 
 export const UserService = {
