@@ -107,7 +107,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    console.error("Faculty creation error:", error);
     throw error;
   }
 };
