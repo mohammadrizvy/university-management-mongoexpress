@@ -27,11 +27,7 @@ const updateFacultyIntoDB = async (
       payload,
     });
     
-    // This is incorrect: {payload}
-    // This creates an object like: { payload: { name: "value", etc } }
-    // Which means MongoDB is looking for documents with a "payload" field
     
-    // Correct version - pass the payload object directly:
     const result = await Faculty.findOneAndUpdate({facultyId}, payload, {
       new: true,
       runValidators: true,
