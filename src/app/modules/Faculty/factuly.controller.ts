@@ -35,9 +35,9 @@ const getSingleFaculty = catchAsync(async (req, res, next) => {
 
 const updateFaculty = catchAsync(async (req, res, next) => {
   try {
+      const {facultyId} = req.params;
     const updatedData = req.body;
-    const facultyId = req.params.facultyId;
-    console.log(updatedData, facultyId);
+    // console.log(updatedData, facultyId);
 
     const result = await FacultyServices.updateFacultyIntoDB(
       facultyId,
