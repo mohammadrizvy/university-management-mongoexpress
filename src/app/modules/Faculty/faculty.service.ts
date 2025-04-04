@@ -13,27 +13,47 @@ const getFacultyFromDB = async () => {
 };
 
 const getSingleFacultyFromDB = async (facultyId: string) => {
-  console.log(facultyId, 'Got data here');
   const result = await Faculty.findOne({ id: facultyId });
   return result;
 };
 
 const updateFacultyIntoDB = async (
-    facultyId: string,
-    payload: Partial<TFaculty>,
-  ) => {
-    console.log('services', {
-      facultyId,
-      payload,
-    });
-    
-    
-    const result = await Faculty.findOneAndUpdate({facultyId}, payload, {
+  facultyId: string,
+  payload: Partial<TFaculty>,
+) => {
+  console.log('Updating faculty:', facultyId, payload);
+
+  const { name, ...remainingFacultyData } = payload;
+
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...remainingFacultyData,
+  };
+
+  /*
+    FORMAT : --- 
+    name.firstName = "Robart"
+    */
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedUpdatedData[`name.${key}`] = value;
+    }
+  }
+
+  console.log(modifiedUpdatedData);
+
+  const result = await Faculty.findOneAndUpdate(
+    { id: facultyId },
+    modifiedUpdatedData,
+    {
       new: true,
       runValidators: true,
-    });
-    return result;
-  };
+    },
+  );
+
+  console.log('Update result:', result);
+  return result;
+};
 
 export const FacultyServices = {
   getFacultyFromDB,

@@ -20,7 +20,7 @@ const getFaculty = catchAsync(async (req, res, next) => {
 const getSingleFaculty = catchAsync(async (req, res, next) => {
   try {
     const facultyId = req.params.facultyId;
-    console.log(facultyId, 'From controller');
+    // console.log(facultyId, 'From controller');
     const result = await FacultyServices.getSingleFacultyFromDB(facultyId);
     sendResponse(res, {
       sucess: true,
@@ -35,13 +35,12 @@ const getSingleFaculty = catchAsync(async (req, res, next) => {
 
 const updateFaculty = catchAsync(async (req, res, next) => {
   try {
-      const {facultyId} = req.params;
-    const updatedData = req.body;
-    // console.log(updatedData, facultyId);
+    const { facultyId } = req.params;
+    const { faculty } = req.body;
 
     const result = await FacultyServices.updateFacultyIntoDB(
       facultyId,
-      updatedData,
+      faculty,
     );
 
     sendResponse(res, {
