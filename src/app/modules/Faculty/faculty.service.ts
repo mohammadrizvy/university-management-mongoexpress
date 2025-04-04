@@ -14,7 +14,15 @@ const getFacultyFromDB = async () => {
 return result ; 
 }
 
+const getSingleFacultyFromDB = async (facultyId : string) => {
+
+    const result = await Faculty.findOne(facultyId)
+    
+    
+}
+
 
 export const FacultyServices = {
-    getFacultyFromDB
+    getFacultyFromDB,
+    getSingleFacultyFromDB
 }
