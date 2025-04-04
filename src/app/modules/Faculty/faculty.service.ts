@@ -14,7 +14,7 @@ const getFacultyFromDB = async () => {
 
 const getSingleFacultyFromDB = async (facultyId: string) => {
   console.log(facultyId, 'Got data here');
-  const result = await Faculty.findOne({ id: facultyId });
+  const result = await Faculty.findOne({id : facultyId});
   return result;
 };
 
@@ -26,6 +26,10 @@ const updateFacultyIntoDB = async (
     facultyId,
     payload,
   });
+
+  
+
+
 };
 
 export const FacultyServices = {
