@@ -4,41 +4,59 @@ import httpStatus from 'http-status';
 import sendResponse from './../../utils/sendResponse';
 
 const getFaculty = catchAsync(async (req, res, next) => {
+  try {
     const result = await FacultyServices.getFacultyFromDB();
     sendResponse(res, {
-        sucess: true,
-        statusCode: httpStatus.FOUND,
-        message: 'Faculties retrived sucessfully',
-        data: result,
+      sucess: true,
+      statusCode: httpStatus.FOUND,
+      message: 'Faculties retrived sucessfully',
+      data: result,
     });
+  } catch (error) {
+    next(error);
+  }
 });
 
 const getSingleFaculty = catchAsync(async (req, res, next) => {
-    const factultyId = req.params.facultyId;
-    console.log(factultyId, 'From controller');
-    const result = await FacultyServices.getSingleFacultyFromDB(factultyId);
+  try {
+    const facultyId = req.params.facultyId;
+    console.log(facultyId, 'From controller');
+    const result = await FacultyServices.getSingleFacultyFromDB(facultyId);
     sendResponse(res, {
-        sucess: true,
-        statusCode: httpStatus.FOUND,
-        message: 'Single faculty retrived sucessfully',
-        data: result,
+      sucess: true,
+      statusCode: httpStatus.FOUND,
+      message: 'Single faculty retrived sucessfully',
+      data: result,
     });
+  } catch (error) {
+    next(error);
+  }
 });
 
-
 const updateFaculty = catchAsync(async (req, res, next) => {
+  try {
+    const updatedData = req.body;
+    const facultyId = req.params.facultyId;
+    console.log(updatedData, facultyId);
 
-    const updatedData = req.body
-    const factultyId = req.params.factultyId
+    const result = await FacultyServices.updateFacultyIntoDB(
+      facultyId,
+      updatedData,
+    );
 
-    console.log(updatedData, factultyId)
-
-
-})
-
+    sendResponse(res, {
+      sucess: true,
+      statusCode: httpStatus.OK,
+      message: 'Faculty updated sucessfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export const facultyController = {
-    getFaculty,
-    getSingleFaculty,
-    updateFaculty
+  getFaculty,
+  getSingleFaculty,
+  updateFaculty,
 };
