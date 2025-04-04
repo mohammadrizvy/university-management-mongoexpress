@@ -1,33 +1,44 @@
-import catchAsync from "../../utils/catchAsync";
-import { FacultyServices } from "./faculty.service";
+import catchAsync from '../../utils/catchAsync';
+import { FacultyServices } from './faculty.service';
 import httpStatus from 'http-status';
 import sendResponse from './../../utils/sendResponse';
 
 const getFaculty = catchAsync(async (req, res, next) => {
-    const result = await FacultyServices.getFacultyFromDB()
+    const result = await FacultyServices.getFacultyFromDB();
     sendResponse(res, {
         sucess: true,
         statusCode: httpStatus.FOUND,
-        message: "Faculties retrived sucessfully",
+        message: 'Faculties retrived sucessfully',
         data: result,
-    })
-})
+    });
+});
 
 const getSingleFaculty = catchAsync(async (req, res, next) => {
-    const factultyId = req.params.facultyId
-    console.log(factultyId, "From controller")
-    const result = await FacultyServices.getSingleFacultyFromDB(factultyId)
-    sendResponse(res , {
-        sucess : true ,
-        statusCode : httpStatus.FOUND,
-        message : "Single faculty retrived sucessfully",
-        data : result
-    })
-    
+    const factultyId = req.params.facultyId;
+    console.log(factultyId, 'From controller');
+    const result = await FacultyServices.getSingleFacultyFromDB(factultyId);
+    sendResponse(res, {
+        sucess: true,
+        statusCode: httpStatus.FOUND,
+        message: 'Single faculty retrived sucessfully',
+        data: result,
+    });
+});
+
+
+const updateFaculty = catchAsync(async (req, res, next) => {
+
+    const updatedData = req.body
+    const factultyId = req.params.factultyId
+
+    console.log(updatedData, factultyId)
+
+
 })
 
 
 export const facultyController = {
     getFaculty,
-    getSingleFaculty
-}
+    getSingleFaculty,
+    updateFaculty
+};
