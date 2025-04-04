@@ -2,10 +2,6 @@ import { flatten } from 'flat';
 import { TFaculty } from './faculty.interface';
 import { Faculty } from './faculty.model';
 
-
-
-
-
 const getFacultyFromDB = async () => {
   const result = await Faculty.find({ isDeleted: { $ne: true } }).populate({
     path: 'academicDepartment',
@@ -35,7 +31,7 @@ const getSingleFacultyFromDB = async (facultyId: string) => {
 //   };
 
 //   /*
-//     FORMAT : --- 
+//     FORMAT : ---
 //     name.firstName = "Robart"
 //     */
 
@@ -60,34 +56,38 @@ const getSingleFacultyFromDB = async (facultyId: string) => {
 //   return result;
 // };
 
-const updateFacultyIntoDB = async (
-    facultyId: string,
-    payload: Partial<TFaculty>,
-  ) => {
-    console.log('Updating faculty:', facultyId, payload);
-  
-    // Use the flat library to flatten the nested object structure
-    // The flatten function will convert nested objects to dot notation
-    const modifiedUpdatedData : Record<string, unknown> = flatten(payload);
-  
-    console.log('Flattened update data:', modifiedUpdatedData);
-  
-    const result = await Faculty.findOneAndUpdate(
-      { id: facultyId },
-      modifiedUpdatedData,
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
-  
-    console.log('Update result:', result);
-    return result;
-  };
+// TODO : Using FLAT package for updating data (NON-Primitive)
 
+const updateFacultyIntoDB = async (
+  facultyId: string,
+  payload: Partial<TFaculty>,
+) => {
+  console.log('Updating faculty:', facultyId, payload);
+
+  // Use the flat library to flatten the nested object structure
+  // The flatten function will convert nested objects to dot notation
+  const modifiedUpdatedData: Record<string, unknown> = flatten(payload);
+
+  console.log('Flattened update data:', modifiedUpdatedData);
+
+  const result = await Faculty.findOneAndUpdate(
+    { id: facultyId },
+    modifiedUpdatedData,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  console.log('Update result:', result);
+  return result;
+};
+
+const deleteFacultyFromDB = async (id: string) => {};
 
 export const FacultyServices = {
   getFacultyFromDB,
   getSingleFacultyFromDB,
   updateFacultyIntoDB,
+  deleteFacultyFromDB,
 };
