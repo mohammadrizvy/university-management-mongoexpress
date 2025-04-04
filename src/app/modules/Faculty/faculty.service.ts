@@ -11,14 +11,18 @@ const getFacultyFromDB = async () => {
         },
     })
 
-return result ; 
+    return result;
 }
 
-const getSingleFacultyFromDB = async (facultyId : string) => {
+const getSingleFacultyFromDB = async (facultyId: string) => {
 
-    const result = await Faculty.findOne(facultyId)
-    
-    
+    console.log(facultyId, "Got data here")
+
+    const result = await Faculty.findOne({ id: facultyId })
+
+    return result
+
+
 }
 
 
