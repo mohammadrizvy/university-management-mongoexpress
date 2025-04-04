@@ -74,5 +74,5 @@ export const facultyController = {
   getFaculty,
   getSingleFaculty,
   updateFaculty,
-  deleteFactulty
+  deleteFactulty,
 };
