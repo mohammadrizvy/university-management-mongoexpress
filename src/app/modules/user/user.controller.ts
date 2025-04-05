@@ -41,7 +41,12 @@ const createFaculty: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const userController = {
-  createStudent,
-  createFaculty,
+const createAdmin: RequestHandler = async (req, res, next) => {
+  try {
+    const { password, admin: adminData } = req.body;
+
+    console.log(password, adminData);
+  } catch (error) {}
 };
+
+export const userController = { createStudent, createFaculty, createAdmin };
