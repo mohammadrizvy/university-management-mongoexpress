@@ -127,8 +127,11 @@ Step : ( 1 )
 2. Find them by role and id , and sort it by leatest created admin time .
 3. Then retun the lastAdmin Id , If not the return undifiend 
 Step : ( 2 )
-1.
-
+1. If lastAdminId exists, extract the numeric part (after 'A-')
+2. Convert the extracted number to integer
+3. Increment the number by 1
+4. Pad the number with zeros to maintain fixed length
+5. Add the prefix 'A-' to create the final admin ID
 */
 
 const findLastAdmin = async () => {
