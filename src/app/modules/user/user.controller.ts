@@ -45,7 +45,6 @@ const createFaculty: RequestHandler = async (req, res, next) => {
 const createAdmin: RequestHandler = async (req, res, next) => {
   try {
     const { password, admin: adminData } = req.body;
-    console.log(password, adminData);
 
     const result = await UserService.createAdminIntoDB(password , adminData)
 
@@ -53,7 +52,7 @@ const createAdmin: RequestHandler = async (req, res, next) => {
       sucess: true,
       statusCode: httpStatus.OK,
       message: 'Studnent created sucessfully',
-      data: result,
+      data: result ,
     });
   } catch (error) {
     next(error)

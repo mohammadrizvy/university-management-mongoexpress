@@ -10,6 +10,7 @@ import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { Faculty } from '../Faculty/faculty.model';
+import { TAdmin } from '../Admin/admin.interface';
 
 // TODO : Important concept !!!
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
@@ -101,7 +102,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     await session.commitTransaction();
     await session.endSession();
 
-    console.log(newFaculty);
 
     return newFaculty;
   } catch (error) {
@@ -113,7 +113,32 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
 
 
-const createAdminIntoDB = async () => {
+const createAdminIntoDB = async (password : string , payload : Partial<TAdmin>) => {
+
+  console.log(password , payload , "Data in service")
+
+  const userData : Partial<TUser> = {}; 
+
+  userData.password = password || config.default_password;
+ 
+  userData.role = "admin";
+
+  const session = await mongoose.startSession(); 
+
+  try {
+
+    session.startTransaction(); 
+
+
+
+
+    
+  } catch (error) {
+    
+  }
+
+
+
 
 }
 
