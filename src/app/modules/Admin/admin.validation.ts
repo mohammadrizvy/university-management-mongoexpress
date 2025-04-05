@@ -22,9 +22,11 @@ const createAdminValidationSchema = z.object({
       dateOfBirth: z.string({
         required_error: 'Date of birth is required',
       }),
-      email: z.string({
-        required_error: 'Email is required',
-      }).email(),
+      email: z
+        .string({
+          required_error: 'Email is required',
+        })
+        .email(),
       contactNo: z.string({
         required_error: 'Contact number is required',
       }),
@@ -49,11 +51,13 @@ const createAdminValidationSchema = z.object({
 const updateAdminValidationSchema = z.object({
   body: z.object({
     admin: z.object({
-      name: z.object({
-        firstName: z.string().optional(),
-        middleName: z.string().optional(),
-        lastName: z.string().optional(),
-      }).optional(),
+      name: z
+        .object({
+          firstName: z.string().optional(),
+          middleName: z.string().optional(),
+          lastName: z.string().optional(),
+        })
+        .optional(),
       designation: z.string().optional(),
       gender: z.enum(['male', 'female']).optional(),
       dateOfBirth: z.string().optional(),

@@ -5,7 +5,11 @@ import { TStudent } from '../Students/student.interface';
 import { Student } from '../Students/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generateAdminId, generateFacultyId, generateStudentId } from './user.utils';
+import {
+  generateAdminId,
+  generateFacultyId,
+  generateStudentId,
+} from './user.utils';
 import { AppError } from '../../Errors/AppErrors';
 import httpStatus from 'http-status';
 import { TFaculty } from '../Faculty/faculty.interface';
@@ -103,7 +107,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     await session.commitTransaction();
     await session.endSession();
 
-
     return newFaculty;
   } catch (error) {
     await session.abortTransaction();
@@ -111,8 +114,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     throw error;
   }
 };
-
-
 
 const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   // Create user data object
@@ -160,5 +161,5 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 export const UserService = {
   createStudentIntoDB,
   createFacultyIntoDB,
-  createAdminIntoDB
+  createAdminIntoDB,
 };
