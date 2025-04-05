@@ -3,7 +3,7 @@ import { userController } from './user.controller';
 import { studentValidations } from '../Students/student.validation';
 import validateRequest from '../../middlewares/validateRequest';
 import { facultyValidations } from '../Faculty/faculty.validation';
-import { adminValidations } from '../Admin/admin.validation';
+import { AdminValidation } from '../Admin/admin.validation';
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.post(
 );
 router.post(
   '/create-admin',
-  validateRequest(adminValidations.createAdminValidationSchema),
+  validateRequest(AdminValidation.createAdminValidationSchema),
   userController.createAdmin,
 );
 

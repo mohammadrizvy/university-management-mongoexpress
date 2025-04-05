@@ -1,25 +1,23 @@
 import { Types } from 'mongoose';
 
-export type TAdminName = {
-  firstName: string;
-  secoundName?: string;
-  lastName: string;
-};
-
 export type TAdmin = {
   id: string;
   user: Types.ObjectId;
-  name: TAdminName;
   designation: string;
-  gender: 'male' | 'female ';
-  DOB: Date;
+  name: {
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+  };
+  gender: 'male' | 'female' ;
   email: string;
-  contactNo: number;
-  emergencyContact: number;
+  dateOfBirth: string;
+  contactNo: string;
+  emergencyContactNo: string;
   presentAddress: string;
-  parmanentAddress: string;
+  permanentAddress: string;
+  managmentDeparment? : Types.ObjectId;
+  academicFaculty : Types.ObjectId;
   profileImage?: string;
-  managmentDeparment?: Types.ObjectId;
-  academicFaculty: Types.ObjectId;
-  isDeleted: boolean;
+  isDeleted?: boolean;
 };

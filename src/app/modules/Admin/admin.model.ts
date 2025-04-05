@@ -1,31 +1,94 @@
-import { model, Schema, Types } from 'mongoose';
-import { TAdmin, TAdminName } from './admin.interface';
-
-const adminNameSchema = new Schema<TAdminName>({
-  firstName: { type: String },
-  secoundName: { type: String },
-  lastName: { type: String },
-});
+import { Schema, model } from 'mongoose';
+import { TAdmin } from './admin.interface';
 
 const adminSchema = new Schema<TAdmin>(
   {
-    id: { types: String, unique: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
-    name: adminNameSchema,
-    designation: { type: String },
-    gender: { type: String, enum: ['male', 'female'] },
-    DOB: { types: Date },
-    email: { type: String },
-    contactNo: { type: Number },
-    emergencyContact: { type: Number },
-    presentAddress: { type: String },
-    parmanentAddress: { type: String },
-    profileImage: { type: String },
-    managmentDeparment: { types: Schema.Types.ObjectId, required: false },
-    academicFaculty: { type: Schema.Types.ObjectId, ref: 'AcademicFaculty' },
-    isDeleted: { type: Boolean, default: false },
+    id: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      unique: true,
+      ref: 'User'
+    },
+    designation: {
+      type: String,
+      required: true
+    },
+    name: {
+      firstName: {
+        type: String,
+        required: true
+      },
+      middleName: {
+        type: String
+      },
+      lastName: {
+        type: String,
+        required: true
+      }
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female'],
+      required: true
+    },
+    dateOfBirth: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    contactNo: {
+      type: String,
+      required: true
+    },
+    emergencyContactNo: {
+      type: String,
+      required: true
+    },
+    presentAddress: {
+      type: String,
+      required: true
+    },
+    permanentAddress: {
+      type: String,
+      required: true
+    },
+    managmentDeparment: {
+      type: Schema.Types.ObjectId,
+      ref: 'ManagementDepartment'
+    },
+    academicFaculty: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicFaculty',
+      required: true
+    },
+    profileImage: {
+      type: String
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    }
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true
+    }
+  }
 );
+
+adminSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
 
 export const Admin = model<TAdmin>('Admin', adminSchema);
