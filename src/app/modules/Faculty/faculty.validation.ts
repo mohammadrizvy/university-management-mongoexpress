@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-// Create faculty name validation schema
-const createFacultyNameValidationSchema = z.object({
+// Create Admin Name validation schema
+const createAdminNameValidationSchema = z.object({
   firstName: z.string({
     required_error: 'First name is required',
     invalid_type_error: 'First name must be a string',
@@ -13,14 +13,14 @@ const createFacultyNameValidationSchema = z.object({
   }),
 });
 
-// Create faculty validation schema
-const createFacultyValidationSchema = z.object({
+// Create Admin validation schema
+const createAdminValidationSchema = z.object({
   body: z.object({
     password: z.string({
       required_error: 'Password is required',
     }),
-    faculty: z.object({
-      name: createFacultyNameValidationSchema,
+    admin: z.object({
+      name: createAdminNameValidationSchema,
       gender: z.enum(['male', 'female'], {
         required_error: 'Gender is required and must be either male or female',
       }),
@@ -42,24 +42,26 @@ const createFacultyValidationSchema = z.object({
         required_error: 'Present address is required',
       }),
       profileImage: z.string().optional(),
-      academicDepartment: z.string(),
-      academicFaculty: z.string(),
+      managmentDeparment: z.string().optional(),
+      academicFaculty: z.string({
+        required_error: 'Academic Faculty is required',
+      }),
     }),
   }),
 });
 
-// Update faculty name validation schema
-const updateFacultyNameValidationSchema = z.object({
+// Update Admin Name validation schema
+const updateAdminNameValidationSchema = z.object({
   firstName: z.string().optional(),
   secoundName: z.string().optional(),
   lastName: z.string().optional(),
 });
 
-// Update faculty validation schema
-const updateFacultyValidationSchema = z.object({
+// Update Admin validation schema
+const updateAdminValidationSchema = z.object({
   body: z.object({
-    faculty: z.object({
-      name: updateFacultyNameValidationSchema.optional(),
+    admin: z.object({
+      name: updateAdminNameValidationSchema.optional(),
       gender: z.enum(['male', 'female']).optional(),
       contactNo: z.number().optional(),
       emergencyContact: z.number().optional(),
@@ -67,13 +69,13 @@ const updateFacultyValidationSchema = z.object({
       DOB: z.string().optional(),
       presentAddress: z.string().optional(),
       profileImage: z.string().optional(),
-      academicDepartment: z.string().optional(),
+      managmentDeparment: z.string().optional(),
       academicFaculty: z.string().optional(),
     }),
   }),
 });
 
-export const facultyValidations = {
-  createFacultyValidationSchema,
-  updateFacultyValidationSchema,
+export const adminValidations = {
+  createAdminValidationSchema,
+  updateAdminValidationSchema,
 };
