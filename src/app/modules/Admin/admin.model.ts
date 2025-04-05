@@ -1,6 +1,5 @@
 import { model, Schema, Types } from 'mongoose';
 import { TAdmin, TAdminName } from './admin.interface';
-import { boolean } from 'zod';
 
 const adminNameSchema = new Schema<TAdminName>({
   firstName: { type: String },

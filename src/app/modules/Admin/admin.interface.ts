@@ -17,7 +17,7 @@ export type TAdmin = {
   contactNo: number;
   emergencyContact: number;
   presentAddress: string;
-  parmanentAddress : string;
+  parmanentAddress: string;
   profileImage?: string;
   managmentDeparment?: Types.ObjectId;
   academicFaculty: Types.ObjectId;
