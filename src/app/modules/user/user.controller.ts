@@ -46,16 +46,16 @@ const createAdmin: RequestHandler = async (req, res, next) => {
   try {
     const { password, admin: adminData } = req.body;
 
-    const result = await UserService.createAdminIntoDB(password , adminData)
+    const result = await UserService.createAdminIntoDB(password, adminData);
 
     sendResponse(res, {
       sucess: true,
       statusCode: httpStatus.OK,
       message: 'Studnent created sucessfully',
-      data: result ,
+      data: result,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 

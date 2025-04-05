@@ -129,6 +129,7 @@ const createAdminIntoDB = async (password : string , payload : Partial<TAdmin>) 
 
     session.startTransaction(); 
 
+    userData.id = await 
 
 
 

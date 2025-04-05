@@ -30,9 +30,11 @@ const createAdminValidationSchema = z.object({
       DOB: z.string({
         required_error: 'Date of birth is required',
       }),
-      email: z.string({
-        required_error: 'Email is required',
-      }).email(),
+      email: z
+        .string({
+          required_error: 'Email is required',
+        })
+        .email(),
       contactNo: z.number({
         required_error: 'Contact number is required',
       }),
@@ -47,7 +49,7 @@ const createAdminValidationSchema = z.object({
       }),
       profileImage: z.string().optional(),
       managmentDeparment: z.string().optional(),
-      academicFaculty: z.string()
+      academicFaculty: z.string(),
     }),
   }),
 });
@@ -74,7 +76,7 @@ const updateAdminValidationSchema = z.object({
       parmanentAddress: z.string().optional(),
       profileImage: z.string().optional(),
       managmentDeparment: z.string().optional(),
-      academicFaculty: z.string().optional()
+      academicFaculty: z.string().optional(),
     }),
   }),
 });

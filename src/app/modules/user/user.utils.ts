@@ -1,9 +1,10 @@
 // Import the required types and models
 import { TacademicSemester } from '../academicSemester/academicSemester.interface'; // Type for academic semester
+import { TAdmin } from '../Admin/admin.interface';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { User } from './user.model'; // User model for interacting with user data in the database
 
-// !Student_______!
+// !Student!
 
 // Function to find the most recent student ID from the database
 const findLastStudent = async () => {
@@ -68,7 +69,7 @@ export const generateStudentId = async (payload: TacademicSemester) => {
   return generatedId;
 };
 
-// !Faculty_______!
+// !Faculty!
 
 // Id Format : -->
 // F-0001
@@ -111,3 +112,63 @@ export const generateFacultyId = async (payload: TFaculty) => {
 
   return facultyId;
 };
+
+// !Admin!
+// Id Format : -->
+// A-0001
+// A-0002
+
+// TODO : Later to Read  & Understand perfectly; 
+
+/*
+NOTE : How to generate ID ---> 
+Step : ( 1 )
+1. First i have to find in User Model , if there are any admin or not .
+2. Find them by role and id , and sort it by leatest created admin time .
+3. Then retun the lastAdmin Id , If not the return undifiend 
+Step : ( 2 )
+1.
+
+*/
+
+const findLastAdmin = async () => {
+  const lastAdmin = await User.findOne(
+    {
+      role: 'admin',
+    },
+    {
+      id: 1,
+      _id: 0,
+    },
+  ).sort({
+    createdAt: -1,
+  }).lean();
+
+  return lastAdmin?.id ? lastAdmin.id : undefined;
+
+};
+// Id Format : -->
+// A-0001
+// A-0002
+const generateAdminId = async (payload: TAdmin) => {
+
+  let currentId = "0000";
+
+  const lastAdminId = await findLastAdmin();
+
+  if (lastAdminId) {
+    const lastIdNumber = lastAdminId.substring(0, 2)
+    currentId = lastIdNumber;
+  }
+
+  const incrementId = (Number(currentId + 1)).toString().padStart(4, "0")
+
+  const adminId = `A-${incrementId}`
+
+  console.log(adminId, "Generated Id buddy")
+
+
+
+
+}
+
