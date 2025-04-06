@@ -10,6 +10,23 @@ const getAdmins = catchAsync(async (req, res, next) => {
     sendResponse(res, {
       sucess: true,
       statusCode: httpStatus.FOUND,
+      message: 'Admins retrived successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+const getSingleAdmin = catchAsync(async (req, res, next) => {
+  const { adminId } = req.params;
+
+  const result = await adminService.getSingleAdminFromDB(adminId);
+
+  try {
+    sendResponse(res, {
+      sucess: true,
+      statusCode: httpStatus.FOUND,
       message: 'Admin retrived successfully',
       data: result,
     });
@@ -20,4 +37,5 @@ const getAdmins = catchAsync(async (req, res, next) => {
 
 export const adminController = {
   getAdmins,
+  getSingleAdmin,
 };

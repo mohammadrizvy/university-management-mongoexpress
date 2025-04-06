@@ -5,6 +5,15 @@ const getAdminFromDB = async () => {
   return result;
 };
 
+const getSingleAdminFromDB = async (id: string) => {
+  console.log(id, 'From service');
+
+  const result = await Admin.findOne({ id });
+
+  return result;
+};
+
 export const adminService = {
   getAdminFromDB,
+  getSingleAdminFromDB,
 };
