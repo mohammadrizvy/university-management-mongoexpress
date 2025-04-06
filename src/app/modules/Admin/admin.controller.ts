@@ -38,7 +38,7 @@ const getSingleAdmin = catchAsync(async (req, res, next) => {
 const updateAdmin = catchAsync(async (req, res, next) => {
   try {
     const { adminId } = req.params;
-    const {admin} = req.body;
+    const { admin } = req.body;
     const result = await adminService.updateAdminIntoDB(adminId, admin);
 
     sendResponse(res, {
@@ -52,8 +52,23 @@ const updateAdmin = catchAsync(async (req, res, next) => {
   }
 });
 
+const deleteAdmin = catchAsync(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await adminService.deleteAdminFromDB(id)
+    sendResponse(res , {
+      sucess : true ,
+      statusCode : httpStatus.OK,
+      message : "Admin deleted successfully",
+      data : result
+    })
+
+  } catch (error) {next(error)}
+});
+
 export const adminController = {
   getAdmins,
   getSingleAdmin,
   updateAdmin,
+  deleteAdmin,
 };
