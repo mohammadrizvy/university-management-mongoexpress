@@ -1,3 +1,4 @@
+import { flatten } from 'flat';
 import { TAdmin } from './admin.interface';
 import { Admin } from './admin.model';
 
@@ -14,14 +15,22 @@ const getSingleAdminFromDB = async (id: string) => {
 
 const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
 
-  console.log(id , payload , "From service")
+  const updatedData: Record<string, unknown> = flatten(payload);
 
+  console.log(updatedData);
 
+  const result = await Admin.findOneAndUpdate({ id }, updatedData, {
+    new: true,
+    runValidators: true,
+  });
 
+  
+
+  return result;
 };
 
 export const adminService = {
   getAdminFromDB,
   getSingleAdminFromDB,
-  updateAdminIntoDB
+  updateAdminIntoDB,
 };

@@ -66,7 +66,7 @@ const updateFacultyIntoDB = async (
   facultyId: string,
   payload: Partial<TFaculty>,
 ) => {
-  console.log('Updating faculty:', facultyId, payload);
+  // console.log('Updating faculty:', facultyId, payload);
 
   // Use the flat library to flatten the nested object structure
   // The flatten function will convert nested objects to dot notation
@@ -83,7 +83,7 @@ const updateFacultyIntoDB = async (
     },
   );
 
-  console.log('Update result:', result);
+  // console.log('Update result:', result);
   return result;
 };
 
