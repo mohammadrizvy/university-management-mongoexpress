@@ -31,6 +31,9 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
 };
 
 const deleteAdminFromDB = async (id: string) => {
+
+  console.log(id, "Form service")
+
   const session = await mongoose.startSession();
 
   try {
@@ -60,7 +63,7 @@ const deleteAdminFromDB = async (id: string) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    throw new AppError(httpStatus.BAD_REQUEST, 'Fail to delete Faculty');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Fail to delete admin');
   }
 };
 

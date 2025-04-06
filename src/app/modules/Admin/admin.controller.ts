@@ -54,8 +54,9 @@ const updateAdmin = catchAsync(async (req, res, next) => {
 
 const deleteAdmin = catchAsync(async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const result = await adminService.deleteAdminFromDB(id);
+    const { adminId } = req.params;
+    console.log(adminId , "From controller")
+    const result = await adminService.deleteAdminFromDB(adminId);
     sendResponse(res, {
       sucess: true,
       statusCode: httpStatus.OK,
