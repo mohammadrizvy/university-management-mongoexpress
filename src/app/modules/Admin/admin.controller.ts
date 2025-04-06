@@ -19,11 +19,11 @@ const getAdmins = catchAsync(async (req, res, next) => {
 });
 
 const getSingleAdmin = catchAsync(async (req, res, next) => {
-  const { adminId } = req.params;
-
-  const result = await adminService.getSingleAdminFromDB(adminId);
-
   try {
+    const { adminId } = req.params;
+
+    const result = await adminService.getSingleAdminFromDB(adminId);
+
     sendResponse(res, {
       sucess: true,
       statusCode: httpStatus.FOUND,
@@ -35,7 +35,28 @@ const getSingleAdmin = catchAsync(async (req, res, next) => {
   }
 });
 
+const updateAdmin = catchAsync(async (req, res, next) => {
+  try {
+    const {adminId} = req.params;
+    const data = req.body
+
+    console.log(adminId, data);
+
+    const result = await adminService.updateAdminIntoDB(adminId, data)
+
+    sendResponse(res, {
+      sucess: true,
+      statusCode: httpStatus.FOUND,
+      message: 'Admin updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export const adminController = {
   getAdmins,
   getSingleAdmin,
+  updateAdmin,
 };
