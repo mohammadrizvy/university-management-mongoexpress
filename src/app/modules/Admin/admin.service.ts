@@ -2,6 +2,9 @@ import { flatten } from 'flat';
 import { TAdmin } from './admin.interface';
 import { Admin } from './admin.model';
 import mongoose from 'mongoose';
+import { AppError } from '../../Errors/AppErrors';
+import httpStatus from 'http-status';
+import { User } from '../user/user.model';
 
 const getAdminFromDB = async () => {
   const result = await Admin.find();
@@ -27,31 +30,43 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
   return result;
 };
 
-const deleteAdminFromDB = async (id : string) => {
-
-  const session = await mongoose.startSession(); 
-
+const deleteAdminFromDB = async (id: string) => {
+  const session = await mongoose.startSession();
 
   try {
-
-    session.startTransaction()
-    const deleteAdmin = await Admin.findOneAndUpdate({id} ,{ isDeleted : true} , {new : true , runValidators : true, session})
-    if(!deleteAdmin){
-
+    session.startTransaction();
+    const deleteAdmin = await Admin.findOneAndUpdate(
+      { id },
+      { isDeleted: true },
+      { new: true, runValidators: true, session },
+    );
+    if (!deleteAdmin) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Faild to delete admin');
     }
 
-    
+    const deleteUser = await User.findOneAndUpdate(
+      { id },
+      { isDeleted: true },
+      { new: true, runValidators: true, session },
+    );
+    if (!deleteUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Faild to delete user');
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return deleteAdmin;
   } catch (error) {
-    
+    await session.abortTransaction();
+    await session.endSession();
+    throw new AppError(httpStatus.BAD_REQUEST, 'Fail to delete Faculty');
   }
-
-
-}
-
+};
 
 export const adminService = {
   getAdminFromDB,
   getSingleAdminFromDB,
   updateAdminIntoDB,
-  deleteAdminFromDB 
+  deleteAdminFromDB,
 };
