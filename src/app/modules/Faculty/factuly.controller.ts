@@ -20,7 +20,6 @@ const getFaculty = catchAsync(async (req, res, next) => {
 const getSingleFaculty = catchAsync(async (req, res, next) => {
   try {
     const facultyId = req.params.facultyId;
-    // console.log(facultyId, 'From controller');
     const result = await FacultyServices.getSingleFacultyFromDB(facultyId);
     sendResponse(res, {
       sucess: true,

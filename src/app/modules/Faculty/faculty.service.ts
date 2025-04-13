@@ -60,7 +60,7 @@ const getSingleFacultyFromDB = async (facultyId: string) => {
 //   return result;
 // };
 
-// TODO : Using FLAT package for updating data (NON-Primitive)
+// README : Using FLAT package for updating data (NON-Primitive)
 
 const updateFacultyIntoDB = async (
   facultyId: string,
