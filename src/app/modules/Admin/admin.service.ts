@@ -31,8 +31,7 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
 };
 
 const deleteAdminFromDB = async (id: string) => {
-
-  console.log(id, "Form service")
+  console.log(id, 'Form service');
 
   const session = await mongoose.startSession();
 
