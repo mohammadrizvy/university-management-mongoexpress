@@ -18,7 +18,9 @@ const getSingleAdminFromDB = async (id: string) => {
 };
 
 const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
-  const updatedData: Record<string, unknown> = flatten(payload);
+  const flatModule = await import('flat');
+  const flatten = flatModule.flatten;
+  const updatedData: Record<string, unknown> = await flatten(payload);
 
   console.log(updatedData);
 

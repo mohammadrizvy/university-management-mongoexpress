@@ -70,6 +70,8 @@ const updateFacultyIntoDB = async (
 
   // Use the flat library to flatten the nested object structure
   // The flatten function will convert nested objects to dot notation
+  const flatModule = await import('flat');
+  const flatten = flatModule.flatten;
   const modifiedUpdatedData: Record<string, unknown> = flatten(payload);
 
   console.log('Flattened update data:', modifiedUpdatedData);
