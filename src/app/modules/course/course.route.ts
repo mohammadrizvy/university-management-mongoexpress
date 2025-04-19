@@ -7,10 +7,8 @@ const router = express.Router();
 
 router.post(
   '/create-course',
-  validateRequest(
-    courseValidations.createCourseValidationSchema,
-  ),
-  courseController.createCourse
+  validateRequest(courseValidations.createCourseValidationSchema),
+  courseController.createCourse,
 );
 
 router.get('/', courseController.getCourse);
@@ -19,12 +17,10 @@ router.get('/:id', courseController.getSingleCourse);
 
 router.delete('/:id', courseController.deleteCourse);
 
-// router.patch(
-//   '/:facultyId',
-//   validateRequest(
-//     academicFacultyValidation.updateAcademicFacultyValidationSchema,
-//   ),
-//   courseController.updateAcademicFaculty,
-// );
+router.patch(
+  '/:id',
+  validateRequest(courseValidations.updateCourseValiationSchema),
+  courseController.updateCourese,
+);
 
 export const courseRoutes = router;
