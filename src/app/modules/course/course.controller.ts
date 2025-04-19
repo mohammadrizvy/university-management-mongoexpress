@@ -24,7 +24,7 @@ const getCourse = catchAsync(async (req, res, next) => {
 });
 
 const getSingleCourse = catchAsync(async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const result = await courseServices.getSingleCourse(id);
   sendResponse(res, {
     sucess: true,
@@ -61,5 +61,8 @@ const deleteCourse = catchAsync(async (req, res, next) => {
 });
 
 export const facultyController = {
- createCourse, getCourse ,getSingleCourse ,deleteCourse
+  createCourse,
+  getCourse,
+  getSingleCourse,
+  deleteCourse,
 };

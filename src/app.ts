@@ -16,7 +16,7 @@ app.use('/api/v1', router);
 // ! ------ Test
 
 const test = async (req: Request, res: Response) => {
-  console.log("hi there")
+  console.log('hi there');
 };
 
 app.get('/', test);
