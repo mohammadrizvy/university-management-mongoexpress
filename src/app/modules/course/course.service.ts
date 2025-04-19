@@ -9,7 +9,7 @@ const createCourseIntoDB = async (payload: TCourse) => {
 };
 
 const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
-  const courseQuery = new QueryBuilder(Course.find().populate("PreRequisiteCourses.course"), query)
+  const courseQuery = new QueryBuilder(Course.find().populate("preRequisiteCourses.course"), query)
     .search(courseSearchableFields)
     .filter()
     .sort()
@@ -19,7 +19,8 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 const getSingleCourse = async (id: string) => {
-  const result = await Course.findById({ id });
+  console.log(id)
+  const result = await Course.findById( id );
   return result;
 };
 
