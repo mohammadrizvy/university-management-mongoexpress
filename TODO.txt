@@ -2,4 +2,4 @@
 1 . Faculty querybuilder implementaion ; 
 2 . Factulty populate ; 
 3 . Faculty data model refactor ; 
-4 . Replace findOne with findById ; 
+4 . Replace all findOne with findById ; 
