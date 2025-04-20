@@ -61,6 +61,23 @@ const deleteCourse = catchAsync(async (req, res, next) => {
   });
 });
 
+const assignFaculties = catchAsync(async (req, res, next) => {
+  const { courseId } = req.params;
+  const { faculties } = req.body;
+
+  const result = await courseServices.createCourseIntoDB(courseId , faculties)
+
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Course deleted successfully',
+    data: result,
+  });
+
+
+
+});
+
 export const courseController = {
   createCourse,
   getCourse,

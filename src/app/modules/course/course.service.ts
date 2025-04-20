@@ -123,6 +123,8 @@ const deleteCourseFromDB = async (id: string) => {
   return result;
 };
 
+const assignFacultiesIntoDB = async(id : string , payload : ) 
+
 export const courseServices = {
   createCourseIntoDB,
   getAllCoursesFromDB,
