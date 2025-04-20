@@ -17,7 +17,11 @@ router.get('/:id', courseController.getSingleCourse);
 
 router.delete('/:id', courseController.deleteCourse);
 
-router.put("/:courseId/assign-faculties" )
+router.put(
+  '/:courseId/assign_faculties',
+  validateRequest(courseValidations.courseFacultySchemanSchema), // Fixed schema name
+  courseController.assignFacultiesWithCourse,
+);
 
 router.patch(
   '/:id',
