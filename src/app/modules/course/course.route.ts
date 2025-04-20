@@ -19,8 +19,13 @@ router.delete('/:id', courseController.deleteCourse);
 
 router.put(
   '/:courseId/assign_faculties',
-  validateRequest(courseValidations.courseFacultySchemanSchema), // Fixed schema name
+  validateRequest(courseValidations.courseFacultyWithValidationSchema), // Fixed schema name
   courseController.assignFacultiesWithCourse,
+);
+router.delete(
+  '/:courseId/remove_faculties',
+  validateRequest(courseValidations.courseFacultyWithValidationSchema),
+  courseController.removeFacultiesWithCourse,
 );
 
 router.patch(
