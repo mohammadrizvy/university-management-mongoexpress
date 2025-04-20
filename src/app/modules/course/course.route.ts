@@ -19,7 +19,7 @@ router.delete('/:id', courseController.deleteCourse);
 
 router.patch(
   '/:id',
-  validateRequest(courseValidations.updateCourseValiationSchema),
+  validateRequest(courseValidations.updateCreateCourseValidationSchema),
   courseController.updateCourese,
 );
 
