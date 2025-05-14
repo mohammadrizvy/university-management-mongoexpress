@@ -28,6 +28,7 @@ const modulesRoutes = [
   { path: '/academic-faculty', route: academicFacultyRoutes },
   { path: '/academic-department', route: academicDepartmentRoutes },
   { path: '/courses', route: courseRoutes },
+  { path: '/semester-registration', route: courseRoutes },
 ];
 
 // router.use('/users', userRoutes);
