@@ -7,6 +7,4 @@ export type TSemesteRegistration = {
     endDate : Date ; 
     minCredit : number; 
     maxCredit : number;
-    createdAt  : Date ;
-    updatedAt : Date ; 
 }
