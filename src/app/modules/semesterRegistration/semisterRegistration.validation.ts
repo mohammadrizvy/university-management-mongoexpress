@@ -9,6 +9,9 @@ const createSemesterRegistrationValidationSchema = z.object({
         endDate : z.string().datetime(),
         minCredit : z.number(),
         maxCredit : z.number(),
-
     })
 })
+
+export const SemesterRegistrationValidations = {
+    createSemesterRegistrationValidationSchema
+}
