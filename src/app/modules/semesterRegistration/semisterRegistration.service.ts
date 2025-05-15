@@ -44,7 +44,12 @@ const createSemesterRegistrationIntoDB = async (
   return result;
 };
 
-const getAllSemesterRegistrationFromDB = async () => {};
+const getAllSemesterRegistrationFromDB = async () => {
+
+    const result = SemesterRegistration.find()
+    return result; 
+
+};
 
 const getSingleSemesterRegistrationFromDB = async () => {};
 
