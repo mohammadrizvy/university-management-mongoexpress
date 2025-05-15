@@ -1,7 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TSemesteRegistration } from './semisterRegistration.interface';
 import { SemesterRegistrationStatus } from './semesterRegistration.const';
-import { timeStamp } from 'console';
 
 const semesterRegistrationSchema = new Schema<TSemesteRegistration>({
   academicSemester: {
