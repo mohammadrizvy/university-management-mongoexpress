@@ -8,10 +8,12 @@ const createSemesterRegistrationIntoDB = async (
   payload: TSemesteRegistration,
 ) => {
   /**
-   * (1) So basically what happend here is , First we check if the the semester dose exits on DB or not .
-   * If not then it will show thorw and an error .
-   * (2) Then in 2nd phase we are checking if the semester is already registerd or not .
-   * If not then it will pass or if the semster is alredy registerd it will throw conflict error that "This semester is already registerd!"
+   * (1) First, we check whether the semester exists in the database.
+   *     If it doesn't, an error will be thrown.
+   *
+   * (2) Next, we check if the semester is already registered.
+   *     If it isn't, the process continues. If it is already registered,
+   *     a conflict error will be thrown with the message: "This semester is already registered!"
    */
 
   const academicSemester = payload?.academicSemester;
