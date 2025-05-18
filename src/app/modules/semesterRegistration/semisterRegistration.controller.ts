@@ -44,8 +44,15 @@ const getSingleSemesterRegistration = catchAsync(async (req, res) => {
   });
 });
 
+
+const updateSemesterRegistration = catchAsync(async (req , res) => {
+
+
+})
+
 export const semesterRegistrationControllers = {
   createSemesterRegistration,
   getAllSemesterRegistration,
   getSingleSemesterRegistration,
+  updateSemesterRegistration
 };
