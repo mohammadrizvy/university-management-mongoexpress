@@ -45,7 +45,21 @@ const getSingleSemesterRegistration = catchAsync(async (req, res) => {
 });
 
 
-const updateSemesterRegistration = catchAsync(async (req , res) => {
+const updateSemesterRegistration = catchAsync(async (req , res ) => {
+
+  const {id} = req.params; 
+
+
+  const result = await 
+
+
+
+   sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.FOUND,
+    message: 'All Semster Registerd retrived succesfully',
+    data: result,
+  });
 
 
 })
