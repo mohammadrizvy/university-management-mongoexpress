@@ -9,18 +9,9 @@ const createSemesterRegistrationIntoDB = async (
   payload: TSemesteRegistration,
 ) => {
   /**
-   * (1) First, we check whether the semester exists in the database.
-   *     If it doesn't, an error will be thrown.
-   *
-   * (2) Next, we check if the semester is already registered.
-   *     If it isn't, the process continues. If it is already registered,
-   *     a conflict error will be thrown with the message: "This semester is already registered!"
+   * Step 1: Ensure no semester with "UPCOMING" or "ONGOING" status already exists.
+   *         Only one semester can be active or upcoming at any given time.
    */
-
-  const academicSemester = payload?.academicSemester;
-
-  //? check if there any registried semester that is already "UPCOMING" or "ONGOING"
-
   const isThereAnyUpcomingOrOngoingSemester =
     await SemesterRegistration.findOne({
       $or: [{ status: 'UPCOMING' }, { status: 'ONGOING' }],
@@ -29,31 +20,44 @@ const createSemesterRegistrationIntoDB = async (
   if (isThereAnyUpcomingOrOngoingSemester) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      `There is alredy ${isThereAnyUpcomingOrOngoingSemester.status}`,
+      `There is already a ${isThereAnyUpcomingOrOngoingSemester.status} registered semester.`,
     );
   }
 
-  //?  Check if the semester dose exits?
-  const isAcademicSemesterExits =
+  const academicSemester = payload?.academicSemester;
+
+  /**
+   * Step 2: Verify that the academic semester exists in the database.
+   *         If not found, throw a "Not Found" error.
+   */
+  const isAcademicSemesterExists =
     await AcademicSemester.findById(academicSemester);
-  if (!isAcademicSemesterExits) {
+
+  if (!isAcademicSemesterExists) {
     throw new AppError(
       httpStatus.NOT_FOUND,
-      'This academic semester is not found !',
+      'The specified academic semester was not found.',
     );
   }
-  //?   Check if the semester is already registerd or not
-  const isSemesterRegistrationExits = await SemesterRegistration.findOne({
+
+  /**
+   * Step 3: Check if the semester is already registered.
+   *         If yes, throw a "Conflict" error to prevent duplicate registration.
+   */
+  const isSemesterAlreadyRegistered = await SemesterRegistration.findOne({
     academicSemester,
   });
 
-  if (isSemesterRegistrationExits) {
+  if (isSemesterAlreadyRegistered) {
     throw new AppError(
       httpStatus.CONFLICT,
-      'This semester is already registerd ! ',
+      'This semester is already registered.',
     );
   }
 
+  /**
+   * Step 4: Create a new semester registration with the provided payload.
+   */
   const result = await SemesterRegistration.create(payload);
 
   return result;
@@ -82,10 +86,20 @@ const getSingleSemesterRegistrationFromDB = async (id: string) => {
   return result;
 };
 
-const updateSemesterRegistrationIntoDB = async (id: string) => {
+const updateSemesterRegistrationIntoDB = async (
+  id: string,
+  payload: Partial<TSemesteRegistration>,
+) => {
+  // If the requested semester is ENDED,  the we will not update anything
 
+  const requestedSemesterStatus = await SemesterRegistration.findById(id);
 
-
+  if (requestedSemesterStatus?.status == 'ENDED') {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `This semester is already ${requestedSemesterStatus.status}`,
+    );
+  }
 };
 
 export const semesterRegistrationServices = {
