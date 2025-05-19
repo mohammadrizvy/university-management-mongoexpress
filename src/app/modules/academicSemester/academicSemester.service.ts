@@ -14,7 +14,7 @@ const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
 };
 
 const getAcademicSemesterFromDB = async () => {
-  const result = await AcademicSemester.find();
+  const result = await AcademicSemester.find().lean();
   return result;
 };
 
