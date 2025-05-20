@@ -101,7 +101,7 @@ const updateSemesterRegistrationIntoDB = async (
   // If the requested semester is ENDED,  the we will not update anything
 
   const currentSemesterStatus = isSemsesterExits.status;
-  const requestedStatus = payload?.status; 
+  const requestedStatus = payload?.status;
 
   if (currentSemesterStatus == 'ENDED') {
     throw new AppError(
@@ -112,21 +112,25 @@ const updateSemesterRegistrationIntoDB = async (
 
   // UPCOMING -> ONGOING -> ENDED (Update flow)
 
-  if(currentSemesterStatus === "UPCOMING" && requestedStatus === "ENDED" ){
+  if (currentSemesterStatus === 'UPCOMING' && requestedStatus === 'ENDED') {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `You can't directly change status from ${currentSemesterStatus} to ${requestedStatus}`,
     );
   }
 
-  if(currentSemesterStatus === "ONGOING" && requestedStatus === "UPCOMING" ){
+  if (currentSemesterStatus === 'ONGOING' && requestedStatus === 'UPCOMING') {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `You can't directly change status from ${currentSemesterStatus} to ${requestedStatus}`,
     );
   }
 
-
+  const result = await SemesterRegistration.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+  return result
 };
 
 export const semesterRegistrationServices = {
