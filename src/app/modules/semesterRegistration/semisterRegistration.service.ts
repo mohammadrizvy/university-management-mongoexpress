@@ -39,7 +39,7 @@ const createSemesterRegistrationIntoDB = async (
       'The specified academic semester was not found.',
     );
   }
- 
+
   /**
    * Step 3: Check if the semester is already registered.
    *         If yes, throw a "Conflict" error to prevent duplicate registration.
@@ -90,14 +90,22 @@ const updateSemesterRegistrationIntoDB = async (
   id: string,
   payload: Partial<TSemesteRegistration>,
 ) => {
+  // Check if the requested registerd semester exits in the DB or not !
+
+  const isSemsesterExits = await SemesterRegistration.findById(id);
+
+  if (!isSemsesterExits) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Semester dose not exits');
+  }
+
   // If the requested semester is ENDED,  the we will not update anything
 
-  const requestedSemesterStatus = await SemesterRegistration.findById(id);
+  const requestedSemesterStatus = isSemsesterExits.status;
 
-  if (requestedSemesterStatus?.status == 'ENDED') {
+  if (requestedSemesterStatus == 'ENDED') {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      `This semester is already ${requestedSemesterStatus.status}`,
+      `This semester is already ${requestedSemesterStatus}`,
     );
   }
 };
