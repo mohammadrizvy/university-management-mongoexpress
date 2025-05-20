@@ -119,6 +119,13 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
+  if(currentSemesterStatus === "ONGOING" && requestedStatus === "UPCOMING" ){
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can't directly change status from ${currentSemesterStatus} to ${requestedStatus}`,
+    );
+  }
+
 
 };
 
