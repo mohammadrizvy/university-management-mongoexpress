@@ -4,6 +4,7 @@ import { TSemesteRegistration } from './semisterRegistration.interface';
 import httpStatus from 'http-status';
 import { SemesterRegistration } from './semisterRegistration.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { RegistrationStatus } from './semesterRegistration.const';
 
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesteRegistration,
@@ -13,7 +14,10 @@ const createSemesterRegistrationIntoDB = async (
 
   const isThereAnyUpcomingOrOngoingSemester =
     await SemesterRegistration.findOne({
-      $or: [{ status: 'UPCOMING' }, { status: 'ONGOING' }],
+      $or: [
+        { status: RegistrationStatus.UPCOMING },
+        { status: RegistrationStatus.ONGOING },
+      ],
     });
 
   if (isThereAnyUpcomingOrOngoingSemester) {
@@ -99,7 +103,7 @@ const updateSemesterRegistrationIntoDB = async (
   const currentSemesterStatus = isSemsesterExits.status;
   const requestedStatus = payload?.status;
 
-  if (currentSemesterStatus == 'ENDED') {
+  if (currentSemesterStatus == RegistrationStatus.ENDED) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `This semester is already ${currentSemesterStatus}`,
@@ -108,14 +112,20 @@ const updateSemesterRegistrationIntoDB = async (
 
   // UPCOMING -> ONGOING -> ENDED (Update flow)
 
-  if (currentSemesterStatus === 'UPCOMING' && requestedStatus === 'ENDED') {
+  if (
+    currentSemesterStatus === RegistrationStatus.UPCOMING &&
+    requestedStatus === RegistrationStatus.ENDED
+  ) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `You can't directly change status from ${currentSemesterStatus} to ${requestedStatus}`,
     );
   }
 
-  if (currentSemesterStatus === 'ONGOING' && requestedStatus === 'UPCOMING') {
+  if (
+    currentSemesterStatus === RegistrationStatus.ONGOING &&
+    requestedStatus === RegistrationStatus.UPCOMING
+  ) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `You can't directly change status from ${currentSemesterStatus} to ${requestedStatus}`,
