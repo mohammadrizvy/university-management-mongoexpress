@@ -8,10 +8,9 @@ import QueryBuilder from '../../builder/QueryBuilder';
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesteRegistration,
 ) => {
-  /**
-   * Step 1: Ensure no semester with "UPCOMING" or "ONGOING" status already exists.
-   *         Only one semester can be active or upcoming at any given time.
-   */
+  // Step 1: Ensure no semester with "UPCOMING" or "ONGOING" status already exists.
+  // Only one semester can be active or upcoming at any given time.
+
   const isThereAnyUpcomingOrOngoingSemester =
     await SemesterRegistration.findOne({
       $or: [{ status: 'UPCOMING' }, { status: 'ONGOING' }],
@@ -26,10 +25,9 @@ const createSemesterRegistrationIntoDB = async (
 
   const academicSemester = payload?.academicSemester;
 
-  /**
-   * Step 2: Verify that the academic semester exists in the database.
-   *         If not found, throw a "Not Found" error.
-   */
+  // Step 2: Verify that the academic semester exists in the database.
+  // If not found, throw a "Not Found" error.
+
   const isAcademicSemesterExists =
     await AcademicSemester.findById(academicSemester);
 
@@ -40,10 +38,9 @@ const createSemesterRegistrationIntoDB = async (
     );
   }
 
-  /**
-   * Step 3: Check if the semester is already registered.
-   *         If yes, throw a "Conflict" error to prevent duplicate registration.
-   */
+  //  Step 3: Check if the semester is already registered.
+  //  If yes, throw a "Conflict" error to prevent duplicate registration.
+
   const isSemesterAlreadyRegistered = await SemesterRegistration.findOne({
     academicSemester,
   });
@@ -55,9 +52,8 @@ const createSemesterRegistrationIntoDB = async (
     );
   }
 
-  /**
-   * Step 4: Create a new semester registration with the provided payload.
-   */
+  // Step 4: Create a new semester registration with the provided payload.
+
   const result = await SemesterRegistration.create(payload);
 
   return result;
@@ -130,7 +126,7 @@ const updateSemesterRegistrationIntoDB = async (
     new: true,
     runValidators: true,
   });
-  return result
+  return result;
 };
 
 export const semesterRegistrationServices = {

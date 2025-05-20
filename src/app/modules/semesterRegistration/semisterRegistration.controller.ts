@@ -12,7 +12,7 @@ const createSemesterRegistration = catchAsync(async (req, res) => {
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.CREATED,
-    message: 'Semster Registerd succesfully',
+    message: 'Semster Registerd create succesfully',
     data: result,
   });
 });
@@ -39,7 +39,7 @@ const getSingleSemesterRegistration = catchAsync(async (req, res) => {
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.FOUND,
-    message: 'Semster Registerd retrived succesfully',
+    message: 'Single semster Registerd retrived succesfully',
     data: result,
   });
 });
@@ -56,7 +56,7 @@ const updateSemesterRegistration = catchAsync(async (req, res) => {
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.FOUND,
-    message: 'All Semster Registerd retrived succesfully',
+    message: 'Semster Registerd updated succesfully',
     data: result,
   });
 });
