@@ -39,7 +39,7 @@ const createSemesterRegistrationIntoDB = async (
       'The specified academic semester was not found.',
     );
   }
-
+ 
   /**
    * Step 3: Check if the semester is already registered.
    *         If yes, throw a "Conflict" error to prevent duplicate registration.

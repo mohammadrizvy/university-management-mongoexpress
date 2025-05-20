@@ -23,8 +23,8 @@ router.patch(
   '/:id',
   validateRequest(
     SemesterRegistrationValidations.updateSemesterRegistrationValidationSchema,
-    semesterRegistrationControllers.updateSemesterRegistration,
   ),
+  semesterRegistrationControllers.updateSemesterRegistration,
 );
 
 export const semesterRegistrationRoutes = router;
