@@ -1,1 +1,1 @@
-export  const Days = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"] as const;
+export const Days = ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'] as const;

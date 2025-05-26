@@ -30,7 +30,7 @@ const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
     section: { type: Number, required: true },
     day: {
       type: String,
-      enum: Days ,
+      enum: Days,
       required: true,
     },
     startTime: { type: String, required: true },
@@ -38,7 +38,6 @@ const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
   },
   {},
 );
-
 
 export const OfferedCourse = mongoose.model<TOfferedCourse>(
   'OfferedCourse',
