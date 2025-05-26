@@ -1,1 +1,1 @@
-export type Days = 'Sat' | 'Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri';
+export  const Days = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"] as const;

@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { Days } from './offeredCourse.const';
+export type Days = 'Sat' | 'Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri';
 
 export type TOfferedCourse = {
   SemesterRegistration: Types.ObjectId;
