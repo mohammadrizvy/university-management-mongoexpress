@@ -1,8 +1,10 @@
 import express from 'express';
 import { offeredCourseControllers } from './offeredCourse.controller';
+import validateRequest from '../../middlewares/validateRequest';
+import { OfferedCourseValidation } from './offeredCourse.validation';
 const router = express.Router();
 
-router.post('/', offeredCourseControllers.createOfferCourse);
+router.post('/', validateRequest(OfferedCourseValidation.createOfferedCourseValidationSchema), offeredCourseControllers.createOfferCourse);
 router.get('/');
 
 export const offeredCourseRouter = router;
