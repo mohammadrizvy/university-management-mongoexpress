@@ -5,4 +5,3 @@ export const RegistrationStatus = {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
 } as const;
-
