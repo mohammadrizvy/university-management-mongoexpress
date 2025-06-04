@@ -4,7 +4,11 @@ import validateRequest from '../../middlewares/validateRequest';
 import { OfferedCourseValidation } from './offeredCourse.validation';
 const router = express.Router();
 
-router.post('/', validateRequest(OfferedCourseValidation.createOfferedCourseValidationSchema), offeredCourseControllers.createOfferCourse);
+router.post(
+  '/create-offer-course',
+  validateRequest(OfferedCourseValidation.createOfferedCourseValidationSchema),
+  offeredCourseControllers.createOfferCourse,
+);
 router.get('/');
 
 export const offeredCourseRouter = router;

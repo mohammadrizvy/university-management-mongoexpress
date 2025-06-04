@@ -4,7 +4,7 @@ import { TOfferedCourse } from './offeredCourse.interface';
 
 const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
   {
-    SemesterRegistration: {
+    semesterRegistration: {
       type: Schema.Types.ObjectId,
       ref: 'SemesterRegistration',
       required: true,
