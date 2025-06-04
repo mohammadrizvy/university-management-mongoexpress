@@ -10,9 +10,19 @@ const createOfferedCourseValidationSchema = z.object({
     faculty: z.string(),
     maxCapacity: z.number(),
     section: z.number(),
-    day: z.enum([...Days] as [string, ...string[]]),
-    startTime: z.string(),
-    endTime: z.string(),
+    days: z.array(z.enum([...Days] as [string, ...string[]])),
+    startTime: z.string().refine((time) => {
+      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      return regex.test(time);
+    }, {
+      message: "Start time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+    }),
+    endTime: z.string().refine((time) => {
+      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      return regex.test(time);
+    }, {
+      message: "End time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+    }),
   }),
 });
 
@@ -20,9 +30,19 @@ const updateOfferedCourseValidationSchema = z.object({
   body: z.object({
     faculty: z.string().optional(),
     maxCapacity: z.number().optional(),
-    day: z.enum([...Days] as [string, ...string[]]).optional(),
-    startTime: z.string().optional(),
-    endTime: z.string().optional(),
+    days: z.array(z.enum([...Days] as [string, ...string[]])).optional(),
+    startTime: z.string().refine((time) => {
+      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      return regex.test(time);
+    }, {
+      message: "Start time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+    }).optional(),
+    endTime: z.string().refine((time) => {
+      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      return regex.test(time);
+    }, {
+      message: "End time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+    }).optional(),
   }),
 });
 
