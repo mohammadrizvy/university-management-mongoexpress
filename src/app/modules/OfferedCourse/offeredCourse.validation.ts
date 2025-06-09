@@ -24,7 +24,6 @@ const createOfferedCourseValidationSchema = z.object({
       message: "End time must be in 24-hour format (e.g., 09:30, 14:45)"
     }),
   }).refine((body) => {
-    console.log(body)
     const start = new Date (`1970-01-01T${body.startTime}:00`)
     const end = new Date (`1970-01-01T${body.endTime}:00`)
     return end > start; 
