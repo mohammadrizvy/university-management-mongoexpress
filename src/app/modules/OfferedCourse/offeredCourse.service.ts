@@ -15,6 +15,7 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
     academicDepartment,
     course,
     faculty,
+    section,
   } = payload;
   //! Check if the SemesterRegistration id is exists
   const isSemesterRegistrationExits =
@@ -24,7 +25,7 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
     throw new AppError(httpStatus.NOT_FOUND, 'Semester Registration not found');
   }
   //? Extracting academicSemester from isSemesterRegistrationExits
-  const academicSemester = isSemesterRegistrationExits.academicSemester
+  const academicSemester = isSemesterRegistrationExits.academicSemester;
 
   //! Check if the AcademicFaculty id is exists
   const isAcademicFacultyExits =
@@ -53,16 +54,32 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
     throw new AppError(httpStatus.NOT_FOUND, 'Faculty not found');
   }
 
-  //? check if the department is belong to that faculty? 
-// TODO : Yet to understand this topic !!! 
+  //? check if the department is belong to that faculty?
+  // TODO : Yet to understand this topic !!!
   const isDepartmentBelongToFaculty = await AcademicDepartment.findOne({
+    _id : academicDepartment,
     academicFaculty,
-    academicDepartment
-  })
+  });
 
-    if (!isDepartmentBelongToFaculty) {
-    throw new AppError(httpStatus.NOT_FOUND, `This ${isAcademicDepartmentExits.name} is not belong to this ${isAcademicDepartmentExits.name} faculty `);
+  if (!isDepartmentBelongToFaculty) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      `This ${isAcademicDepartmentExits.name} is not belong to this ${isAcademicDepartmentExits.name} faculty `,
+    );
   }
+
+  //! Check if the  same offerd course same section in same registerd semester exists
+
+  const isSameOfferedCourseExitsWithSameRegistredSemesterWithSameSection =
+    await OfferedCourse.findOne({
+      semesterRegistration,
+      course,
+      section,
+    });
+
+    if(isSameOfferedCourseExitsWithSameRegistredSemesterWithSameSection){
+        throw new AppError(httpStatus.NOT_FOUND, 'Offered course with same section already exits!');
+    }
 
   const result = await OfferedCourse.create({ ...payload, academicSemester });
   return result;

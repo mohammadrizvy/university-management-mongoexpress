@@ -28,10 +28,12 @@ const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
     faculty: { type: Schema.Types.ObjectId, ref: 'Faculty', required: true },
     maxCapacity: { type: Number, required: true },
     section: { type: Number, required: true },
-    days: [{
-      type: String,
-      enum: Days,
-    }],
+    days: [
+      {
+        type: String,
+        enum: Days,
+      },
+    ],
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
   },
