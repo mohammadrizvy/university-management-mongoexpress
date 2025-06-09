@@ -16,6 +16,9 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
     course,
     faculty,
     section,
+    days,
+    startTime,
+    endTime,
   } = payload;
   //! Check if the SemesterRegistration id is exists
   const isSemesterRegistrationExits =
@@ -57,13 +60,13 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
   //? check if the department is belong to that faculty?
   // TODO : Yet to understand this topic !!!
   const isDepartmentBelongToFaculty = await AcademicDepartment.findOne({
-    _id : academicDepartment,
+    _id: academicDepartment,
     academicFaculty,
   });
 
   if (!isDepartmentBelongToFaculty) {
     throw new AppError(
-      httpStatus.NOT_FOUND,
+      httpStatus.BAD_REQUEST,
       `This ${isAcademicDepartmentExits.name} is not belong to this ${isAcademicDepartmentExits.name} faculty `,
     );
   }
@@ -77,11 +80,41 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
       section,
     });
 
-    if(isSameOfferedCourseExitsWithSameRegistredSemesterWithSameSection){
-        throw new AppError(httpStatus.NOT_FOUND, 'Offered course with same section already exits!');
+  if (isSameOfferedCourseExitsWithSameRegistredSemesterWithSameSection) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Offered course with same section already exits!',
+    );
+  }
+
+  // ! Get the schedules of the faculties (Mean : By this function it will find all of offered couse that this faculty will take )
+
+  const assignedSchedules = await OfferedCourse.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: days },
+  }).select('days startTime endTime ');
+
+  console.log(assignedSchedules);
+
+  const newSchedules = { days, startTime, endTime };
+
+  assignedSchedules.forEach((shcedule) => {
+    const existingStartTime = new Date(`1970-01-01T${shcedule.startTime}`);
+    const existingEndTime = new Date(`1970-01-01T${shcedule.endTime}`);
+    const newStartTime = new Date(`1970-01-01T${newSchedules.startTime}`);
+    const newEndTime = new Date(`1970-01-01T${newSchedules.endTime}`);
+
+    if (newStartTime < existingEndTime && newEndTime > existingStartTime) {
+      throw new AppError(
+        httpStatus.CONFLICT,
+        'This faculty is now availabe at that time ! Choose another faculty or date and time ',
+      );
     }
+  });
 
   const result = await OfferedCourse.create({ ...payload, academicSemester });
+
   return result;
 };
 
