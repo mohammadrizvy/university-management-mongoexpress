@@ -54,14 +54,14 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
   }
 
   //? check if the department is belong to that faculty? 
-
+// TODO : Yet to understand this topic !!! 
   const isDepartmentBelongToFaculty = await AcademicDepartment.findOne({
     academicFaculty,
     academicDepartment
   })
 
     if (!isDepartmentBelongToFaculty) {
-    throw new AppError(httpStatus.NOT_FOUND, `This ${academicDepartment} is not belong to this ${academicFaculty} faculty `);
+    throw new AppError(httpStatus.NOT_FOUND, `This ${isAcademicDepartmentExits.name} is not belong to this ${isAcademicDepartmentExits.name} faculty `);
   }
 
   const result = await OfferedCourse.create({ ...payload, academicSemester });
