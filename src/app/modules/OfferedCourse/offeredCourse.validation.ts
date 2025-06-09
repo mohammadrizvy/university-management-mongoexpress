@@ -12,17 +12,24 @@ const createOfferedCourseValidationSchema = z.object({
     section: z.number(),
     days: z.array(z.enum([...Days] as [string, ...string[]])),
     startTime: z.string().refine((time) => {
-      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
       return regex.test(time);
     }, {
-      message: "Start time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+      message: "Start time must be in 24-hour format (e.g., 09:30, 14:45)"
     }),
     endTime: z.string().refine((time) => {
-      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
       return regex.test(time);
     }, {
-      message: "End time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+      message: "End time must be in 24-hour format (e.g., 09:30, 14:45)"
     }),
+  }).refine((body) => {
+    console.log(body)
+    const start = new Date (`1970-01-01T${body.startTime}:00`)
+    const end = new Date (`1970-01-01T${body.endTime}:00`)
+    return end > start; 
+  }, {
+    message : "Start time should be before end time"
   }),
 });
 
@@ -32,16 +39,16 @@ const updateOfferedCourseValidationSchema = z.object({
     maxCapacity: z.number().optional(),
     days: z.array(z.enum([...Days] as [string, ...string[]])).optional(),
     startTime: z.string().refine((time) => {
-      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
       return regex.test(time);
     }, {
-      message: "Start time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+      message: "Start time must be in 24-hour format (e.g., 09:30, 14:45)"
     }).optional(),
     endTime: z.string().refine((time) => {
-      const regex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
       return regex.test(time);
     }, {
-      message: "End time must be in 12-hour format (e.g., 9:30 AM, 02:45 PM)"
+      message: "End time must be in 24-hour format (e.g., 09:30, 14:45)"
     }).optional(),
   }),
 });
