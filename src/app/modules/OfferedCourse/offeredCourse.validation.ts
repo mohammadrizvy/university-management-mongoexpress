@@ -1,17 +1,15 @@
 import { z } from 'zod';
 import { Days } from './offeredCourse.const';
 
-const timeStringSchema = z
-  .string()
-  .refine(
-    (time) => {
-      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
-      return regex.test(time);
-    },
-    {
-      message: 'Time must be in 24-hour format (e.g., 09:30, 14:45)',
-    },
-  );
+const timeStringSchema = z.string().refine(
+  (time) => {
+    const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    return regex.test(time);
+  },
+  {
+    message: 'Time must be in 24-hour format (e.g., 09:30, 14:45)',
+  },
+);
 
 const createOfferedCourseValidationSchema = z.object({
   body: z

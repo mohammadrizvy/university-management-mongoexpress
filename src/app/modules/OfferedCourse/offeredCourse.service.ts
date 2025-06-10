@@ -112,30 +112,46 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
   return result;
 };
 
+const updateOfferedCourseIntoDB = async (
+  id: string,
+  payload: Pick<TOfferedCourse, 'faculty' | 'days' | 'startTime' | 'endTime'>,
+) => {
+  const { faculty, days, startTime, endTime } = payload;
 
-const updateOfferedCourseIntoDB = async (id: string, payload: Partial<TOfferedCourse>) => {
-
-
-  const {faculty} = payload; 
-
-   //! Check if the id exists or not
+  //! Check if the id exists or not
   const isOfferedCourseExits = await OfferedCourse.findById(id);
 
   if (!isOfferedCourseExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'OfferedCourse not found');
   }
-   //! Check if the Faculty exists or not
+  //! Check if the Faculty exists or not
   const isFacultyExits = await Faculty.findById(faculty);
 
   if (!isFacultyExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'Faculty not found');
   }
 
+  const semesterRegistration = isOfferedCourseExits.semesterRegistration;
 
+  const assignedSchedules = await OfferedCourse.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: days },
+  }).select('days startTime endTime ');
 
+  console.log(assignedSchedules);
 
-}
+  const newSchedules = { days, startTime, endTime };
+
+  if (hasTimeConflict(assignedSchedules, newSchedules)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      'The faculty is not availabe at that time ! Choose another date or time .',
+    );
+  }
+};
 
 export const offeredCourseServices = {
-  createOfferedCourseIntoDb, updateOfferedCourseIntoDB
+  createOfferedCourseIntoDb,
+  updateOfferedCourseIntoDB,
 };
