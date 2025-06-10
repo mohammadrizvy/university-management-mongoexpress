@@ -113,12 +113,13 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
 };
 
 
-const updateOfferedCourseIntoDB = async () => {
+const updateOfferedCourseIntoDB = async (id: string, payload: Partial<TOfferedCourse>) => {
 
+  
 
 
 }
 
 export const offeredCourseServices = {
-  createOfferedCourseIntoDb,updateOfferedCourseIntoDB
+  createOfferedCourseIntoDb, updateOfferedCourseIntoDB
 };
