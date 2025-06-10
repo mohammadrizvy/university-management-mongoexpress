@@ -100,13 +100,17 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
 
   const newSchedules = { days, startTime, endTime };
 
-  console.log(hasTimeConflict(assignedSchedules ,newSchedules ))
+  if (hasTimeConflict(assignedSchedules, newSchedules)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      'The faculty is not availabe at that time ! Choose another date or time .',
+    );
+  }
 
+  // const result = await OfferedCourse.create({ ...payload, academicSemester });
 
-
-  const result = await OfferedCourse.create({ ...payload, academicSemester });
-
-  return result;
+  // return result;
+  return null;
 };
 
 export const offeredCourseServices = {
