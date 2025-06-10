@@ -6,6 +6,9 @@ import { SemesterRegistration } from './semisterRegistration.model';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { RegistrationStatus } from './semesterRegistration.const';
 
+
+// TODO : Task left at : Mission 4 -> Module 17 -> last video 
+
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesteRegistration,
 ) => {
