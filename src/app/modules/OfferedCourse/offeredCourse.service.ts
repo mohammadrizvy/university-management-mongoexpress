@@ -134,15 +134,15 @@ const updateOfferedCourseIntoDB = async (
 
   const semesterRegistration = isOfferedCourseExits.semesterRegistration;
 
-  const semesterRegistrationStatus = await SemesterRegistration.findById(semesterRegistration)
+  const semesterRegistrationStatus =
+    await SemesterRegistration.findById(semesterRegistration);
 
-  if (semesterRegistrationStatus?.status !== "UPCOMING") {
+  if (semesterRegistrationStatus?.status !== 'UPCOMING') {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `You can't update this offered course as it is  ${semesterRegistrationStatus?.status}`,
     );
   }
-
 
   const assignedSchedules = await OfferedCourse.find({
     semesterRegistration,
@@ -167,7 +167,56 @@ const updateOfferedCourseIntoDB = async (
   return result;
 };
 
+const getAllOfferedCoursesFromDB = async () => {
+  const result = await OfferedCourse.find()
+   
+
+  return result;
+};
+
+const getSingleOfferedCourseFromDB = async (id: string) => {
+  const result = await OfferedCourse.findById(id)
+    //TODO:  .populate('semesterRegistration') Not workig fix it later 
+    .populate('academicSemester')
+    .populate('academicFaculty')
+    .populate('academicDepartment')
+    .populate('course')
+    .populate('faculty');
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Offered Course not found');
+  }
+
+  return result;
+};
+
+const deleteOfferedCourseFromDB = async (id: string) => {
+  const isOfferedCourseExists = await OfferedCourse.findById(id);
+
+  if (!isOfferedCourseExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Offered Course not found');
+  }
+
+  const semesterRegistration = isOfferedCourseExists.semesterRegistration;
+
+  const semesterRegistrationStatus =
+    await SemesterRegistration.findById(semesterRegistration);
+
+  if (semesterRegistrationStatus?.status !== 'UPCOMING') {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Cannot delete! This offered course is ${semesterRegistrationStatus?.status}`,
+    );
+  }
+
+  const result = await OfferedCourse.findByIdAndDelete(id);
+  return result;
+};
+
 export const offeredCourseServices = {
   createOfferedCourseIntoDb,
   updateOfferedCourseIntoDB,
+  getAllOfferedCoursesFromDB,
+  getSingleOfferedCourseFromDB,
+  deleteOfferedCourseFromDB,
 };
