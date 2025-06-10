@@ -124,6 +124,7 @@ const updateOfferedCourseIntoDB = async (
   if (!isOfferedCourseExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'OfferedCourse not found');
   }
+
   //! Check if the Faculty exists or not
   const isFacultyExits = await Faculty.findById(faculty);
 
@@ -133,13 +134,21 @@ const updateOfferedCourseIntoDB = async (
 
   const semesterRegistration = isOfferedCourseExits.semesterRegistration;
 
+  const semesterRegistrationStatus = await SemesterRegistration.findById(semesterRegistration)
+
+  if (semesterRegistrationStatus?.status !== "UPCOMING") {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can't update this offered course as it is  ${semesterRegistrationStatus?.status}`,
+    );
+  }
+
+
   const assignedSchedules = await OfferedCourse.find({
     semesterRegistration,
     faculty,
     days: { $in: days },
   }).select('days startTime endTime ');
-
-  console.log(assignedSchedules);
 
   const newSchedules = { days, startTime, endTime };
 
@@ -149,6 +158,13 @@ const updateOfferedCourseIntoDB = async (
       'The faculty is not availabe at that time ! Choose another date or time .',
     );
   }
+
+  const result = await OfferedCourse.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+
+  return result;
 };
 
 export const offeredCourseServices = {
