@@ -107,12 +107,18 @@ const createOfferedCourseIntoDb = async (payload: TOfferedCourse) => {
     );
   }
 
-  // const result = await OfferedCourse.create({ ...payload, academicSemester });
+  const result = await OfferedCourse.create({ ...payload, academicSemester });
 
-  // return result;
-  return null;
+  return result;
 };
 
+
+const updateOfferedCourseIntoDB = async () => {
+
+
+
+}
+
 export const offeredCourseServices = {
-  createOfferedCourseIntoDb,
+  createOfferedCourseIntoDb,updateOfferedCourseIntoDB
 };
