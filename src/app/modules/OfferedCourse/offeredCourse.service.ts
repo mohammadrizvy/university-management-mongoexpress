@@ -168,15 +168,14 @@ const updateOfferedCourseIntoDB = async (
 };
 
 const getAllOfferedCoursesFromDB = async () => {
-  const result = await OfferedCourse.find()
-   
+  const result = await OfferedCourse.find();
 
   return result;
 };
 
 const getSingleOfferedCourseFromDB = async (id: string) => {
   const result = await OfferedCourse.findById(id)
-    //TODO:  .populate('semesterRegistration') Not workig fix it later 
+    //TODO:  .populate('semesterRegistration') Not workig fix it later
     .populate('academicSemester')
     .populate('academicFaculty')
     .populate('academicDepartment')
