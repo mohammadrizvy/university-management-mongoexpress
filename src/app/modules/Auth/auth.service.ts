@@ -5,6 +5,8 @@ const loginUser = async (payload: TLoginUser) => {
     console.log(payload)
 
 
+    return {}
+
 
 
 }
