@@ -38,10 +38,11 @@ userSchema.post('save', async function (doc, next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-
   return await User.findOne({ id });
-
-
-}
+};
+userSchema.statics.isUserDeletedByCustomId = async function (id: string) {
+  const user = await User.findOne({ id });
+  return user?.isDeleted || false;
+};
 
 export const User = model<TUser, UserModel>('User', userSchema);
