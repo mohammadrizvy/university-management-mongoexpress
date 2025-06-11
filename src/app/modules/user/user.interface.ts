@@ -12,5 +12,8 @@ export interface UserModel extends Model<TUser> {
   isUserExistsByCustomId(id: string): Promise<TUser>;
   isUserDeletedByCustomId(id: string): Promise<TUser>;
   isUserBlockedByCustomId(id: string): Promise<TUser>;
-  isPasswordMatch(plainTextPassword : string , hashedPassword : string): Promise<Boolean>;
+  isPasswordMatch(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<Boolean>;
 }

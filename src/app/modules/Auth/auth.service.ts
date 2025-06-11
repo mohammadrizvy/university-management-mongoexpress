@@ -1,15 +1,16 @@
+import config from '../../config';
 import { AppError } from '../../Errors/AppErrors';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
-import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const loginUser = async (payload: TLoginUser) => {
   // Checking if the user dose exists ?
 
-  const isUserExists = await User.isUserExistsByCustomId(payload.id)
+  const user = await User.isUserExistsByCustomId(payload.id);
 
-  if (!isUserExists) {
+  if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
 
@@ -25,18 +26,27 @@ const loginUser = async (payload: TLoginUser) => {
   }
 
   // Checking if the password is correct ?
+  const passwordMatch = await User.isPasswordMatch(
+    payload?.password,
+    user?.password,
+  );
 
-  const passwordMatch = await User.isPasswordMatch(payload?.password, isUserExists?.password)
-
+  // Access Granted : Send AccessToken , RefreshToken
   if (!passwordMatch) {
     throw new AppError(httpStatus.FORBIDDEN, 'Password is incorrect ! ');
   }
 
+  // Create token and sent to the client
+  const jwtPayload = {
+    userId: user,
+    role: user.role,
+  };
+  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, { expiresIn: "30" });
 
-
-  // Access Granted : Send AccessToken , RefreshToken
-
-  return {};
+  return {
+    accessToken,
+    needsPasswordChange : user.needsPasswordChange
+  };
 };
 
 export const authServices = {
