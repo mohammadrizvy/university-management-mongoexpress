@@ -26,7 +26,6 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
 
-
   // Checking if the password is correct ? 
 
   const isPasswordMatch =  await bcrypt.compare(payload.password , isUserExists.password)
