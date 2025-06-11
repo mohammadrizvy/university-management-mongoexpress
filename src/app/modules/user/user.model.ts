@@ -3,7 +3,7 @@ import { TUser, UserModel } from './user.interface';
 import config from '../../config';
 import bcrypt from 'bcrypt';
 
-const userSchema = new Schema<TUser , UserModel>(
+const userSchema = new Schema<TUser, UserModel>(
   {
     id: { type: String },
     password: { type: String },
@@ -37,4 +37,11 @@ userSchema.post('save', async function (doc, next) {
   next();
 });
 
-export const User = model<TUser ,  UserModel>('User', userSchema);
+userSchema.statics.isUserExistsByCustomId = async function (id: string) {
+
+  return await User.findOne({ id });
+
+
+}
+
+export const User = model<TUser, UserModel>('User', userSchema);
