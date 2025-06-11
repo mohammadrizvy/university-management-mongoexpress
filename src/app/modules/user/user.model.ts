@@ -42,7 +42,11 @@ userSchema.statics.isUserExistsByCustomId = async function (id: string) {
 };
 userSchema.statics.isUserDeletedByCustomId = async function (id: string) {
   const user = await User.findOne({ id });
-  return user?.isDeleted || false;
+  return user?.isDeleted || false ;
 };
+userSchema.statics.isUserBlockedByCustomId = async function (id: string) {
+  const user = await User.findOne({ id });
+  return user?.status === "blocked"
+}
 
 export const User = model<TUser, UserModel>('User', userSchema);

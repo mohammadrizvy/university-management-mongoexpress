@@ -18,9 +18,9 @@ const loginUser = async (payload: TLoginUser) => {
   if (isDeleted) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is deleted');
   }
-  const userStatus = isUserExists?.status;
+  const userStatus = await User.isUserBlockedByCustomId(payload.id);
 
-  if (userStatus === 'blocked') {
+  if (userStatus) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
 
