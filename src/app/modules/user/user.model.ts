@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 import { TUser, UserModel } from './user.interface';
 import config from '../../config';
 import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<TUser, UserModel>(
   {
@@ -47,6 +48,12 @@ userSchema.statics.isUserDeletedByCustomId = async function (id: string) {
 userSchema.statics.isUserBlockedByCustomId = async function (id: string) {
   const user = await User.findOne({ id });
   return user?.status === "blocked"
+}
+userSchema.statics.isPasswordMatch = async function (plainTextPassword , hashedPassword){
+  await bcrypt.compare(
+    plainTextPassword,
+    hashedPassword,
+  );
 }
 
 export const User = model<TUser, UserModel>('User', userSchema);

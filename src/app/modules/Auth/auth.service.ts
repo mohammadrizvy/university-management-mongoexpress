@@ -26,12 +26,13 @@ const loginUser = async (payload: TLoginUser) => {
 
   // Checking if the password is correct ?
 
-  const isPasswordMatch = await bcrypt.compare(
-    payload.password,
-    isUserExists.password,
-  );
+  const passwordMatch = await User.isPasswordMatch(payload?.password, isUserExists?.password)
 
-  console.log(isPasswordMatch);
+  if (!passwordMatch) {
+    throw new AppError(httpStatus.FORBIDDEN, 'Password is incorrect ! ');
+  }
+
+
 
   // Access Granted : Send AccessToken , RefreshToken
 
