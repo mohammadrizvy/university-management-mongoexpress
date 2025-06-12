@@ -33,7 +33,6 @@ const auth = () => {
             );
           }
           // decoded
-
           req.user = decoded as JwtPayload;
         },
       );

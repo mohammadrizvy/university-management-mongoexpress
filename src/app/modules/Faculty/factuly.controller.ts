@@ -54,19 +54,18 @@ const updateFaculty = catchAsync(async (req, res, next) => {
 });
 
 const deleteFactulty = catchAsync(async (req, res, next) => {
-  try {
-    const { facultyId } = req.params;
-    const result = await FacultyServices.deleteFacultyFromDB(facultyId);
+  
 
-    sendResponse(res, {
-      sucess: true,
-      statusCode: httpStatus.OK,
-      message: 'Factulty deleted successfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+  const { facultyId } = req.params;
+  const result = await FacultyServices.deleteFacultyFromDB(facultyId);
+
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Factulty deleted successfully',
+    data: result,
+  });
+
 });
 
 export const facultyController = {
