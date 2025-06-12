@@ -10,5 +10,5 @@ export default {
   database_url: process.env.DATABSAE_URL,
   salt_round: process.env.SALT_ROUND,
   default_password: process.env.DEFAULT_PASS,
-  jwt_access_secret : process.env.JWT_ACCESS_SECRET
+  jwt_access_secret: process.env.JWT_ACCESS_SECRET,
 };

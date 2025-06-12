@@ -41,11 +41,13 @@ const loginUser = async (payload: TLoginUser) => {
     userId: user,
     role: user.role,
   };
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, { expiresIn: "30" });
+  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+    expiresIn: '30',
+  });
 
   return {
     accessToken,
-    needsPasswordChange : user.needsPasswordChange
+    needsPasswordChange: user.needsPasswordChange,
   };
 };
 

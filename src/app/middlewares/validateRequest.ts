@@ -3,22 +3,14 @@ import { AnyZodObject } from 'zod';
 import catchAsync from '../utils/catchAsync';
 
 // !Express middleware to check validation
-const validateRequest = (
-  schema: AnyZodObject,
-  updateSemesterRegistration?: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => void,
-) => {
+const validateRequest = (schema: AnyZodObject) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     //* Validation Here
     await schema.parseAsync({
       body: req.body,
     });
     next();
-
-  })
+  });
 };
 
 export default validateRequest;
