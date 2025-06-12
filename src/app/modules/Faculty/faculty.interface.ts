@@ -9,6 +9,7 @@ export type TFacultyName = {
 export type TFaculty = {
   id: string;
   user: Types.ObjectId;
+  designation : string,
   name: TFacultyName;
   gender: 'male' | 'female';
   DOB: Date;
