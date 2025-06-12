@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 const userSchema = new Schema<TUser, UserModel>(
   {
     id: { type: String },
-    password: { type: String , select : 0 },
+    password: { type: String, select: 0 },
     needsPasswordChange: { type: Boolean, default: true },
     role: { type: String, enum: ['admin', 'student', 'faculty'] },
     status: {
@@ -38,7 +38,7 @@ userSchema.post('save', async function (doc, next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id }).select("+password");
+  return await User.findOne({ id }).select('+password');
 };
 userSchema.statics.isUserDeletedByCustomId = async function (id: string) {
   const user = await User.findOne({ id });

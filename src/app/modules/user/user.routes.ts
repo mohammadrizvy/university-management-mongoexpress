@@ -16,7 +16,8 @@ router.post(
   userController.createStudent,
 );
 router.post(
-  '/create-faculty', auth(USER_ROLE.admin),
+  '/create-faculty',
+  auth(USER_ROLE.admin),
   validateRequest(facultyValidations.createFacultyValidationSchema),
   userController.createFaculty,
 );

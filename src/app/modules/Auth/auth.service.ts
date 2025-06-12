@@ -3,7 +3,7 @@ import { AppError } from '../../Errors/AppErrors';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const loginUser = async (payload: TLoginUser) => {
   // Checking if the user dose exists ?
@@ -51,11 +51,17 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
+const changePassword = async (user : JwtPayload, payload ) => {
 
-const changePassword = () => {
+  const result = await User.findOneAndUpdate({
+    id : user.userId,
+    role : user.role,
+  }, )
 
-}
+
+};
 
 export const authServices = {
-  loginUser,changePassword
+  loginUser,
+  changePassword,
 };
