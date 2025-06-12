@@ -95,8 +95,7 @@ const changePassword = async (
       id: userData.userId,
       role: userData.role,
     },
-    { password: newHashedPassword,needsPasswordChange : false },
-    
+    { password: newHashedPassword, needsPasswordChange: false , passwordChangeAt : new Date() },
   );
 
   return null;
