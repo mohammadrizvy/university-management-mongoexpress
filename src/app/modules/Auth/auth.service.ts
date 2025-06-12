@@ -63,12 +63,12 @@ const changePassword = async (
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
 
-  const isDeleted = await User.isUserDeletedByCustomId(payload.id);
+  const isDeleted = await User.isUserDeletedByCustomId(userData.userId);
 
   if (isDeleted) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is deleted');
   }
-  const userStatus = await User.isUserBlockedByCustomId(payload.id);
+  const userStatus = await User.isUserBlockedByCustomId(userData.userId);
 
   if (userStatus) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
@@ -95,7 +95,11 @@ const changePassword = async (
       id: userData.userId,
       role: userData.role,
     },
-    { password: newHashedPassword, needsPasswordChange: false , passwordChangeAt : new Date() },
+    {
+      password: newHashedPassword,
+      needsPasswordChange: false,
+      passwordChangeAt: new Date(),
+    },
   );
 
   return null;

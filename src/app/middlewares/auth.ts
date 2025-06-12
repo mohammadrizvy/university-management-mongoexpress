@@ -15,33 +15,19 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, "You're not authorized user");
     }
     // ?Checking if the token is valid or not !
-    // invalid token
-    jwt.verify(
-      token,
-      config.jwt_access_secret as string,
-      function (err, decoded) {
-        // err
-        if (err) {
-          throw new AppError(
-            httpStatus.UNAUTHORIZED,
-            "You're not authorized user (INVALID TOKEN) ",
-          );
-        }
-        // ?Role checkig for authorization
-        const role = (decoded as JwtPayload)?.role;
-        // "If the role from the decoded token does not match the role required by the protection middleware, an  error will be thrown
-        if (requiredRoles && !requiredRoles.includes(role)) {
-          throw new AppError(
-            httpStatus.UNAUTHORIZED,
-            "You're not authorized user",
-          );
-        }
 
-        // decoded
-        req.user = decoded as JwtPayload;
-      },
-    );
+    // invalid token - synchronous
 
+    const decoded = jwt.verify(token, config.jwt_access_secret as string) as JwtPayload;
+
+    // ?Role checkig for authorization
+    const role = decoded?.role;
+    // "If the role from the decoded token does not match the role required by the protection middleware, an  error will be thrown
+    if (requiredRoles && !requiredRoles.includes(role)) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "You're not authorized user");
+    }
+    // decoded
+    req.user = decoded;
     next();
   });
 };
