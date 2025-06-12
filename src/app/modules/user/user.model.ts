@@ -38,7 +38,7 @@ userSchema.post('save', async function (doc, next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id });
+  return await User.findOne({ id }).select("+password");
 };
 userSchema.statics.isUserDeletedByCustomId = async function (id: string) {
   const user = await User.findOne({ id });
