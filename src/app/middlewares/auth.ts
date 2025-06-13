@@ -26,8 +26,8 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // ?Role checkig for authorization
     // "If the role from the decoded token does not match the role required by the protection middleware, an  error will be thrown
-    
-    const {userId , role , iat} = decoded; 
+
+    const { userId, role, iat } = decoded;
 
     const user = await User.isUserExistsByCustomId(userId);
 
