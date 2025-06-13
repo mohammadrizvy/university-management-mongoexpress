@@ -4,8 +4,7 @@ import httpStatus from 'http-status';
 import sendResponse from './../../utils/sendResponse';
 
 const getAllFaculty = catchAsync(async (req, res, next) => {
-
-  console.log(req.cookies)
+  console.log(req.cookies);
 
   const result = await FacultyServices.getFacultyFromDB();
 

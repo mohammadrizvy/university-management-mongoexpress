@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 import { authServices } from './auth.service';
 import config from '../../config';
 
-const loginUser = catchAsync(async (req, res, next) => {
+const loginUser = catchAsync(async (req, res) => {
   const result = await authServices.loginUser(req.body);
   const { refreshToken, accessToken, needsPasswordChange } = result;
   res.cookie('refreshToken', refreshToken, {
@@ -23,7 +23,7 @@ const loginUser = catchAsync(async (req, res, next) => {
   });
 });
 
-const changePassword = catchAsync(async (req, res, next) => {
+const changePassword = catchAsync(async (req, res) => {
   console.log(req.user);
   const { ...passwordData } = req.body;
   const result = await authServices.changePassword(req.user, passwordData);
@@ -36,7 +36,22 @@ const changePassword = catchAsync(async (req, res, next) => {
   });
 });
 
+const refreshToken = catchAsync(async (req, res) => {
+
+  const result = await authServices.loginUser(req.body);
+
+
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.FOUND,
+    message: 'User logged in sucessfully',
+    data: result
+  });
+
+
+});
+
 export const authController = {
   loginUser,
-  changePassword,
+  changePassword, refreshToken
 };
