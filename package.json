@@ -16,8 +16,10 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@types/cookie-parser": "^1.4.9",
     "@types/jsonwebtoken": "^9.0.9",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
