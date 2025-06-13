@@ -38,7 +38,7 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.FORBIDDEN, 'Password is incorrect ! ');
   }
 
-  // Create token and sent to the client
+  // Create access token and sent to the client
   const jwtPayload = {
     userId: user.id,
     role: user.role,
@@ -46,6 +46,11 @@ const loginUser = async (payload: TLoginUser) => {
   const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
     expiresIn: '7d',
   });
+
+  const refreshToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+    expiresIn: '7d',
+  });
+
 
   return {
     accessToken,
