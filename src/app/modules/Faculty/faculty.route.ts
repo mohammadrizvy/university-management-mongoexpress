@@ -7,7 +7,11 @@ import { USER_ROLE } from '../user/user.const';
 
 const router = express.Router();
 
-router.get('/', auth(USER_ROLE.admin ,USER_ROLE.faculty ), facultyController.getFaculty);
+router.get(
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.faculty),
+  facultyController.getFaculty,
+);
 router.get('/:facultyId', facultyController.getSingleFaculty);
 router.patch(
   '/:facultyId',

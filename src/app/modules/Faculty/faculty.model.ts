@@ -22,7 +22,7 @@ const facultySchema = new Schema<TFaculty>(
       query: true,
       ref: 'User',
     },
-    designation : {
+    designation: {
       type: String,
     },
     name: facultyNameSchema,

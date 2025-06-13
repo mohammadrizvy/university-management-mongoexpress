@@ -20,7 +20,7 @@ const createFacultyValidationSchema = z.object({
       required_error: 'Password is required',
     }),
     faculty: z.object({
-      designation : z.string({required_error : "Designation is required"}),
+      designation: z.string({ required_error: 'Designation is required' }),
       name: createFacultyNameValidationSchema,
       gender: z.enum(['male', 'female'], {
         required_error: 'Gender is required and must be either male or female',
