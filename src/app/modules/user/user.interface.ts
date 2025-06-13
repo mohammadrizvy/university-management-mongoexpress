@@ -21,7 +21,7 @@ export interface UserModel extends Model<TUser> {
   isJWTIssuedBeforePasswordChange(
     passwordChangeTimeStamp: Date,
     jwtIssuedTimeStamp: number,
-  ): Promise<Boolean>;
+  ): boolean;
 }
 
 export type TUserRole = keyof typeof USER_ROLE;
