@@ -50,7 +50,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
       user.passwordChangeAt &&
       User.isJWTIssuedBeforePasswordChange(user.passwordChangeAt, iat as number)
     ) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You're not authorized user right now bud !! ");
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        "You're not authorized user right now bud !! ",
+      );
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
