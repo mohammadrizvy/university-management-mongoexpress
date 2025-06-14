@@ -167,27 +167,37 @@ const refreshToken = async (token: string) => {
   };
 };
 
-const forgetPassword = async (id : string) => {
+const forgetPassword = async (userId: string) => {
 
-  const user = await User.isUserExistsByCustomId(id);
+  const user = await User.isUserExistsByCustomId(userId);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
 
-  const isDeleted = await User.isUserDeletedByCustomId(id);
+  const isDeleted = await User.isUserDeletedByCustomId(userId);
 
   if (isDeleted) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is deleted');
   }
-  const userStatus = await User.isUserBlockedByCustomId(id);
+  const userStatus = await User.isUserBlockedByCustomId(userId);
 
   if (userStatus) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
 
+  // Create access token and sent to the client
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+  };
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    "10m"
+  );
 
-  const resetUILink = `http://localhost:3000/api/v1?id={}`
+  const resetUILink = `http://localhost:3000/api/v1?id=${user.id}token=${}`
 
 };
 
