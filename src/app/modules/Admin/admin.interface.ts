@@ -16,8 +16,8 @@ export type TAdmin = {
   emergencyContactNo: string;
   presentAddress: string;
   permanentAddress: string;
-  managmentDeparment?: Types.ObjectId;
-  academicFaculty: Types.ObjectId;
+  // managmentDeparment?: Types.ObjectId;
+  // academicFaculty: Types.ObjectId;
   profileImage?: string;
   isDeleted?: boolean;
 };

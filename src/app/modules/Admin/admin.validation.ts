@@ -39,10 +39,6 @@ const createAdminValidationSchema = z.object({
       permanentAddress: z.string({
         required_error: 'Permanent address is required',
       }),
-      managmentDeparment: z.string().optional(),
-      academicFaculty: z.string({
-        required_error: 'Academic faculty is required',
-      }),
       profileImage: z.string().optional(),
     }),
   }),

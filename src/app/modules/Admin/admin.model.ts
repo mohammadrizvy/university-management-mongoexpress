@@ -61,15 +61,15 @@ const adminSchema = new Schema<TAdmin>(
       type: String,
       required: true,
     },
-    managmentDeparment: {
-      type: Schema.Types.ObjectId,
-      ref: 'ManagementDepartment',
-    },
-    academicFaculty: {
-      type: Schema.Types.ObjectId,
-      ref: 'AcademicFaculty',
-      required: true,
-    },
+    // managmentDeparment: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'ManagementDepartment',
+    // },
+    // academicFaculty: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'AcademicFaculty',
+    //   required: true,
+    // },
     profileImage: {
       type: String,
     },
