@@ -16,7 +16,11 @@ router.post(
 
 router.get('/', courseController.getCourse);
 
-router.get('/:id', auth("admin", 'faculty' , "student"), courseController.getSingleCourse);
+router.get(
+  '/:id',
+  auth('admin', 'faculty', 'student'),
+  courseController.getSingleCourse,
+);
 
 router.delete('/:id', courseController.deleteCourse);
 
@@ -26,13 +30,15 @@ router.put(
   courseController.assignFacultiesWithCourse,
 );
 router.delete(
-  '/:courseId/remove_faculties',auth("admin",), 
+  '/:courseId/remove_faculties',
+  auth('admin'),
   validateRequest(courseValidations.courseFacultyWithValidationSchema),
   courseController.removeFacultiesWithCourse,
 );
 
 router.patch(
-  '/:id',auth("admin",), 
+  '/:id',
+  auth('admin'),
   validateRequest(courseValidations.updateCreateCourseValidationSchema),
   courseController.updateCourese,
 );

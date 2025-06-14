@@ -115,7 +115,6 @@ const changePassword = async (
 };
 
 const refreshToken = async (token: string) => {
-
   // ?Checking if the token is valid or not !
 
   const decoded = jwt.verify(
@@ -164,12 +163,39 @@ const refreshToken = async (token: string) => {
   );
 
   return {
-    accessToken
-  }
+    accessToken,
+  };
 };
+
+const forgetPassword = async (id : string) => {
+
+  const user = await User.isUserExistsByCustomId(id);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const isDeleted = await User.isUserDeletedByCustomId(id);
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, 'The user is deleted');
+  }
+  const userStatus = await User.isUserBlockedByCustomId(id);
+
+  if (userStatus) {
+    throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
+  }
+
+
+  const resetUILink = `http://localhost:3000/api/v1?id={}`
+
+};
+
+
 
 export const authServices = {
   loginUser,
   changePassword,
   refreshToken,
+  forgetPassword,
 };
