@@ -199,7 +199,7 @@ const forgetPassword = async (userId: string) => {
 
   const resetUILink = `http://localhost:3000/api/v1?id=${user.id}&token=${resetToken}`;
 
-  sendEmail()
+  sendEmail(user.email,resetUILink)
 
 };
 
