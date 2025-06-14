@@ -49,13 +49,15 @@ const createAdmin = catchAsync(async (req, res, next) => {
 });
 
 const getMe = catchAsync(async (req, res, next) => {
-  const token = req.headers.authorization;
+  // const token = req.headers.authorization;
 
-  if (!token) {
-    throw new AppError(httpStatus.FORBIDDEN, 'Token not found!');
-  }
+  // if (!token) {
+  //   throw new AppError(httpStatus.FORBIDDEN, 'Token not found!');
+  // }
 
-  const result = await UserService.getMe(token);
+  const {userId , role}=req.user
+
+  const result = await UserService.getMe(userId,role);
 
   sendResponse(res, {
     sucess: true,
