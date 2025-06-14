@@ -32,7 +32,7 @@ router.post(
   '/change-status/:id',
   auth(USER_ROLE.admin),
   validateRequest(AdminValidation.createAdminValidationSchema),
-  userController.createAdmin,
+  userController.changeStatus,
 );
 
 

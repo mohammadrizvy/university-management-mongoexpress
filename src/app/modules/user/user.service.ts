@@ -180,9 +180,16 @@ const getMe = async (userId: string, role: string) => {
   return result;
 };
 
+
+const changeStatus = async (id : string , payload  ) => {
+
+
+
+}
+
 export const UserService = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
-  getMe,
+  getMe,changeStatus
 };
