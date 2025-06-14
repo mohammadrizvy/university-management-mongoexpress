@@ -203,7 +203,7 @@ const forgetPassword = async (userId: string) => {
 };
 
 
-const resetPassword =  async (payload : {id : string , newpassword : string} , token : string ) => {
+const resetPassword =  async (payload : {id : string , newpassword : string} , token  ) => {
 
   const user = await User.isUserExistsByCustomId(payload.id);
 
@@ -221,7 +221,13 @@ const resetPassword =  async (payload : {id : string , newpassword : string} , t
   if (userStatus) {
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
-  
+
+   const decoded = jwt.verify(
+    token,
+    config.jwt_access_secret as string,
+  ) as JwtPayload;
+
+  console.log(decoded)
 
 
 }
