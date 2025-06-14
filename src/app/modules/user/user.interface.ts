@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { USER_ROLE } from './user.const';
 export interface TUser {
   id: string;
+  email : string,
   password: string;
   needsPasswordChange: boolean;
   passwordChangeAt?: Date;
