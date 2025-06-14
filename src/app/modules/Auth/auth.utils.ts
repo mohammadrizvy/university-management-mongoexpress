@@ -12,3 +12,10 @@ export const createToken = (
     expiresIn,
   } as jwt.SignOptions);
 };
+
+
+export const verifyToken = (token : string , secret : string) => {
+
+
+
+}

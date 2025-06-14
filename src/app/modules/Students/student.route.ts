@@ -9,10 +9,14 @@ const router = express.Router();
 // This will call controller function
 router.get(
   '/',
-  
+
   studentControllers.getStudents,
 );
-router.get('/:studentId',auth('student', 'admin', 'faculty'), studentControllers.getSingleStudent);
+router.get(
+  '/:studentId',
+  auth('student', 'admin', 'faculty'),
+  studentControllers.getSingleStudent,
+);
 // ? used middlewares
 router.patch(
   '/:studentId',

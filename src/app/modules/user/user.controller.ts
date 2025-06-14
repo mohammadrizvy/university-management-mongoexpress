@@ -2,61 +2,70 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { UserService } from './user.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
-import { Admin } from '../Admin/admin.model';
+import catchAsync from '../../utils/catchAsync';
+import { AppError } from '../../Errors/AppErrors';
 
-const createStudent: RequestHandler = async (req, res, next) => {
-  try {
-    // Validate the request body
-    // const validatedData = studentValidatedSchema.parse(req.body);
+const createStudent = catchAsync(async (req, res, next) => {
+  // Validate the request body
+  // const validatedData = studentValidatedSchema.parse(req.body);
 
-    const { password, student: studentData } = req.body;
+  const { password, student: studentData } = req.body;
 
-    // Create student in the database
-    const result = await UserService.createStudentIntoDB(password, studentData);
+  // Create student in the database
+  const result = await UserService.createStudentIntoDB(password, studentData);
 
-    sendResponse(res, {
-      sucess: true,
-      statusCode: httpStatus.OK,
-      message: 'Studnent created sucessfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Studnent created sucessfully',
+    data: result,
+  });
+});
+
+const createFaculty = catchAsync(async (req, res, next) => {
+  const { password, faculty: facultyData } = req.body;
+
+  const result = await UserService.createFacultyIntoDB(password, facultyData);
+
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Faculty created successfully',
+    data: result,
+  });
+});
+
+const createAdmin = catchAsync(async (req, res, next) => {
+  const { password, admin: adminData } = req.body;
+
+  const result = await UserService.createAdminIntoDB(password, adminData);
+
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Studnent created sucessfully',
+    data: result,
+  });
+});
+
+const getMe = catchAsync(async (req, res, next) => {
+
+  const token = req.headers.authorization; 
+
+  if(!token){
+    throw new AppError(httpStatus.FORBIDDEN, 'Token not found!');
   }
-};
 
-const createFaculty: RequestHandler = async (req, res, next) => {
-  try {
-    const { password, faculty: facultyData } = req.body;
+  
 
-    const result = await UserService.createFacultyIntoDB(password, facultyData);
+  const result = await UserService.getMe();
 
-    sendResponse(res, {
-      sucess: true,
-      statusCode: httpStatus.OK,
-      message: 'Faculty created successfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  sendResponse(res, {
+    sucess: true,
+    statusCode: httpStatus.OK,
+    message: 'Studnent created sucessfully',
+    data: result,
+  });
+});
 
-const createAdmin: RequestHandler = async (req, res, next) => {
-  try {
-    const { password, admin: adminData } = req.body;
-
-    const result = await UserService.createAdminIntoDB(password, adminData);
-
-    sendResponse(res, {
-      sucess: true,
-      statusCode: httpStatus.OK,
-      message: 'Studnent created sucessfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const userController = { createStudent, createFaculty, createAdmin };
+export const userController = { createStudent, createFaculty, createAdmin,getMe };

@@ -35,5 +35,10 @@ router.post(
   validateRequest(authValidation.resetPasswordValidationSchema),
   authController.resetPassword,
 );
+router.get(
+  '/me',
+  auth('student', 'admin', 'faculty'),
+  authController.resetPassword,
+);
 
 export const authRoutes = router;
