@@ -202,9 +202,10 @@ const forgetPassword = async (userId: string) => {
   sendEmail(user.email, resetUILink);
 };
 
-
-const resetPassword =  async (payload : {id : string , newpassword : string} , token  ) => {
-
+const resetPassword = async (
+  payload: { id: string; newpassword: string },
+  token: string,
+) => {
   const user = await User.isUserExistsByCustomId(payload.id);
 
   if (!user) {
@@ -222,19 +223,26 @@ const resetPassword =  async (payload : {id : string , newpassword : string} , t
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
 
-   const decoded = jwt.verify(
+  const decoded = jwt.verify(
     token,
     config.jwt_access_secret as string,
   ) as JwtPayload;
 
-  console.log(decoded)
+  console.log(decoded);
+
+  if (payload?.id === decoded.userId) {
+    throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
+  }
+
+  
 
 
-}
+};
 
 export const authServices = {
   loginUser,
   changePassword,
   refreshToken,
-  forgetPassword,resetPassword
+  forgetPassword,
+  resetPassword,
 };
