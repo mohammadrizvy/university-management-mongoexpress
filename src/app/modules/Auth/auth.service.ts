@@ -223,7 +223,7 @@ const resetPassword = async (
     throw new AppError(httpStatus.FORBIDDEN, 'The user is blocked');
   }
 
-  const decoded = verifyToken(token , config.jwt_refresh_secret as string)
+  const decoded = verifyToken(token, config.jwt_refresh_secret as string);
 
   console.log(decoded);
 

@@ -49,16 +49,13 @@ const createAdmin = catchAsync(async (req, res, next) => {
 });
 
 const getMe = catchAsync(async (req, res, next) => {
+  const token = req.headers.authorization;
 
-  const token = req.headers.authorization; 
-
-  if(!token){
+  if (!token) {
     throw new AppError(httpStatus.FORBIDDEN, 'Token not found!');
   }
 
-  
-
-  const result = await UserService.getMe();
+  const result = await UserService.getMe(token);
 
   sendResponse(res, {
     sucess: true,
@@ -68,4 +65,9 @@ const getMe = catchAsync(async (req, res, next) => {
   });
 });
 
-export const userController = { createStudent, createFaculty, createAdmin,getMe };
+export const userController = {
+  createStudent,
+  createFaculty,
+  createAdmin,
+  getMe,
+};

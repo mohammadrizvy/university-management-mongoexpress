@@ -16,6 +16,7 @@ import { TFaculty } from '../Faculty/faculty.interface';
 import { Faculty } from '../Faculty/faculty.model';
 import { TAdmin } from '../Admin/admin.interface';
 import { Admin } from '../Admin/admin.model';
+import { verifyToken } from '../Auth/auth.utils';
 
 // TODO : Important concept !!!
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
@@ -162,11 +163,17 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 };
 
 
-const getMe = async (id : string, role : string) => {
+const getMe = async (token : string) => {
 
-  const result = await
+  const decoded = verifyToken(token , config.jwt_access_secret as string)
 
-return result ; 
+  const {userId , role} = decoded; 
+
+  console.log(userId , role)
+
+  // const result = await
+
+  return {} ; 
 }
 
 

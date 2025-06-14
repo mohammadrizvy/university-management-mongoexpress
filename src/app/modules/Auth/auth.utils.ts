@@ -14,12 +14,6 @@ export const createToken = (
   } as jwt.SignOptions);
 };
 
-
 export const verifyToken = (token: string, secret: string) => {
-
-  return jwt.verify(
-    token,
-    secret
-  ) as JwtPayload;
-
-}
+  return jwt.verify(token, secret) as JwtPayload;
+};
