@@ -162,23 +162,31 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   }
 };
 
+const getMe = async (token: string) => {
+  const decoded = verifyToken(token, config.jwt_access_secret as string);
 
-const getMe = async (token : string) => {
+  const { userId, role } = decoded;
 
-  const decoded = verifyToken(token , config.jwt_access_secret as string)
+  console.log(userId, role);
 
-  const {userId , role} = decoded; 
+  let result = null;
 
-  console.log(userId , role)
+  if (role === 'student') {
+    result = await Student.findOne({ id: userId });
+  }
+  if (role === 'admin') {
+    result = await Admin.findOne({ id: userId });
+  }
+  if (role === 'faculty') {
+    result = await Faculty.findOne({ id: userId });
+  }
 
-  // const result = await
-
-  return {} ; 
-}
-
+  return result;
+};
 
 export const UserService = {
   createStudentIntoDB,
   createFacultyIntoDB,
-  createAdminIntoDB,getMe
+  createAdminIntoDB,
+  getMe,
 };

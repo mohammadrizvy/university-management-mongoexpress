@@ -60,7 +60,7 @@ const getMe = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     sucess: true,
     statusCode: httpStatus.OK,
-    message: 'Studnent created sucessfully',
+    message: 'Info retrived sucessfully',
     data: result,
   });
 });
