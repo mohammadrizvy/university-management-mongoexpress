@@ -203,7 +203,7 @@ const forgetPassword = async (userId: string) => {
 };
 
 const resetPassword = async (
-  payload: { id: string; newpassword: string },
+  payload: { id: string; newPassword: string },
   token: string,
 ) => {
   const user = await User.isUserExistsByCustomId(payload.id);
@@ -234,7 +234,13 @@ const resetPassword = async (
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
 
-  
+   // Need to hash the new password !!
+
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.salt_round),
+  );
+
 
 
 };
