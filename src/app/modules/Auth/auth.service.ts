@@ -234,7 +234,7 @@ const resetPassword = async (
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
 
-   // Need to hash the new password !!
+  // Need to hash the new password !!
 
   const newHashedPassword = await bcrypt.hash(
     payload.newPassword,
@@ -243,7 +243,7 @@ const resetPassword = async (
 
   await User.findOneAndUpdate(
     {
-      id:  decoded.userId,
+      id: decoded.userId,
       role: decoded.role,
     },
     {
@@ -252,8 +252,6 @@ const resetPassword = async (
       passwordChangeAt: new Date(),
     },
   );
-
-
 };
 
 export const authServices = {

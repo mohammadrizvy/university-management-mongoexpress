@@ -115,10 +115,8 @@ const getStudentsFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
-const getSingleStudentFromDB = async (studentId: string) => {
-  // const result = await Student.findOne({ id });
-
-  const result = Student.findOne({ id: studentId })
+const getSingleStudentFromDB = async (id: string) => {
+  const result = await Student.findById(id)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -126,6 +124,11 @@ const getSingleStudentFromDB = async (studentId: string) => {
         path: 'academicFaculty',
       },
     });
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Student not found');
+  }
+
   return result;
 };
 

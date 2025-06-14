@@ -21,7 +21,7 @@ const getStudents = catchAsync(async (req, res, next) => {
 });
 
 const getSingleStudent = catchAsync(async (req, res, next) => {
-  const studentId = req.params.studentId;
+  const { studentId } = req.params; // This will now be MongoDB's _id
   const result = await StudentServices.getSingleStudentFromDB(studentId);
 
   sendResponse(res, {
