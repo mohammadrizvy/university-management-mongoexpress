@@ -230,7 +230,7 @@ const resetPassword = async (
 
   console.log(decoded);
 
-  if (payload?.id === decoded.userId) {
+  if (payload?.id !== decoded.userId) {
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
 
@@ -241,6 +241,17 @@ const resetPassword = async (
     Number(config.salt_round),
   );
 
+  await User.findOneAndUpdate(
+    {
+      id:  decoded.userId,
+      role: decoded.role,
+    },
+    {
+      password: newHashedPassword,
+      needsPasswordChange: false,
+      passwordChangeAt: new Date(),
+    },
+  );
 
 
 };
