@@ -180,16 +180,19 @@ const getMe = async (userId: string, role: string) => {
   return result;
 };
 
+const changeStatus = async (id: string, payload: { status: string }) => {
+  const result = await User.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
 
-const changeStatus = async (id : string , payload  ) => {
-
-
-
-}
+  return result;
+};
 
 export const UserService = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
-  getMe,changeStatus
+  getMe,
+  changeStatus,
 };
