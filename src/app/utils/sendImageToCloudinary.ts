@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
-export const imageToCloudinary = () => {
+
+export const imageToCloudinary = async () => {
   // Configuration
   cloudinary.config({
     cloud_name: 'dc4zihva5',
@@ -7,15 +8,17 @@ export const imageToCloudinary = () => {
     api_secret: 'jTDHOq5xUmK-Mag16vjYeAwck_c', // Click 'View API Keys' above to copy your API secret
   });
 
-  // Upload an image
-  const uploadResult = await cloudinary.uploader
+  await cloudinary.uploader
     .upload(
-      'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg',
+      'https://i.pinimg.com/1200x/65/54/a1/6554a14fc3e3d30cb9b49f032c79c484.jpg',
       {
-        public_id: 'shoes',
+        public_id: 'babypig',
       },
     )
-    .catch((error) => {
+    .then(function (result) {
+      console.log(result);
+    })
+    .catch(function (error) {
       console.log(error);
     });
 };
