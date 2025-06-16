@@ -1,11 +1,12 @@
 import { v2 as cloudinary } from 'cloudinary';
+import config from '../config';
 
 export const imageToCloudinary = async () => {
   // Configuration
   cloudinary.config({
-    cloud_name: 'dc4zihva5',
-    api_key: '175829349937679',
-    api_secret: 'jTDHOq5xUmK-Mag16vjYeAwck_c', // Click 'View API Keys' above to copy your API secret
+    cloud_name: config.cloudinary_cloud_name,
+    api_key: config.cloudinary_api_key,
+    api_secret: config.cloudinary_api_secrect, 
   });
 
   await cloudinary.uploader
