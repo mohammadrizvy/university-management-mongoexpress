@@ -81,7 +81,6 @@ const createSudentValidatedSchema = z.object({
       }),
       gaurdian: createGuardianValidationSchema,
       localGaurdian: createLocalGuardianValidationSchema,
-      profileImage: z.string().optional(),
       admissionSemester: z.string(),
       academicDepartment: z.string(),
     }),
@@ -134,7 +133,6 @@ const updateSudentValidatedSchema = z.object({
           parmanentAddress: z.string().optional(),
           gaurdian: updateGuardianValidationSchema.optional(),
           localGaurdian: updateLocalGuardianValidationSchema.optional(),
-          profileImage: z.string().optional(),
           admissionSemester: z.string().optional(),
           academicDepartment: z.string().optional(),
         })
