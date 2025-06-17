@@ -52,7 +52,7 @@ const createStudentIntoDB = async (
     const imageName = `${userData.id}${payload.name.firstName}`;
     const path = file?.path;
 
-    imageToCloudinary(imageName, path);
+    const {secure_url} = await imageToCloudinary(imageName, path);
 
     //?  creating a user
     const NewUser = await User.create([userData], { session }); //!(Transactio-1 )
@@ -65,6 +65,7 @@ const createStudentIntoDB = async (
       // * set id & _id as user (ref)
       payload.id = NewUser[0].id;
       payload.user = NewUser[0]._id; //*This will be the {ref} id that will be in student data,
+      payload.profileImage = secure_url
 
       const newStudnet = await Student.create([payload], { session }); //!(Transactio-2 )
 
