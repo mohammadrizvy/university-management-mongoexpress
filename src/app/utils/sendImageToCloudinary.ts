@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import config from '../config';
 import multer from 'multer';
-import fs from "fs"
+import fs from 'fs';
 
 // Configuration
 cloudinary.config({
@@ -11,7 +11,6 @@ cloudinary.config({
 });
 
 export const imageToCloudinary = (imageName: string, path: string) => {
-
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
@@ -21,19 +20,16 @@ export const imageToCloudinary = (imageName: string, path: string) => {
           return reject(error);
         }
         resolve(result);
-        // Delte file after finally upload the the image to DB ! 
+        // Delte file after finally upload the the image to DB !
         fs.unlink(path, (err) => {
           if (err) {
-            reject(err)
+            reject(err);
+          } else {
+            console.log('File is deleted ');
           }
-          else {
-            console.log("File is deleted ")
-          }
-        })
-      }
+        });
+      },
     );
-
-
   });
 };
 
