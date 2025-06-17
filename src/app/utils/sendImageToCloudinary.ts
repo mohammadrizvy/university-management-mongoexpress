@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import config from '../config';
 import multer from 'multer';
 
-export const imageToCloudinary = async () => {
+export const imageToCloudinary = async (imageName : string ,path : string) => {
   // Configuration
   cloudinary.config({
     cloud_name: config.cloudinary_cloud_name,
@@ -12,9 +12,9 @@ export const imageToCloudinary = async () => {
 
   await cloudinary.uploader
     .upload(
-      'https://i.pinimg.com/1200x/65/54/a1/6554a14fc3e3d30cb9b49f032c79c484.jpg',
+      path,
       {
-        public_id: 'babypig',
+        public_id: imageName,
       },
     )
     .then(function (result) {
