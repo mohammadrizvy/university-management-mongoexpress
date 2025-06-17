@@ -6,16 +6,12 @@ import catchAsync from '../../utils/catchAsync';
 import { AppError } from '../../Errors/AppErrors';
 
 const createStudent = catchAsync(async (req, res, next) => {
-  // Validate the request body
-  // const validatedData = studentValidatedSchema.parse(req.body);
+  console.log(req.file, "File");
 
-  console.log(req.file , "FIle");
-  console.log(req.body , "Data");
+  const {  password, student: studentData } = req.body;
 
-  // const { password, student: studentData } = req.body;
-
-  // // Create student in the database
-  // const result = await UserService.createStudentIntoDB(password, studentData);
+  // Create student in the database
+  const result = await UserService.createStudentIntoDB(req.file ,password, studentData);
 
   sendResponse(res, {
     sucess: true,
