@@ -9,7 +9,8 @@ const createStudent = catchAsync(async (req, res, next) => {
   // Validate the request body
   // const validatedData = studentValidatedSchema.parse(req.body);
 
-  console.log(req.file);
+  console.log(req.file , "FIle");
+  console.log(JSON.parse(req.body.data ), "Data");
 
   // const { password, student: studentData } = req.body;
 
