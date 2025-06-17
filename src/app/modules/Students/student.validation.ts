@@ -50,9 +50,11 @@ const createGuardianValidationSchema = z.object({
 
 const createSudentValidatedSchema = z.object({
   body: z.object({
-    password: z.string({
-      required_error: 'Password is required',
-    }).optional(),
+    password: z
+      .string({
+        required_error: 'Password is required',
+      })
+      .optional(),
     student: z.object({
       name: createUserNameValidationSchema,
       gender: z.enum(['male', 'female'], {

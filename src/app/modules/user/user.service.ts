@@ -20,7 +20,11 @@ import { verifyToken } from '../Auth/auth.utils';
 import { imageToCloudinary } from '../../utils/sendImageToCloudinary';
 
 // TODO : Important concept !!!
-const createStudentIntoDB = async (file : any , password: string, payload: TStudent) => {
+const createStudentIntoDB = async (
+  file: any,
+  password: string,
+  payload: TStudent,
+) => {
   const userData: Partial<TUser> = {}; //? create a user object
 
   userData.password = password || (config.default_password as string); //? If password is not given , use default password
@@ -45,10 +49,10 @@ const createStudentIntoDB = async (file : any , password: string, payload: TStud
     userData.id = await generateStudentId(academicSemester); //   set genareated (id)
 
     // Send image to cloudinary
-    const imageName = `${userData.id}${payload.name.firstName}` ; 
-    const path = file?.path ; 
+    const imageName = `${userData.id}${payload.name.firstName}`;
+    const path = file?.path;
 
-    imageToCloudinary(imageName , path );
+    imageToCloudinary(imageName, path);
 
     //?  creating a user
     const NewUser = await User.create([userData], { session }); //!(Transactio-1 )
