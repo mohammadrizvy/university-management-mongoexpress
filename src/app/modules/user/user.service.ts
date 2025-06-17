@@ -44,9 +44,9 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
     userData.id = await generateStudentId(academicSemester); //   set genareated (id)
 
-    // Send image to cloudinary 
+    // Send image to cloudinary
 
-    imageToCloudinary()
+    imageToCloudinary();
 
     //?  creating a user
     const NewUser = await User.create([userData], { session }); //!(Transactio-1 )

@@ -1,12 +1,13 @@
 import { v2 as cloudinary } from 'cloudinary';
 import config from '../config';
+import multer from 'multer';
 
 export const imageToCloudinary = async () => {
   // Configuration
   cloudinary.config({
     cloud_name: config.cloudinary_cloud_name,
     api_key: config.cloudinary_api_key,
-    api_secret: config.cloudinary_api_secrect, 
+    api_secret: config.cloudinary_api_secrect,
   });
 
   await cloudinary.uploader
@@ -23,3 +24,15 @@ export const imageToCloudinary = async () => {
       console.log(error);
     });
 };
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/tmp/my-uploads')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+export const upload = multer({ storage: storage })
