@@ -1,6 +1,6 @@
 const createEnrolledCourseIntoDB = async () => {};
 
-const updateEnrolledCourseMarksIntoDB = async () => {};
+const updateEnrolledCourseMarksIntoDB = async ( ) => {};
 
 export const EnrolledCourseServices = {
   createEnrolledCourseIntoDB,

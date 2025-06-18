@@ -35,7 +35,7 @@ const modulesRoutes = [
   { path: '/semester-registration', route: semesterRegistrationRoutes },
   { path: '/offered-course', route: offeredCourseRouter },
   { path: '/auth', route: authRoutes },
-   {
+  {
     path: '/enrolled-courses',
     route: EnrolledCourseRoutes,
   },
