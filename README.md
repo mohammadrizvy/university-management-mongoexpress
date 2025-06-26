@@ -40,6 +40,7 @@ A comprehensive backend system for managing university operations using Node.js,
 4. Run development server: `npm run dev`
 
 ## Project Structure
+
 ```
 src/
 ├── app/
