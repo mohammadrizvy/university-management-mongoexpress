@@ -13,7 +13,7 @@ const createEnrolledCourse = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
+console.log("first")
 const updateEnrolledCourseMarks = catchAsync(async (req, res) => {
   const result = await EnrolledCourseServices.updateEnrolledCourseMarksIntoDB();
 
