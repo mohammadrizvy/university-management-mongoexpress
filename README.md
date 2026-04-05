@@ -3,7 +3,7 @@
 ## Overview
 A comprehensive backend system for managing university operations using Node.js, Express, TypeScript, and Mongoose.
 
-## Key Features
+## Key Features 
 1. User Management
     - Student registration and profiles
     - Faculty management
